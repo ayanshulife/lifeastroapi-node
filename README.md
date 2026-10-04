@@ -291,7 +291,7 @@ const client = new LifeAstro({ apiKey: process.env.LIFEASTRO_API_KEY });
 // 1. Fetch the report JSON
 const report = await client.reports.kundliDetailed({
   date: "1990-01-15", time: "10:30", tz: "Asia/Kolkata", lat: 19.076, lon: 72.8777,
-  name: "Vikas Sharma", place: "Mumbai, India", lang: "hi",
+  name: "Arjun Mehta", place: "Mumbai, India", lang: "hi",
 });
 
 // 2. Render a branded PDF in one call
@@ -344,7 +344,7 @@ match-making) when you request the report. Without them the cover reads "Subject
 
 ```ts
 const report = await client.reports.matchMaking({
-  boy, girl, boyName: "Vikas", girlName: "Asha", boyPlace: "Mumbai", girlPlace: "Delhi",
+  boy, girl, boyName: "Arjun", girlName: "Asha", boyPlace: "Mumbai", girlPlace: "Delhi",
 });
 ```
 

@@ -470,9 +470,9 @@ describe("endpoints corrected against the live API", () => {
   it("reports accept the person's name and place for the cover page", async () => {
     const { fetch, calls } = mockFetch(() => ({ body: {} }));
     const c = makeClient(fetch);
-    await c.reports.kundliLite({ ...BIRTH, name: "Vikas Sharma", place: "Mumbai" });
+    await c.reports.kundliLite({ ...BIRTH, name: "Arjun Mehta", place: "Mumbai" });
     const one = new URL(calls[0]!.url).searchParams;
-    expect(one.get("name")).toBe("Vikas Sharma");
+    expect(one.get("name")).toBe("Arjun Mehta");
     expect(one.get("place")).toBe("Mumbai");
     await c.reports.matchMaking({ boy: BIRTH, girl: BIRTH, boyName: "A", girlName: "B", boyPlace: "Pune" });
     const q = new URL(calls[1]!.url).searchParams;

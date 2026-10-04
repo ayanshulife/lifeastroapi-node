@@ -93,7 +93,7 @@ describe("kundliBrihad — Part 0-7 page organization", () => {
   // pairs (divisional/varshaphal/yoga/dosha) that must NOT scatter.
   const brihad = {
     Locale: "en",
-    Subject: { Name: "T", BirthDate: "1986-12-27", BirthTime: "08:14", BirthPlace: "Neemuch" },
+    Subject: { Name: "T", BirthDate: "1990-01-15", BirthTime: "10:30", BirthPlace: "Mumbai" },
     Ascendant: { sign: "Sagittarius", dms_within: "25", nakshatra: "PurvaAshadha", pada: 4 },
     Planets: [{ name: "Sun", name_en: "Sun", house_num: 1, placement: { sign: "Sagittarius", dms_within: "10", nakshatra: "Mula", pada: 1 } }],
     Houses: [{ HouseNum: 1, LordEN: "Jupiter", LordSign: "Aquarius", Body: "x" }],
