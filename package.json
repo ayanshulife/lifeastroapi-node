@@ -78,8 +78,15 @@
     "typescript": "^5.4.0",
     "vitest": "^1.4.0"
   },
+  "peerDependencies": {
+    "puppeteer": ">=22.0.0",
+    "pdfjs-dist": ">=4.0.0"
+  },
   "peerDependenciesMeta": {
     "puppeteer": {
+      "optional": true
+    },
+    "pdfjs-dist": {
       "optional": true
     }
   }
