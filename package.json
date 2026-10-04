@@ -1,0 +1,86 @@
+{
+  "name": "lifeastroapi",
+  "version": "0.2.0",
+  "description": "Official Node.js / TypeScript SDK for LifeAstroAPI — Vedic & Western astrology, panchang, matchmaking, dashas, numerology and tarot. DrikPanchang-level precision, pay-per-call.",
+  "keywords": [
+    "astrology",
+    "vedic",
+    "panchang",
+    "kundli",
+    "horoscope",
+    "jyotish",
+    "western-astrology",
+    "matchmaking",
+    "numerology",
+    "pdf",
+    "white-label",
+    "kundli-pdf",
+    "lifeastroapi"
+  ],
+  "license": "MIT",
+  "author": "Ayanshu Life <support@lifeastroapi.com>",
+  "homepage": "https://lifeastroapi.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayanshulife/lifeastroapi-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ayanshulife/lifeastroapi-node/issues"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./pdf": {
+      "import": {
+        "types": "./dist/pdf/index.d.ts",
+        "default": "./dist/pdf/index.js"
+      },
+      "require": {
+        "types": "./dist/pdf/index.d.cts",
+        "default": "./dist/pdf/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "live": "node scripts/live-sweep.mjs",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run typecheck && npm run test && npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.4.0"
+  },
+  "peerDependenciesMeta": {
+    "puppeteer": {
+      "optional": true
+    }
+  }
+}

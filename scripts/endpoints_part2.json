@@ -1,0 +1,2711 @@
+[
+ {
+  "path": "/v1/western/transits/exact",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "transit_planet",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "natal_planet",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "aspect",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "from",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "to",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Find the exact moment a transiting planet will aspect a natal planet — useful for precise transit timing."
+ },
+ {
+  "path": "/v1/western/transits/calendar",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "from",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "to",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Get a day-by-day calendar of transiting planet aspects to a natal chart over a date range (up to 30 days)."
+ },
+ {
+  "path": "/v1/western/synastry/grid",
+  "shape": "twoPerson",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Get the full N×M synastry aspect grid between two natal charts — every planet in chart A aspecting every planet in chart B."
+ },
+ {
+  "path": "/v1/western/returns/lunar",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "from",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Compute the Lunar Return chart — the chart for the exact moment the transiting Moon returns to its natal degree (~every 27.3 days)."
+ },
+ {
+  "path": "/v1/western/returns/solar/aspects",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "return_year",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Get the aspects formed between planets in the solar return chart — shows which planets are strongly configured in the return year."
+ },
+ {
+  "path": "/v1/western/returns/lunar/aspects",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "from",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Get the aspects formed between planets in the lunar return chart."
+ },
+ {
+  "path": "/v1/western/composite/aspects",
+  "shape": "twoPerson",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Get aspects in the composite (midpoint) chart for two people — shows how the relationship's combined energy is configured."
+ },
+ {
+  "path": "/v1/western/davison/chart",
+  "shape": "twoPerson",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Compute the Davison relationship chart — an alternative to the composite chart that uses the midpoint of the two birth times rather than midpoint longitudes."
+ },
+ {
+  "path": "/v1/western/davison/aspects",
+  "shape": "twoPerson",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Get aspects in the Davison relationship chart."
+ },
+ {
+  "path": "/v1/western/progressions/aspects-to-natal",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "age_in_years",
+    "type": "number",
+    "required": true
+   }
+  ],
+  "desc": "Get secondary progressed planet aspects to natal planets — the slow symbolic evolution of the birth chart over time."
+ },
+ {
+  "path": "/v1/western/progressions/lunation",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "age_in_years",
+    "type": "number",
+    "required": true
+   }
+  ],
+  "desc": "Get the progressed Moon phase — shows what stage of the 29-year progressed lunation cycle you are in (new moon, crescent, first quarter, gibbous, full moon, disseminating, last quarter, balsamic)."
+ },
+ {
+  "path": "/v1/western/solar-arc/aspects-to-natal",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "age_in_years",
+    "type": "number",
+    "required": true
+   }
+  ],
+  "desc": "Get solar arc directed planet aspects to natal planets — a predictive technique where all planets advance at the rate of the Sun (~1°/year)."
+ },
+ {
+  "path": "/v1/western/horoscope/daily",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "sign",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "tone",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the daily Western horoscope for a sun sign."
+ },
+ {
+  "path": "/v1/western/horoscope/weekly",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "sign",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "week_start",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "tone",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the weekly Western horoscope for a sun sign."
+ },
+ {
+  "path": "/v1/western/horoscope/monthly",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "sign",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "year_month",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "tone",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the monthly Western horoscope for a sun sign."
+ },
+ {
+  "path": "/v1/western/narrative/natal-summary",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "verbosity",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a composed narrative summary of a Western natal chart — authored prose covering Ascendant, Sun, Moon placements and key aspect highlights."
+ },
+ {
+  "path": "/v1/western/narrative/transit-summary",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "time",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "verbosity",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a composed narrative summary of current transits to a natal chart — authored prose for the most exact active transits at the given moment."
+ },
+ {
+  "path": "/v1/western/narrative/yearly",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "sign",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the annual solar-return theme for a sun sign — a deep interpretive essay on the year's archetypal themes for that sign."
+ },
+ {
+  "path": "/v1/western/narrative/decan",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "sign",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "decan",
+    "type": "integer",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the authored narrative for a zodiac decan (10° division of a sign)."
+ },
+ {
+  "path": "/v1/western/narrative/sabian",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "degree",
+    "type": "integer",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the authored Sabian symbol and interpretation for a specific zodiac degree (1–360, where 1 = Aries 1° and 360 = Pisces 30°)."
+ },
+ {
+  "path": "/v1/western/narrative/fixed-star/{star}",
+  "shape": "custom",
+  "pathParams": [
+   "star"
+  ],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the authored narrative interpretation for a named fixed star in a natal chart."
+ },
+ {
+  "path": "/v1/western/narrative/timelord/profection",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "house",
+    "type": "integer",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the authored narrative for the annual profection house — a description of the life themes activated in this profection year."
+ },
+ {
+  "path": "/v1/western/narrative/timelord/zr",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lord",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the authored narrative for a Zodiacal Releasing planetary lord — describes the life-period themes when a given planet is lord in the ZR system."
+ },
+ {
+  "path": "/v1/western/profections/monthly",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "birth_date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "ref_date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "asc_sign",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Compute the monthly profection sub-period — which house and lord are activated this month within the annual profection cycle."
+ },
+ {
+  "path": "/v1/western/profections/daily",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "birth_date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "ref_date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "asc_sign",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Compute the daily profection drill-down — the most granular level of the profection system."
+ },
+ {
+  "path": "/v1/western/zodiacal-releasing/spirit",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "birth_date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "ref_date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lot_sign",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Compute Zodiacal Releasing from the Lot of Spirit — indicates career and achievement periods."
+ },
+ {
+  "path": "/v1/western/dignities/almuten",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "asc_lon",
+    "type": "number",
+    "required": true
+   },
+   {
+    "wire": "diurnal",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "scheme",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Compute the Almuten Figuris — the planet with the highest combined essential dignity score at the Ascendant degree."
+ },
+ {
+  "path": "/v1/western/dignities/triplicity",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lon",
+    "type": "number",
+    "required": true
+   },
+   {
+    "wire": "scheme",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "diurnal",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the triplicity (element) ruler for a zodiac degree — shows which planet rules by fire/earth/air/water triplicity, with day and night rulers."
+ },
+ {
+  "path": "/v1/western/dignities/bounds",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lon",
+    "type": "number",
+    "required": true
+   },
+   {
+    "wire": "scheme",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "diurnal",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the bound (term) ruler for a zodiac degree and the full sign breakdown — shows which planet rules each of the five bounds within a sign."
+ },
+ {
+  "path": "/v1/western/dignities/face",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lon",
+    "type": "number",
+    "required": true
+   },
+   {
+    "wire": "scheme",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "diurnal",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the face (decan) ruler for a zodiac degree using the Chaldean order — shows which of the 36 faces the degree falls in and its planetary ruler."
+ },
+ {
+  "path": "/v1/western/natal/centaurs",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Get natal positions for the centaur bodies: Pholus, Nessus, Asbolus, and Chariklo."
+ },
+ {
+  "path": "/v1/western/natal/tnos",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Get natal positions for trans-Neptunian objects: Eris, Sedna, Haumea, Makemake, Quaoar, Orcus, and Varuna."
+ },
+ {
+  "path": "/v1/western/natal/lilith-set",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Get all Lilith positions: Mean Black Moon Lilith, True Black Moon Lilith, Osculating (Interpolated) Lilith, and asteroid 1181 Lilith."
+ },
+ {
+  "path": "/v1/western/natal/uranian-hypotheticals",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Get positions for the eight Uranian/Hamburg school hypothetical planets: Cupido, Hades, Zeus, Kronos, Apollon, Admetos, Vulkanus, and Poseidon."
+ },
+ {
+  "path": "/v1/western/natal/parans",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Compute paran aspects — fixed stars crossing the 4 angles (Ascendant, MC, Descendant, IC) in parallel with natal planets."
+ },
+ {
+  "path": "/v1/western/natal/vertex-set",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Get the Vertex, Anti-Vertex, and East Point for a natal chart."
+ },
+ {
+  "path": "/v1/western/natal/harmonic-aspects",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "harmonics",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Find harmonic aspects across multiple harmonics simultaneously — quintiles (H5), septiles (H7), noviles (H9), etc."
+ },
+ {
+  "path": "/v1/western/compatibility/sun-sign",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "sign_a",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "sign_b",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Get the Western sun-sign compatibility between two zodiac signs — score 0–100, band (excellent/good/fair/challenging), aspect basis (trine/sextile/square etc.), element interaction, strengths, and challenges."
+ },
+ {
+  "path": "/v1/western/lunar/phase",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Get the natal Moon phase at birth — phase angle, illumination percentage, 8-named phase (new moon through waning crescent), and age in days since last new moon."
+ },
+ {
+  "path": "/v1/western/natal/aspect-patterns",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Detect classical multi-planet aspect patterns in a natal chart — Grand Trine, T-Square, Grand Cross, Yod (Finger of God), Kite, Mystic Rectangle, Stellium, Grand Sextile."
+ },
+ {
+  "path": "/v1/western/natal/dominant",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Get the chart dominance profile — dominant element (fire/earth/air/water), dominant modality (cardinal/fixed/mutable), most aspected planet, Lilly dignity ranking of traditional planets, and hemisphere balance."
+ },
+ {
+  "path": "/v1/western/natal/chart-shape",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Classify the natal chart into one of the seven Jones planetary distribution patterns: Splash, Bundle, Locomotive, Bowl, Bucket, See-Saw, or Splay."
+ },
+ {
+  "path": "/v1/western/eclipses/visibility",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lat",
+    "type": "number",
+    "required": true
+   },
+   {
+    "wire": "lon",
+    "type": "number",
+    "required": true
+   },
+   {
+    "wire": "start_date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "end_date",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Check whether upcoming eclipses are visible from a specific location — returns visibility type (total, partial, annular, not visible) and times of contact."
+ },
+ {
+  "path": "/v1/western/primary-directions/placidus-zodiacal",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "key",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "max_age",
+    "type": "integer",
+    "required": false
+   },
+   {
+    "wire": "converse",
+    "type": "boolean",
+    "required": false
+   }
+  ],
+  "desc": "Compute Placidus zodiacal primary directions — the oldest predictive technique in Western astrology (1° ≈ 1 year)."
+ },
+ {
+  "path": "/v1/western/primary-directions/placidus-mundane",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "key",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "max_age",
+    "type": "integer",
+    "required": false
+   },
+   {
+    "wire": "converse",
+    "type": "boolean",
+    "required": false
+   }
+  ],
+  "desc": "Compute Placidus mundane primary directions — the promissor moves through the Placidus mundane house framework."
+ },
+ {
+  "path": "/v1/western/primary-directions/regiomontanus",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "key",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "max_age",
+    "type": "integer",
+    "required": false
+   },
+   {
+    "wire": "converse",
+    "type": "boolean",
+    "required": false
+   }
+  ],
+  "desc": "Compute Regiomontanus primary directions — uses equatorial Right Ascension arc, the simplest and fastest calculation method."
+ },
+ {
+  "path": "/v1/numerology/personal-periods",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "dob",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "ref_date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Compute the Personal Year, Personal Month, and Personal Day numbers for any date — the time-transiting layer of Vedic numerology that shows the numerological climate for a specific period."
+ },
+ {
+  "path": "/v1/numerology/challenges",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "dob",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "ref_date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Compute the four Vedic Challenge Numbers from a birth date — the life obstacles and developmental lessons to be mastered in different life stages (CH1 early life, CH2 middle life, CH3 major challenge, CH4 later life)."
+ },
+ {
+  "path": "/v1/numerology/advanced",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "name",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "dob",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Compute the advanced Vedic numerology profile from a name (and optionally DOB): Maturity Number (life purpose emerging after 40), Karmic Lessons (missing digits = undeveloped qualities), Sub-conscious Self (9 minus karmic lessons), Hidden Passion (dominant talent), and Balance Number (crisis response quality)."
+ },
+ {
+  "path": "/v1/tarot/cards",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "suit",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "search",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "List tarot cards from the 78-card Rider-Waite deck with upright/reversed meanings, keywords, and yes/no tendency."
+ },
+ {
+  "path": "/v1/tarot/card/{id}",
+  "shape": "none",
+  "pathParams": [
+   "id"
+  ],
+  "extras": [],
+  "desc": "Get the complete details for a single tarot card by ID — name, suit, element, archetype, upright and reversed meanings, keywords, and yes/no tendency."
+ },
+ {
+  "path": "/v1/tarot/daily",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the card of the day — a deterministic daily tarot card that is the same for everyone on a given date."
+ },
+ {
+  "path": "/v1/tarot/spread",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "type",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "topic",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "seed",
+    "type": "integer",
+    "required": false
+   }
+  ],
+  "desc": "Draw a tarot spread with a chosen layout and optional topic focus."
+ },
+ {
+  "path": "/v1/tarot/yes-no",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "seed",
+    "type": "integer",
+    "required": false
+   }
+  ],
+  "desc": "Get a yes/no tarot answer — draws one card, returns yes/no/maybe based on the card's natural tendency modified by orientation, with reasoning."
+ },
+ {
+  "path": "/v1/vedic/narrative/career-outlook",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a multi-paragraph career and profession narrative for a Vedic birth chart — analyses the 10th house lord, planets in the 10th, D10 chart, and dashas to describe career strengths, suitable professions, and current period's impact on work."
+ },
+ {
+  "path": "/v1/vedic/narrative/dasha-phal",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the Dasha Phal (period interpretation) narrative for the currently running Vimshottari Mahadasha + Antardasha combination — a human-readable explanation of what this dasha pair typically brings and how it interacts with the natal chart."
+ },
+ {
+  "path": "/v1/vedic/narrative/dasha-tree-phal",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "maha",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "antar",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get narrative interpretations for a specific dasha combination — pass mahadasha lord (and optionally antardasha lord) to get the meaning of that specific period for the natal chart."
+ },
+ {
+  "path": "/v1/vedic/narrative/doshas",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the Doshas narrative for a birth chart — comprehensive analysis of all major afflictions (Mangal Dosha, Kaal Sarp Dosha, Pitru Dosha, Shrapit Dosha, Guru Chandal Yoga, Grahan Yoga) with presence, severity, cancellations, and remedial guidance."
+ },
+ {
+  "path": "/v1/vedic/narrative/finance-outlook",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a finance and wealth narrative for a Vedic birth chart — analyses the 2nd and 11th house lords, Jupiter, Venus, and wealth yogas to describe financial strengths, challenges, and periods of prosperity."
+ },
+ {
+  "path": "/v1/vedic/narrative/horoscope/daily-by-lagna",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "name": "onDate",
+    "wire": "transit_date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a personalised daily horoscope narrative computed from the rising sign (lagna) of a birth chart — more precise than generic Moon-sign horoscopes since it uses the exact birth data. The input is the birth chart; pass `onDate` (YYYY-MM-DD) to read a day other than today."
+ },
+ {
+  "path": "/v1/vedic/narrative/horoscope/daily-by-moon",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "name": "onDate",
+    "wire": "transit_date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a personalised daily horoscope narrative computed from the natal Moon sign with full transit context — richer than a generic rashifal because it uses the birth chart's Moon degree and current transit aspects. The input is the birth chart; pass `onDate` (YYYY-MM-DD) to read a day other than today."
+ },
+ {
+  "path": "/v1/vedic/narrative/horoscope/daily-tamil",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "name": "onDate",
+    "wire": "transit_date",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a daily horoscope in Tamil astrology style — uses the Tamil rashi system and traditional Tamil Panchangam for the day's reading. The input is the birth chart; pass `onDate` (YYYY-MM-DD) to read a day other than today."
+ },
+ {
+  "path": "/v1/vedic/narrative/horoscope/weekly-by-lagna",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "name": "onDate",
+    "wire": "transit_date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a personalised weekly horoscope narrative computed from the birth chart's rising sign (lagna) — personalised 7-day outlook with major transit themes. The input is the birth chart; pass `onDate` (YYYY-MM-DD) to read a day other than today."
+ },
+ {
+  "path": "/v1/vedic/narrative/horoscope/weekly-by-moon",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "name": "onDate",
+    "wire": "transit_date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a personalised weekly horoscope narrative computed from the natal Moon sign — personalised weekly reading using the birth chart's Moon degree. The input is the birth chart; pass `onDate` (YYYY-MM-DD) to read a day other than today."
+ },
+ {
+  "path": "/v1/vedic/narrative/house-lord",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "house",
+    "type": "integer",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a narrative interpretation of a specific house lord's placement — where the lord of house N is placed in the chart and what it means for the areas of life that house governs."
+ },
+ {
+  "path": "/v1/vedic/narrative/house-lords-overview",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a comprehensive narrative overview of all 12 house lords' placements in a birth chart — a full bhavesh analysis summarising how each house lord's position shapes the chart."
+ },
+ {
+  "path": "/v1/vedic/narrative/karakas",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the Jaimini Chara Karakas for a birth chart — the 8 karaka planets (Atmakaraka, Amatyakaraka, Bhratrukaraka, Matrukaraka, Putrakaraka, Gnatikaraka, Darakaraka, Dara/Swamsha) determined by planet degrees, with interpretation."
+ },
+ {
+  "path": "/v1/vedic/narrative/lagna",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a narrative interpretation of the birth chart's lagna (ascendant) — describes the physical appearance, personality, health tendencies, and life approach associated with the rising sign, including first-house planets' influence."
+ },
+ {
+  "path": "/v1/vedic/narrative/marriage-outlook",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a marriage and relationship narrative for a Vedic birth chart — analyses the 7th house lord, Venus, navamsa, and marriage-timing dashas to describe relationship characteristics, likely spouse traits, and timing of marriage."
+ },
+ {
+  "path": "/v1/vedic/narrative/milan",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "boy.date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "boy.time",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "boy.tz",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "girl.date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "girl.time",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "girl.tz",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a narrative compatibility analysis for a couple — goes beyond the numeric Ashtakoota score with a written interpretation of compatibility across all factors (guna milan, mangal dosha, dashas, navamsa)."
+ },
+ {
+  "path": "/v1/vedic/narrative/moon-sign",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a narrative interpretation of the natal Moon sign (Chandra Rashi) — covers emotional nature, mental tendencies, mother relationship, and instinctive responses associated with the Moon's sign placement."
+ },
+ {
+  "path": "/v1/vedic/narrative/nakshatra",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a narrative interpretation of the birth nakshatra (Janma Nakshatra) — covers personality, strengths, weaknesses, compatible nakshatras, ruling deity, symbol, and life path themes of the nakshatra the Moon occupied at birth."
+ },
+ {
+  "path": "/v1/vedic/narrative/planet-in-house",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "planet",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a narrative interpretation of a specific planet's house placement in a Vedic birth chart — describes what that planet's position in that house means for the native's life areas, including classical significations and any classical yoga formation."
+ },
+ {
+  "path": "/v1/vedic/narrative/planet-in-sign",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "planet",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a narrative interpretation of a specific planet's sign placement — describes how the planet expresses itself in that rashi, classical dignity/debility implications, and characteristic traits."
+ },
+ {
+  "path": "/v1/vedic/narrative/planets-in-houses",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get narrative interpretations for ALL planets' house placements in a birth chart in a single call — the full house-placement reading for every graha."
+ },
+ {
+  "path": "/v1/vedic/narrative/planets-in-signs",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get narrative interpretations for ALL planets' sign placements in a birth chart in a single call — the full sign-placement reading for every graha."
+ },
+ {
+  "path": "/v1/vedic/narrative/profile",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a holistic birth chart profile narrative — an executive summary of the entire chart covering lagna, Moon sign, key planetary strengths/weaknesses, dominant yogas, current dasha, and life-theme highlights in a single comprehensive reading."
+ },
+ {
+  "path": "/v1/vedic/narrative/sade-sati-history",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a narrative of all past and future Sade Sati periods for a birth chart — written descriptions of each 7.5-year Saturn transit cycle with dates, life themes expected, and which phase (rising/peak/setting) the person experienced."
+ },
+ {
+  "path": "/v1/vedic/narrative/sade-sati-phase",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a narrative interpretation of the current Sade Sati phase (rising, peak, or setting) — what the current phase typically brings and remedies."
+ },
+ {
+  "path": "/v1/vedic/narrative/sade-sati-status",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the current Sade Sati status with narrative context — whether the person is in Sade Sati, which phase, start/end dates, and a written description of the current transit's meaning for their Moon sign."
+ },
+ {
+  "path": "/v1/vedic/narrative/sun-sign",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a narrative interpretation of the natal Sun sign (Surya Rashi) — covers ego, identity, father, authority, vitality, and the life-purpose themes associated with the Sun's sidereal sign placement."
+ },
+ {
+  "path": "/v1/vedic/narrative/transit-ashtakavarga",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "birth.date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "birth.time",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "birth.tz",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lat",
+    "type": "number",
+    "required": true
+   },
+   {
+    "wire": "lon",
+    "type": "number",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a narrative interpretation of the Ashtakavarga transit scores for a birth chart — written analysis of how current planetary transits score against the natal chart's benefic-point grid, with guidance on which transits are favourable or challenging."
+ },
+ {
+  "path": "/v1/vedic/narrative/transit-double",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a narrative of the Double Transit analysis — written explanation of which life events the current Jupiter-Saturn joint transit is activating in the chart, and when the confluence is strongest."
+ },
+ {
+  "path": "/v1/vedic/narrative/transit-phal",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the Transit Phal (gochar results) narrative — a written analysis of all current major planetary transits over the natal chart, their house positions from Moon, and the classical effects expected from each transit."
+ },
+ {
+  "path": "/v1/vedic/narrative/varshaphal-themes",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "birth.date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "birth.time",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "birth.tz",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lat",
+    "type": "number",
+    "required": true
+   },
+   {
+    "wire": "lon",
+    "type": "number",
+    "required": true
+   },
+   {
+    "wire": "year",
+    "type": "integer",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a narrative of the key themes for the current Varshaphal (solar-return) year — written analysis of the annual chart's varsha lord, muntha, annual lagna, and tajika yogas as a prediction for the year's major themes."
+ },
+ {
+  "path": "/v1/vedic/narrative/yogas",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a narrative of all major Vedic yogas present in a birth chart — Raja Yoga, Dhana Yoga, Parivartana Yoga, Kemadruma Yoga, Neecha Bhanga, Panchamahapurusha, and others — with presence, strength, and what each yoga means for the native."
+ },
+ {
+  "path": "/v1/reports/dasha-analysis",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "name",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "place",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Generate a comprehensive Dasha Analysis report — the full Vimshottari dasha timeline with narrative interpretation for each Mahadasha period, key life events timing, and dasha-transit correlations."
+ },
+ {
+  "path": "/v1/reports/horoscope/daily",
+  "shape": "rashi",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Generate a detailed daily horoscope report for a Moon sign — structured report with separate sections for career, love, finance, health, and daily guidance."
+ },
+ {
+  "path": "/v1/reports/horoscope/monthly",
+  "shape": "rashi",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "month",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Generate a detailed monthly horoscope report for a Moon sign — structured report covering the month's major transit themes, weekly breakdown, and guidance for career, relationships, and finance for the full month. `month` is `YYYY-MM`."
+ },
+ {
+  "path": "/v1/reports/horoscope/weekly",
+  "shape": "rashi",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Generate a detailed weekly horoscope report for a Moon sign — structured report covering the week's planetary movement, day-by-day highlights, and focus areas."
+ },
+ {
+  "path": "/v1/reports/kundli/brihad",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "name",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "place",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Generate the Brihad (comprehensive) Kundli report — the most detailed birth chart report covering chart analysis, all divisional charts (D1–D60), planetary strengths (Shadbala), ashtakavarga, all dashas, yogas, doshas, remedies, and lifetime predictions."
+ },
+ {
+  "path": "/v1/reports/kundli/detailed",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "name",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "place",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Generate a Detailed Kundli report — birth chart report with the planet positions table, full house-by-house analysis, major yogas, key doshas (Mangal/Kaal Sarp/Pitra), the Vimshottari Mahadasha timeline (current + upcoming), and birth panchang. For all divisional charts (D9/D10), Shadbala strengths, and life-area predictions, use the Brihad report."
+ },
+ {
+  "path": "/v1/reports/kundli/lite",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "name",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "place",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Generate a Lite Kundli report — a concise birth chart summary with lagna, Moon sign, nakshatra, key planets, current dasha, and a brief personality reading."
+ },
+ {
+  "path": "/v1/reports/mangal-dosha",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "name",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "place",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Generate a comprehensive Mangal Dosha report — full analysis of Mangal Dosha presence, sub-rules, all cancellation conditions checked, severity, impact on marriage, and detailed remedies with specific mantras, pujas, and gemstone guidance."
+ },
+ {
+  "path": "/v1/reports/match-making",
+  "shape": "boygirl",
+  "pathParams": [],
+  "extras": [
+   {
+    "name": "boyName",
+    "wire": "boy.name",
+    "type": "string",
+    "required": false
+   },
+   {
+    "name": "girlName",
+    "wire": "girl.name",
+    "type": "string",
+    "required": false
+   },
+   {
+    "name": "boyPlace",
+    "wire": "boy.place",
+    "type": "string",
+    "required": false
+   },
+   {
+    "name": "girlPlace",
+    "wire": "girl.place",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Generate a comprehensive Match Making (Kundli Milan) report for a couple — full Ashtakoota analysis with all 8 kootas scored, Mangal Dosha compatibility, Dasha synchrony, Navamsa compatibility, and an overall written recommendation."
+ },
+ {
+  "path": "/v1/reports/numerology",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "name",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "place",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "dob",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Generate a comprehensive Numerology report — calculates all key numbers (Driver/Mulank, Conductor/Bhagyank, Name number, Soul Urge, Personality, Destiny) from name and date of birth, with complete interpretation of each number's meaning and their combined influence."
+ },
+ {
+  "path": "/v1/reports/sade-sati",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "name",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "place",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Generate a comprehensive Sade Sati report — covers current Sade Sati status, all past and upcoming cycles from birth to age 90, phase-by-phase narrative for the current or next cycle, and detailed remedies (mantras, donations, Shani puja guidance)."
+ },
+ {
+  "path": "/v1/reports/varshaphal",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "name",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "place",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "year",
+    "type": "integer",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Generate a comprehensive Varshaphal (Solar Return) annual report — full annual chart with varsha lord, muntha, annual lagna, Tajika yogas, Mudda dasha timeline, and predictions for all 12 life areas for the current solar-return year."
+ },
+ {
+  "path": "/v1/vedic/remedies",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "category",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get Vedic astrological remedies for a birth chart — personalised remedies based on weak planets, doshas, and challenging dashas."
+ },
+ {
+  "path": "/v1/western/astrocartography/local-space",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "observer_lat",
+    "type": "number",
+    "required": true
+   },
+   {
+    "wire": "observer_lon",
+    "type": "number",
+    "required": true
+   }
+  ],
+  "desc": "Compute Local Space astrocartography — the directions from an observer's location in which each natal planet rises, sets, culminates, or anti-culminates."
+ },
+ {
+  "path": "/v1/western/composite/houses",
+  "shape": "twoPerson",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Compute the house cusps of the Composite chart for two people — the midpoint chart combining both natal charts to represent the relationship itself."
+ },
+ {
+  "path": "/v1/western/composite/planets",
+  "shape": "twoPerson",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Compute the planet placements in the Composite chart for two people — midpoint positions for all planets in the relationship chart."
+ },
+ {
+  "path": "/v1/western/davison/houses",
+  "shape": "twoPerson",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Compute the house cusps of the Davison Relationship chart — the chart for the midpoint in time and space between two people's births (an actual chart for a real moment, unlike the composite)."
+ },
+ {
+  "path": "/v1/western/davison/planets",
+  "shape": "twoPerson",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Compute the planet placements in the Davison Relationship chart — all planet positions in the Davison chart's tropical zodiac."
+ },
+ {
+  "path": "/v1/western/dignities/receptions",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "sun",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "moon",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "mercury",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "venus",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "mars",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "jupiter",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "saturn",
+    "type": "number",
+    "required": false
+   }
+  ],
+  "desc": "Compute essential dignities and mutual receptions for a Western birth chart — each planet's essential dignity state (domicile, exaltation, triplicity, term, face, detriment, fall), any mutual reception pairs, and the overall dignity score."
+ },
+ {
+  "path": "/v1/western/narrative/timelord/firdaria",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lord",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get the Firdaria time-lord narrative for a given planet — the Hellenistic planetary period system (similar to Vimshottari but Ptolemaic)."
+ },
+ {
+  "path": "/v1/western/natal/ascendant",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Compute the Western (tropical) natal Ascendant — rising sign, degree, and Midheaven in the tropical zodiac."
+ },
+ {
+  "path": "/v1/western/natal/mc",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Compute the Midheaven (Medium Coeli, MC) and its tropical sign for a Western birth chart — the career and public reputation point, along with its aspects to natal planets."
+ },
+ {
+  "path": "/v1/western/natal/out-of-bounds",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Check which planets are Out of Bounds (OOB) in a Western natal chart — planets with declination beyond ±23°26′ (the Sun's maximum), considered to operate outside normal rules and with heightened, unconventional energy."
+ },
+ {
+  "path": "/v1/western/natal/planets",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Get all planet placements in the Western (tropical) birth chart — sign, degree, house, retrograde flag, and speed for all 10 planets (Sun through Pluto) plus Chiron."
+ },
+ {
+  "path": "/v1/western/returns/solar/exact-jd",
+  "shape": "westernNatal",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "return_year",
+    "type": "integer",
+    "required": true,
+    "name": "year"
+   }
+  ],
+  "desc": "Get the exact Julian Day (JD) and calendar datetime of the Western (tropical) solar return for a given year — the precise moment the Sun returns to its natal tropical longitude."
+ },
+ {
+  "path": "/v1/ashtakavarga/sarva",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Get the Sarvashtakavarga table — the combined 12-sign benefic-point grid from all 9 grahas."
+ },
+ {
+  "path": "/v1/ashtakavarga/kaksha",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Get Kaksha (sub-division) level Ashtakavarga analysis — divides each sign into 8 equal 3°45′ segments, each ruled by a graha."
+ },
+ {
+  "path": "/v1/ashtakavarga/transit-score",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Score current (or a given date's) planetary transits against a natal chart using Ashtakavarga benefic points."
+ },
+ {
+  "path": "/v1/calendar/adhik-maas",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "year",
+    "type": "integer",
+    "required": true
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Find the Adhik Maas (intercalary/leap month) in a given year — the extra lunar month inserted to sync the Hindu lunar calendar with the solar year."
+ },
+ {
+  "path": "/v1/calendar/month",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Get the Hindu calendar details for a Gregorian month — maps each day to its Hindu month (Chaitra/Vaishakha/…), paksha (Shukla/Krishna), tithi, and Vikram Samvat year."
+ },
+ {
+  "path": "/v1/calendar/ritu",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Get the current Hindu Ritu (season) for a date — one of 6 seasons: Vasanta (spring), Grishma (summer), Varsha (monsoon), Sharad (autumn), Hemanta (pre-winter), Shishira (winter)."
+ },
+ {
+  "path": "/v1/calendar/samvatsara",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Get the Samvatsara (Jupiter year) name for a given year — the 60-year Jupiter cycle used in Hindu astrology (Prabhava, Vibhava, Shukla, … Akshaya)."
+ },
+ {
+  "path": "/v1/chart/bhavabala",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Compute Bhava Bala — the six-component strength of each of the 12 houses: Bhavadhipati Bala (lord strength), Bhava Digbala, Bhava Drishti Bala, and more."
+ },
+ {
+  "path": "/v1/chart/combustion",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Check which planets are combust (too close to the Sun) in a birth chart — returns each planet's angular distance from Sun, whether it is combust by classical limits, and combust severity."
+ },
+ {
+  "path": "/v1/chart/graha-yuddha",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Identify Graha Yuddha (planetary war) in a birth chart — occurs when two visible planets are within 1° of each other."
+ },
+ {
+  "path": "/v1/chart/house-occupants",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [],
+  "desc": "List all planets occupying each of the 12 houses in a birth chart — a house-indexed view of the chart (vs planet-indexed from chart_planets)."
+ },
+ {
+  "path": "/v1/chart/kp-house-significator",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "cusp",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Get KP (Krishnamurti Paddhati) house significators for a given cusp — lists planets that significate the house through occupancy, lordship, and sub-lord chain."
+ },
+ {
+  "path": "/v1/chart/kp-sublord",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "planet",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Get the KP sublord of a planet — the sub-lord of the nakshatra sub-division the planet occupies (KP star lord → sub lord → sub-sub lord chain)."
+ },
+ {
+  "path": "/v1/festivals/on-date",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "region",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "List Hindu festivals and observances falling on a specific date — Ekadashi, Pradosh, Purnima, Amavasya, major festivals, vratas, and regional observances."
+ },
+ {
+  "path": "/v1/geo/search",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "q",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "limit",
+    "type": "integer",
+    "required": false
+   },
+   {
+    "wire": "cc",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Search for a city or place by name — returns matching locations with latitude, longitude, state/province, country, and IANA timezone."
+ },
+ {
+  "path": "/v1/geo/timezone",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lat",
+    "type": "number",
+    "required": true
+   },
+   {
+    "wire": "lon",
+    "type": "number",
+    "required": true
+   }
+  ],
+  "desc": "Get the IANA timezone for a latitude/longitude — returns timezone name (e.g."
+ },
+ {
+  "path": "/v1/milan/dasha-sync",
+  "shape": "boygirl",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Check Dasha synchrony between two partners — are they running compatible mahadasha lords at the same time? Good dasha synchrony indicates the couple will flourish together during major life events."
+ },
+ {
+  "path": "/v1/milan/dhan-yog",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Check Dhan Yog (wealth yoga) for a single person's chart — assesses 2nd/11th house lord strength and Jupiter placement for prosperity."
+ },
+ {
+  "path": "/v1/milan/longevity",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Assess longevity for a single person's chart — classical analysis of lagna, 8th house, and Moon sign longevity indicators."
+ },
+ {
+  "path": "/v1/milan/mahendra",
+  "shape": "boygirl",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Check Mahendra Koota — the 4th additional compatibility factor beyond Ashtakoota."
+ },
+ {
+  "path": "/v1/milan/navamsa-compat",
+  "shape": "boygirl",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Check Navamsa compatibility — compares the D9 (Navamsa) chart placements of both partners for deeper marriage harmony beyond the D1 chart."
+ },
+ {
+  "path": "/v1/milan/santan-yog",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Check Santan Yog for a single person's chart — assesses 5th house lord and Jupiter placement to indicate prospects for children."
+ },
+ {
+  "path": "/v1/milan/shani-dosha",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Check Shani Dosha for a single person's chart — Saturn in 1st, 4th, 7th, 10th, or 12th house from lagna."
+ },
+ {
+  "path": "/v1/milan/stree-dirgha",
+  "shape": "boygirl",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Check Stree Dirgha — the distance from bride's nakshatra to groom's must be more than 9 nakshatras for a beneficial match (indicates the groom will lead a longer, more prosperous life than the bride expected)."
+ },
+ {
+  "path": "/v1/muhurta/chandra-bala",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "birth_moon_sign",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Compute Chandra Bala — the Moon's strength relative to a person's natal Moon sign on a given date."
+ },
+ {
+  "path": "/v1/muhurta/graha-pravesh",
+  "shape": "moment",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Find auspicious Griha Pravesh (housewarming) muhurta windows in a date range — checks tithi, nakshatra, vara, Sun position, and lagna for the ceremony."
+ },
+ {
+  "path": "/v1/muhurta/panchaka-rahita",
+  "shape": "moment",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Find Panchaka-free (Panchaka Rahita) windows in a date range — Panchaka occurs when Moon is in Aquarius or Pisces and creates obstacles for travel, construction, funerals, and certain ceremonies."
+ },
+ {
+  "path": "/v1/muhurta/sarvartha-siddhi",
+  "shape": "moment",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Find Sarvartha Siddhi Yoga windows — one of the most auspicious panchang yogas formed by specific vara+nakshatra combinations."
+ },
+ {
+  "path": "/v1/muhurta/shubha-yoga",
+  "shape": "moment",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Find Shubha Yoga (auspicious panchang yoga) windows in a date range — checks for Amrit Siddhi, Sarvartha Siddhi, Ravi Yoga, and other classical panchang yogas in combination."
+ },
+ {
+  "path": "/v1/muhurta/tara-bala",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "birth_nak",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Compute Tara Bala score for a given date relative to a person's birth nakshatra — rates the day's Moon nakshatra as Janma/Sampat/Vipat/Kshema/Pratyak/Sadhana/Vadha/Mitra/Param-Mitra."
+ },
+ {
+  "path": "/v1/muhurta/vyapar",
+  "shape": "moment",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Find auspicious Vyapar (business/trade) muhurta windows — suitable for starting a business, signing contracts, launching a product, or opening a shop."
+ },
+ {
+  "path": "/v1/muhurta/yatra",
+  "shape": "moment",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Find auspicious Yatra (travel/journey) muhurta windows — avoids Disha Shool (directional inauspiciousness), Rahu Kaal, Nak Shool, and favours Pushya/Hasta/Ashwini/Anuradha nakshatras for journeys."
+ },
+ {
+  "path": "/v1/numerology/driver",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "dob",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Compute the Mulank / Driver number — the single-digit number derived from the day of birth (1–31, reduced to 1–9, preserving 11/22/33)."
+ },
+ {
+  "path": "/v1/numerology/conductor",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "dob",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Compute the Bhagyank / Conductor number — derived from the full date of birth (DD+MM+YYYY reduced to a single digit)."
+ },
+ {
+  "path": "/v1/numerology/soul",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "name",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Compute the Soul Urge number — derived from the vowels of the full name."
+ },
+ {
+  "path": "/v1/numerology/personality",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "name",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Compute the Personality number — derived from the consonants of the full name."
+ },
+ {
+  "path": "/v1/numerology/destiny",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "name",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Compute the Destiny number — derived from all letters of the full name (vowels + consonants)."
+ },
+ {
+  "path": "/v1/panchang/hora-dinman",
+  "shape": "moment",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Get the Dinman (day length) and Ratriman (night length) for a date — the exact duration of daytime from sunrise to sunset and nighttime from sunset to next sunrise, in ghatis (1 ghati = 24 minutes)."
+ },
+ {
+  "path": "/v1/panchang/sankranti",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Get solar Sankranti (Sun's sign ingress) dates for a year — the exact moment the Sun enters each of the 12 sidereal signs, including Makar Sankranti (Capricorn), Mesh Sankranti (Aries/New Year), and all others."
+ },
+ {
+  "path": "/v1/planet-moments/combustion-window",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "planet",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "time",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "max_days",
+    "type": "integer",
+    "required": false
+   }
+  ],
+  "desc": "Find the combustion window for a planet — the date range when the planet is too close to the Sun (within classical combust limits) and loses strength."
+ },
+ {
+  "path": "/v1/planet-moments/speed",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "planet",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "time",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Get the current speed and motion state of a planet — degrees per day, whether it is direct/retrograde/stationary, and its speed relative to mean motion."
+ },
+ {
+  "path": "/v1/prashna/arudha",
+  "shape": "moment",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Compute the Arudha Lagna of a Prashna chart — the perceived image/manifestation of the question's subject."
+ },
+ {
+  "path": "/v1/prashna/chart",
+  "shape": "moment",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Cast the full Prashna (horary) chart for the moment a question is asked — returns lagna, all planet placements, houses, and panchang at the moment of the question."
+ },
+ {
+  "path": "/v1/prashna/lagna-lord",
+  "shape": "moment",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Get the lagna lord analysis for a Prashna chart — where the lagna lord is placed, its strength, and what it indicates about the querent's situation and chances of success."
+ },
+ {
+  "path": "/v1/prashna/significators",
+  "shape": "moment",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "house",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Get the KP significators for a Prashna chart — lists planets significating the houses relevant to the question (e.g."
+ },
+ {
+  "path": "/v1/transit/ashtakavarga",
+  "shape": "natalTransit",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Score current planetary transits against a natal chart using Ashtakavarga — shows which houses transiting planets are moving through and how many benefic points those signs have in the natal chart."
+ },
+ {
+  "path": "/v1/transit/double-transit",
+  "shape": "instant",
+  "pathParams": [],
+  "extras": [],
+  "desc": "List the pairs of planets occupying the same sidereal sign at a moment (planetary conjunctions by sign). Takes a date, not a birth chart; defaults to today."
+ },
+ {
+  "path": "/v1/transit/small-panoti",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "time",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Check whether a person is currently in Small Panoti (Ashtama Shani) — the 2.5-year Saturn transit through the 8th house from natal Moon, considered challenging."
+ },
+ {
+  "path": "/v1/transit/small-panoti/history",
+  "shape": "birthPrefixed",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Get the complete history and future windows of Small Panoti (Ashtama Shani) for a natal chart — all past and upcoming 2.5-year periods when Saturn transits the 8th house from natal Moon."
+ },
+ {
+  "path": "/v1/transit/tarabala",
+  "shape": "natalTransit",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Compute Tara Bala for today's transiting Moon relative to a natal chart — rates the day as Janma/Sampat/Vipat/Kshema/Pratyak/Sadhana/Vadha/Mitra/Param-Mitra tara."
+ },
+ {
+  "path": "/v1/transit/vedha",
+  "shape": "natalTransit",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Check Vedha (transit obstruction) for a natal chart — certain house transits are blocked (vedha'd) by another planet transiting a specific opposing house simultaneously."
+ },
+ {
+  "path": "/v1/varshaphal/lord",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "year",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Get the Varsha Lord (year ruler) for an annual chart — the planet that rules the Varshaphal year based on the Tajika system."
+ },
+ {
+  "path": "/v1/varshaphal/muntha",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "year",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Get Muntha placement for a Varshaphal year — Muntha moves one sign per year from birth lagna and its house position in the annual chart is a key indicator of the year's themes."
+ },
+ {
+  "path": "/v1/varshaphal/solar-return-jd",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "year",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Get the precise Julian Day (JD) and calendar datetime of the solar return for a given year — the exact moment the Sun returns to its natal longitude."
+ },
+ {
+  "path": "/v1/varshaphal/yoga",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "year",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Get Tajika Yogas in the Varshaphal annual chart — Ikkaval, Induvara, Ithasala, Ishrafa, Nakta, Yamaya, Manau, Khallasara, Duphali-Kuttha, and other Tajika aspect-based yogas that indicate the tone of the solar-return year."
+ },
+ {
+  "path": "/v1/chart/ashtakvarga/{planet}",
+  "shape": "birth",
+  "ns": "chart",
+  "method": "ashtakvargaPlanet",
+  "pathParams": [
+   "planet"
+  ],
+  "extras": [],
+  "desc": "One planet's Bhinnashtakavarga row: its benefic points (bindus) in each of the 12 signs. `planet` is Sun, Moon, Mars, Mercury, Jupiter, Venus or Saturn."
+ },
+ {
+  "path": "/v1/vedic/narrative/reference",
+  "shape": "custom",
+  "ns": "narrative",
+  "method": "reference",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "The whole authored Vedic glossary: text that defines a concept (yogas, doshas, techniques) rather than interpreting one chart. Large (~800 KB); prefer `referenceFamily`."
+ },
+ {
+  "path": "/v1/vedic/narrative/reference/{family}",
+  "shape": "custom",
+  "ns": "narrative",
+  "method": "referenceFamily",
+  "pathParams": [
+   "family"
+  ],
+  "extras": [
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "The authored Vedic glossary for one concept family, e.g. `yoga`, `dosha`, `argala`."
+ },
+ {
+  "path": "/v1/meta/endpoints",
+  "shape": "none",
+  "ns": "meta",
+  "method": "endpoints",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Every API route with its credit cost and group. Free (0 credits)."
+ },
+ {
+  "path": "/v1/meta/version",
+  "shape": "none",
+  "ns": "meta",
+  "method": "version",
+  "pathParams": [],
+  "extras": [],
+  "desc": "API build and ephemeris version. Free (0 credits)."
+ },
+ {
+  "path": "/v1/meta/ayanamsas",
+  "shape": "instant",
+  "ns": "meta",
+  "method": "ayanamsas",
+  "pathParams": [],
+  "extras": [],
+  "desc": "The supported ayanamsa systems with each one's value in degrees on a date (defaults to today). Free (0 credits)."
+ },
+ {
+  "path": "/v1/meta/vedic/yogas",
+  "shape": "none",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Catalog of every yoga the API detects and narrates, with the IDs `narrative.yoga` accepts. Free (0 credits)."
+ },
+ {
+  "path": "/v1/meta/vedic/doshas",
+  "shape": "none",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Catalog of every dosha the API detects and narrates, with the IDs `narrative.dosha` accepts. Free (0 credits)."
+ },
+ {
+  "path": "/v1/meta/vedic/locales",
+  "shape": "none",
+  "pathParams": [],
+  "extras": [],
+  "desc": "The languages narrative endpoints can answer in, with corpus coverage for each. Free (0 credits)."
+ },
+ {
+  "path": "/v1/meta/vedic/narrative-axes",
+  "shape": "none",
+  "pathParams": [],
+  "extras": [],
+  "desc": "The axes narrative text can vary along (locale, regional pack). Free (0 credits)."
+ }
+]

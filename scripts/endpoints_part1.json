@@ -1,0 +1,1531 @@
+[
+ {
+  "path": "/v1/panchang/summary",
+  "shape": "moment",
+  "ns": "panchang",
+  "method": "summary",
+  "desc": "Quick 5-element panchang strip (tithi, nakshatra, yoga, karana, vara) plus sunrise/sunset."
+ },
+ {
+  "path": "/v1/panchang/basic",
+  "shape": "moment",
+  "ns": "panchang",
+  "method": "basic",
+  "desc": "Composite basic panchang in one call: tithi, nakshatra, yoga, karana, vara, sun/moon rise & set."
+ },
+ {
+  "path": "/v1/panchang/advanced",
+  "shape": "moment",
+  "ns": "panchang",
+  "method": "advanced",
+  "desc": "Full advanced panchang: everything in basic plus all muhurta windows, Choghadiya, Hindu month, samvat and more."
+ },
+ {
+  "path": "/v1/panchang/tithi",
+  "shape": "moment",
+  "desc": "Current tithi (lunar day) with paksha, lord and transition timing."
+ },
+ {
+  "path": "/v1/panchang/nakshatra",
+  "shape": "moment",
+  "desc": "Moon's nakshatra with pada, lord and start/end at the moment."
+ },
+ {
+  "path": "/v1/panchang/yoga",
+  "shape": "moment",
+  "desc": "Current panchang yoga (one of 27)."
+ },
+ {
+  "path": "/v1/panchang/karana",
+  "shape": "moment",
+  "desc": "Current karana (half-tithi)."
+ },
+ {
+  "path": "/v1/panchang/vara",
+  "shape": "moment",
+  "desc": "Hindu weekday (vara) and its ruling planet."
+ },
+ {
+  "path": "/v1/panchang/sunrise-sunset",
+  "shape": "moment",
+  "method": "sunriseSunset",
+  "desc": "Sunrise and sunset times plus day length."
+ },
+ {
+  "path": "/v1/panchang/moonrise-moonset",
+  "shape": "moment",
+  "method": "moonriseMoonset",
+  "desc": "Moonrise and moonset times."
+ },
+ {
+  "path": "/v1/panchang/rahu-kaal",
+  "shape": "moment",
+  "method": "rahuKaal",
+  "desc": "Rahu Kaal inauspicious window."
+ },
+ {
+  "path": "/v1/panchang/yamaganda",
+  "shape": "moment",
+  "desc": "Yamaganda inauspicious window."
+ },
+ {
+  "path": "/v1/panchang/gulika",
+  "shape": "moment",
+  "desc": "Gulika Kaal window."
+ },
+ {
+  "path": "/v1/panchang/abhijit",
+  "shape": "moment",
+  "desc": "Abhijit Muhurat (auspicious window around solar noon)."
+ },
+ {
+  "path": "/v1/panchang/brahma-muhurat",
+  "shape": "moment",
+  "method": "brahmaMuhurat",
+  "desc": "Brahma Muhurat window before sunrise."
+ },
+ {
+  "path": "/v1/panchang/pradosh-kaal",
+  "shape": "moment",
+  "method": "pradoshKaal",
+  "desc": "Pradosh Kaal twilight window after sunset."
+ },
+ {
+  "path": "/v1/panchang/durmuhurta",
+  "shape": "moment",
+  "desc": "Durmuhurta inauspicious periods for the day."
+ },
+ {
+  "path": "/v1/panchang/hora",
+  "shape": "moment",
+  "desc": "Planetary hours (horas) for the day, or the hora at a given time."
+ },
+ {
+  "path": "/v1/panchang/choghadiya",
+  "shape": "moment",
+  "desc": "Choghadiya periods (day + night)."
+ },
+ {
+  "path": "/v1/panchang/hindu-month",
+  "shape": "moment",
+  "method": "hinduMonth",
+  "desc": "Hindu lunar month, paksha, samvat and adhik/kshaya detection."
+ },
+ {
+  "path": "/v1/panchang/panchaka",
+  "shape": "moment",
+  "desc": "Panchaka classification at the moment."
+ },
+ {
+  "path": "/v1/panchang/varjyam",
+  "shape": "moment",
+  "desc": "Varjyam forbidden window based on the Moon's nakshatra."
+ },
+ {
+  "path": "/v1/panchang/amrit-kalam",
+  "shape": "moment",
+  "method": "amritKalam",
+  "desc": "Amrit Kalam auspicious window."
+ },
+ {
+  "path": "/v1/panchang/siddha-yoga",
+  "shape": "moment",
+  "method": "siddhaYoga",
+  "desc": "Siddha Yoga vara+nakshatra auspicious combination check."
+ },
+ {
+  "path": "/v1/panchang/lagna-table",
+  "shape": "moment",
+  "method": "lagnaTable",
+  "desc": "Lagna (rising sign) table for the day with start/end times for each sign."
+ },
+ {
+  "path": "/v1/panchang/monthly",
+  "shape": "custom",
+  "method": "monthly",
+  "extras": [
+   {
+    "name": "lat",
+    "wire": "lat",
+    "type": "number",
+    "required": true
+   },
+   {
+    "name": "lon",
+    "wire": "lon",
+    "type": "number",
+    "required": true
+   },
+   {
+    "name": "tzOffsetHours",
+    "wire": "tz",
+    "type": "number",
+    "required": true
+   },
+   {
+    "name": "year",
+    "wire": "year",
+    "type": "integer",
+    "required": true
+   },
+   {
+    "name": "month",
+    "wire": "month",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Full-month panchang calendar (one entry per day). Note: tzOffsetHours is a NUMERIC UTC offset in hours (e.g. 5.5 for IST), not an IANA name."
+ },
+ {
+  "path": "/v1/panchang/nakshatra-prediction",
+  "shape": "moment",
+  "method": "nakshatraPrediction",
+  "extras": [
+   {
+    "name": "birthNak",
+    "wire": "birth_nak",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Personalised daily Tara Bala prediction relative to a birth nakshatra (index 0-26)."
+ },
+ {
+  "path": "/v1/chart/ascendant",
+  "shape": "birth",
+  "desc": "Ascendant (Lagna): sign, degree, nakshatra, pada and lord."
+ },
+ {
+  "path": "/v1/chart/planets",
+  "shape": "birth",
+  "desc": "All 9 grahas with sign, degree, nakshatra, house, retrograde, dignity, combustion and speed."
+ },
+ {
+  "path": "/v1/chart/planet/{name}",
+  "shape": "birth",
+  "pathParams": [
+   "name"
+  ],
+  "method": "planet",
+  "desc": "Detail for a single planet (sun|moon|mars|mercury|jupiter|venus|saturn|rahu|ketu)."
+ },
+ {
+  "path": "/v1/chart/nakshatra",
+  "shape": "birth",
+  "desc": "Birth (Janma) nakshatra and pada."
+ },
+ {
+  "path": "/v1/chart/divisional/D9",
+  "shape": "birth",
+  "ns": "chart",
+  "method": "navamsa",
+  "desc": "Navamsa (D9) divisional chart — convenience alias for divisional('D9')."
+ },
+ {
+  "path": "/v1/chart/divisional/{varga}",
+  "shape": "birth",
+  "pathParams": [
+   "varga"
+  ],
+  "method": "divisional",
+  "desc": "Any divisional (varga) chart, e.g. D1, D9, D10, D60."
+ },
+ {
+  "path": "/v1/chart/houses",
+  "shape": "birth",
+  "desc": "12 house cusps / occupants for the chosen house system."
+ },
+ {
+  "path": "/v1/chart/dignity",
+  "shape": "birth",
+  "desc": "Every planet's dignity (exalted/debilitated/own/friend/enemy/neutral)."
+ },
+ {
+  "path": "/v1/chart/aspects",
+  "shape": "birth",
+  "desc": "Vedic graha drishti (planetary aspects) table."
+ },
+ {
+  "path": "/v1/chart/shadbala",
+  "shape": "birth",
+  "desc": "Shadbala (six-fold strength) for all 7 planets with components."
+ },
+ {
+  "path": "/v1/chart/shadbala/{component}",
+  "shape": "birth",
+  "pathParams": [
+   "component"
+  ],
+  "method": "shadbalaComponent",
+  "desc": "One shadbala component (sthana|dig|kala|chesta|naisargika|drik) for all planets."
+ },
+ {
+  "path": "/v1/chart/ashtakvarga",
+  "shape": "birth",
+  "method": "ashtakvarga",
+  "desc": "Sarvashtakavarga (SAV) grid; grand total is always 337."
+ },
+ {
+  "path": "/v1/chart/avakhada",
+  "shape": "birth",
+  "desc": "Avakhada Chakra: varna, vashya, yoni, gana, nadi and lucky factors."
+ },
+ {
+  "path": "/v1/chart/ghatak",
+  "shape": "birth",
+  "desc": "Ghatak Chakra (inauspicious indicators) for the chart."
+ },
+ {
+  "path": "/v1/chart/astro-details",
+  "shape": "birth",
+  "method": "astroDetails",
+  "desc": "Full birth-chart snapshot: avakhada, ascendant, all planets, sun/moon sign and birth panchang."
+ },
+ {
+  "path": "/v1/ashtakavarga/bhinna/{planet}",
+  "shape": "birthPrefixed",
+  "pathParams": [
+   "planet"
+  ],
+  "ns": "ashtakavarga",
+  "method": "bhinna",
+  "desc": "Bhinnashtakavarga (BAV) for one planet.",
+  "extras": []
+ },
+ {
+  "path": "/v1/dasha/vimshottari",
+  "shape": "birth",
+  "method": "vimshottari",
+  "extras": [
+   {
+    "name": "depth",
+    "wire": "depth",
+    "type": "integer",
+    "required": false
+   }
+  ],
+  "desc": "Full Vimshottari dasha tree (depth 1-5)."
+ },
+ {
+  "path": "/v1/dasha/vimshottari/current",
+  "shape": "birth",
+  "method": "vimshottariCurrent",
+  "extras": [
+   {
+    "name": "at",
+    "wire": "at",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Currently running 5-level Vimshottari dasha stack (optionally at a custom moment)."
+ },
+ {
+  "path": "/v1/dasha/vimshottari/{md}",
+  "shape": "birth",
+  "pathParams": [
+   "md"
+  ],
+  "method": "vimshottariMaha",
+  "desc": "Antardashas within one Mahadasha lord."
+ },
+ {
+  "path": "/v1/dasha/vimshottari/{md}/{ad}",
+  "shape": "birth",
+  "pathParams": [
+   "md",
+   "ad"
+  ],
+  "method": "vimshottariAntar",
+  "desc": "Pratyantardashas within a Maha+Antar pair."
+ },
+ {
+  "path": "/v1/dasha/vimshottari/{md}/{ad}/{pd}",
+  "shape": "birth",
+  "pathParams": [
+   "md",
+   "ad",
+   "pd"
+  ],
+  "method": "vimshottariPratyantar",
+  "desc": "Sookshma periods within a 3-level Vimshottari combination."
+ },
+ {
+  "path": "/v1/dasha/vimshottari/{md}/{ad}/{pd}/{sd}",
+  "shape": "birth",
+  "pathParams": [
+   "md",
+   "ad",
+   "pd",
+   "sd"
+  ],
+  "method": "vimshottariSookshma",
+  "desc": "Prana periods within a 4-level Vimshottari combination."
+ },
+ {
+  "path": "/v1/dasha/yogini",
+  "shape": "birth",
+  "method": "yogini",
+  "extras": [
+   {
+    "name": "depth",
+    "wire": "depth",
+    "type": "integer",
+    "required": false
+   }
+  ],
+  "desc": "Full Yogini dasha tree (36-year cycle, 8 lords)."
+ },
+ {
+  "path": "/v1/dasha/yogini/current",
+  "shape": "birth",
+  "method": "yoginiCurrent",
+  "extras": [
+   {
+    "name": "at",
+    "wire": "at",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Currently running Yogini dasha."
+ },
+ {
+  "path": "/v1/dasha/yogini/{name}",
+  "shape": "birth",
+  "pathParams": [
+   "name"
+  ],
+  "method": "yoginiByName",
+  "desc": "Yogini dasha sub-periods for a named Yogini lord."
+ },
+ {
+  "path": "/v1/milan/ashtakoota",
+  "shape": "boygirl",
+  "method": "ashtakoota",
+  "desc": "Full 36-point Ashtakoota breakdown across all 8 kootas."
+ },
+ {
+  "path": "/v1/milan/ashtakoota/total",
+  "shape": "boygirl",
+  "method": "ashtakootaTotal",
+  "desc": "Just the Ashtakoota (Guna Milan) total score and verdict."
+ },
+ {
+  "path": "/v1/milan/ashtakoota/{koota}",
+  "shape": "boygirl",
+  "pathParams": [
+   "koota"
+  ],
+  "method": "ashtakootaKoota",
+  "desc": "One koota (varna|vashya|tara|yoni|graha_maitri|gana|bhakoot|nadi)."
+ },
+ {
+  "path": "/v1/milan/mangal-dosha",
+  "shape": "birthPrefixed",
+  "method": "mangalDosha",
+  "desc": "Mangal Dosha (Manglik) detection for one chart."
+ },
+ {
+  "path": "/v1/milan/nadi-dosha",
+  "shape": "boygirl",
+  "method": "nadiDosha",
+  "desc": "Nadi dosha detection plus exceptions."
+ },
+ {
+  "path": "/v1/milan/vivah-phal",
+  "shape": "birthPrefixed",
+  "method": "vivahPhal",
+  "desc": "Vivah Phal (marriage-outcome) assessment for one chart."
+ },
+ {
+  "path": "/v1/transit/positions",
+  "shape": "instant",
+  "ns": "transit",
+  "method": "positions",
+  "extras": [],
+  "desc": "Current sidereal positions of all 9 grahas (defaults to now)."
+ },
+ {
+  "path": "/v1/transit/sade-sati",
+  "shape": "birthPrefixed",
+  "method": "sadeSati",
+  "extras": [
+   {
+    "name": "date",
+    "wire": "date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "name": "tz",
+    "wire": "tz",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Saturn Sade Sati status (rising/peak/setting) relative to the birth Moon."
+ },
+ {
+  "path": "/v1/varshaphal/chart",
+  "shape": "birth",
+  "ns": "varshaphal",
+  "method": "chart",
+  "extras": [
+   {
+    "name": "year",
+    "wire": "year",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Varshaphal (annual solar-return) chart for a year."
+ },
+ {
+  "path": "/v1/varshaphal/harsha-bala",
+  "shape": "birth",
+  "method": "harshaBala",
+  "extras": [
+   {
+    "name": "year",
+    "wire": "year",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Tajika Harsha Bala for the annual chart."
+ },
+ {
+  "path": "/v1/varshaphal/mudda-dasha",
+  "shape": "birth",
+  "method": "muddaDasha",
+  "extras": [
+   {
+    "name": "year",
+    "wire": "year",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Varshaphal Mudda Dasha periods for the solar-return year."
+ },
+ {
+  "path": "/v1/numerology/full",
+  "shape": "numerology",
+  "ns": "numerology",
+  "method": "full",
+  "desc": "Full numerology report (driver, conductor, soul, personality, destiny)."
+ },
+ {
+  "path": "/v1/horoscope/daily",
+  "shape": "rashi",
+  "ns": "horoscope",
+  "method": "daily",
+  "desc": "Daily horoscope by Moon sign (rashi)."
+ },
+ {
+  "path": "/v1/horoscope/weekly",
+  "shape": "rashi",
+  "method": "weekly",
+  "desc": "Weekly horoscope by rashi.",
+  "extras": [
+   {
+    "wire": "week",
+    "type": "string",
+    "required": true
+   }
+  ]
+ },
+ {
+  "path": "/v1/horoscope/monthly",
+  "shape": "rashi",
+  "method": "monthly",
+  "desc": "Monthly horoscope by rashi.",
+  "extras": [
+   {
+    "wire": "month",
+    "type": "string",
+    "required": true
+   }
+  ]
+ },
+ {
+  "path": "/v1/muhurta/vivah",
+  "shape": "moment",
+  "ns": "muhurta",
+  "method": "vivah",
+  "desc": "Auspicious wedding (vivah) muhurta windows in a date range.",
+  "extras": []
+ },
+ {
+  "path": "/v1/muhurta/naamkaran",
+  "shape": "moment",
+  "method": "naamkaran",
+  "desc": "Naamkaran (naming ceremony) muhurta windows.",
+  "extras": [
+   {
+    "wire": "birth_date",
+    "type": "string",
+    "required": true
+   }
+  ]
+ },
+ {
+  "path": "/v1/muhurta/best-time",
+  "shape": "muhurta",
+  "method": "bestTime",
+  "desc": "Best-scoring general muhurta window in a date range."
+ },
+ {
+  "path": "/v1/eclipses/solar",
+  "shape": "dateRange",
+  "ns": "eclipses",
+  "method": "solar",
+  "extras": [
+   {
+    "name": "lat",
+    "wire": "lat",
+    "type": "number",
+    "required": false
+   },
+   {
+    "name": "lon",
+    "wire": "lon",
+    "type": "number",
+    "required": false
+   }
+  ],
+  "desc": "Solar eclipses in a date range (optionally visible from a location)."
+ },
+ {
+  "path": "/v1/eclipses/lunar",
+  "shape": "dateRange",
+  "method": "lunar",
+  "extras": [
+   {
+    "name": "lat",
+    "wire": "lat",
+    "type": "number",
+    "required": false
+   },
+   {
+    "name": "lon",
+    "wire": "lon",
+    "type": "number",
+    "required": false
+   }
+  ],
+  "desc": "Lunar eclipses in a date range (optionally visible from a location)."
+ },
+ {
+  "path": "/v1/eclipses/all",
+  "shape": "dateRange",
+  "method": "all",
+  "extras": [
+   {
+    "name": "lat",
+    "wire": "lat",
+    "type": "number",
+    "required": false
+   },
+   {
+    "name": "lon",
+    "wire": "lon",
+    "type": "number",
+    "required": false
+   }
+  ],
+  "desc": "All eclipses (solar + lunar) in a date range."
+ },
+ {
+  "path": "/v1/festivals/month",
+  "shape": "custom",
+  "ns": "festivals",
+  "method": "month",
+  "extras": [
+   {
+    "name": "year",
+    "wire": "year",
+    "type": "integer",
+    "required": true
+   },
+   {
+    "name": "month",
+    "wire": "month",
+    "type": "integer",
+    "required": true
+   },
+   {
+    "name": "tz",
+    "wire": "tz",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "region",
+    "wire": "region",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Hindu festivals and observances in a Gregorian month."
+ },
+ {
+  "path": "/v1/planet-moments/retrograde-window",
+  "shape": "custom",
+  "ns": "planetMoments",
+  "method": "retrogradeWindow",
+  "extras": [
+   {
+    "wire": "planet",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "time",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "max_days",
+    "type": "integer",
+    "required": false
+   }
+  ],
+  "desc": "A planet's retrograde windows (station retro -> station direct) in a date range."
+ },
+ {
+  "path": "/v1/planet-moments/ingress",
+  "shape": "custom",
+  "method": "ingress",
+  "extras": [
+   {
+    "wire": "planet",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "time",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "max_days",
+    "type": "integer",
+    "required": false
+   }
+  ],
+  "desc": "A planet's sign ingresses (sankranti) in a date range."
+ },
+ {
+  "path": "/v1/prashna/answer",
+  "shape": "moment",
+  "ns": "prashna",
+  "method": "answer",
+  "extras": [
+   {
+    "wire": "house",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Cast a Prashna (horary) chart and compute the classical yes/no answer."
+ },
+ {
+  "path": "/v1/geo/reverse",
+  "shape": "custom",
+  "ns": "geo",
+  "method": "reverse",
+  "extras": [
+   {
+    "name": "lat",
+    "wire": "lat",
+    "type": "number",
+    "required": true
+   },
+   {
+    "name": "lon",
+    "wire": "lon",
+    "type": "number",
+    "required": true
+   },
+   {
+    "name": "limit",
+    "wire": "limit",
+    "type": "integer",
+    "required": false
+   }
+  ],
+  "desc": "Reverse geocode coordinates to the nearest place (free)."
+ },
+ {
+  "path": "/v1/geo/place/{id}",
+  "shape": "none",
+  "ns": "geo",
+  "method": "place",
+  "pathParams": [
+   "id"
+  ],
+  "desc": "Full details for a place by its geo id."
+ },
+ {
+  "path": "/v1/vedic/narrative/yearly-bhavishyafal",
+  "shape": "custom",
+  "ns": "narrative",
+  "method": "yearlyBhavishyafal",
+  "extras": [
+   {
+    "name": "date",
+    "wire": "birth.date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "time",
+    "wire": "birth.time",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "tz",
+    "wire": "birth.tz",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "lat",
+    "wire": "lat",
+    "type": "number",
+    "required": true
+   },
+   {
+    "name": "lon",
+    "wire": "lon",
+    "type": "number",
+    "required": true
+   },
+   {
+    "name": "year",
+    "wire": "year",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Personalised yearly Bhavishyafal (annual horoscope) for a target year."
+ },
+ {
+  "path": "/v1/vedic/narrative/divisional/{varga}",
+  "shape": "birth",
+  "ns": "narrative",
+  "method": "divisional",
+  "pathParams": [
+   "varga"
+  ],
+  "extras": [
+   {
+    "name": "lang",
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Narrative interpretation of a divisional (varga) chart."
+ },
+ {
+  "path": "/v1/vedic/narrative/yoga/{id}",
+  "shape": "birth",
+  "ns": "narrative",
+  "method": "yoga",
+  "pathParams": [
+   "id"
+  ],
+  "extras": [
+   {
+    "name": "lang",
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Narrative interpretation of a specific yoga in the chart."
+ },
+ {
+  "path": "/v1/vedic/narrative/dosha/{id}",
+  "shape": "birth",
+  "ns": "narrative",
+  "method": "dosha",
+  "pathParams": [
+   "id"
+  ],
+  "extras": [
+   {
+    "name": "lang",
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Narrative interpretation of a specific dosha in the chart."
+ },
+ {
+  "path": "/v1/vedic/remedies/{id}",
+  "shape": "custom",
+  "ns": "remedies",
+  "method": "byRuleId",
+  "pathParams": [
+   "id"
+  ],
+  "extras": [
+   {
+    "name": "lang",
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Remedy package attached to a specific rule id."
+ },
+ {
+  "path": "/v1/vedic/remedies/mantra/{id}",
+  "shape": "custom",
+  "ns": "remedies",
+  "method": "mantra",
+  "pathParams": [
+   "id"
+  ],
+  "extras": [
+   {
+    "name": "lang",
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Full details of a mantra remedy by id."
+ },
+ {
+  "path": "/v1/vedic/remedies/pooja/{id}",
+  "shape": "custom",
+  "ns": "remedies",
+  "method": "pooja",
+  "pathParams": [
+   "id"
+  ],
+  "extras": [
+   {
+    "name": "lang",
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Full details of a pooja remedy by id."
+ },
+ {
+  "path": "/v1/vedic/remedies/vrat/{id}",
+  "shape": "custom",
+  "ns": "remedies",
+  "method": "vrat",
+  "pathParams": [
+   "id"
+  ],
+  "extras": [
+   {
+    "name": "lang",
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Full details of a vrat remedy by id."
+ },
+ {
+  "path": "/v1/western/natal/chart",
+  "shape": "westernNatal",
+  "desc": "Western (tropical) natal chart: planets, ascendant, MC, houses and aspects."
+ },
+ {
+  "path": "/v1/western/natal/houses",
+  "shape": "westernNatal",
+  "desc": "Western tropical house cusps + Ascendant and MC."
+ },
+ {
+  "path": "/v1/western/natal/aspects",
+  "shape": "westernNatal",
+  "desc": "All natal aspects with orbs and partile flags."
+ },
+ {
+  "path": "/v1/western/natal/planet/{name}",
+  "shape": "westernNatal",
+  "pathParams": [
+   "name"
+  ],
+  "method": "planet",
+  "desc": "Detail for a single Western natal planet."
+ },
+ {
+  "path": "/v1/western/natal/lots",
+  "shape": "westernNatal",
+  "desc": "All Hellenistic Arabic Parts (Lots)."
+ },
+ {
+  "path": "/v1/western/natal/lot/{name}",
+  "shape": "westernNatal",
+  "pathParams": [
+   "name"
+  ],
+  "method": "lot",
+  "desc": "A single Arabic Lot (fortune|spirit|eros|...)."
+ },
+ {
+  "path": "/v1/western/natal/midpoints",
+  "shape": "westernNatal",
+  "desc": "All planet-pair midpoints and activations."
+ },
+ {
+  "path": "/v1/western/natal/midpoint-tree",
+  "shape": "westernNatal",
+  "method": "midpointTree",
+  "desc": "Ebertin 90-degree dial midpoint tree."
+ },
+ {
+  "path": "/v1/western/natal/fixed-stars",
+  "shape": "westernNatal",
+  "method": "fixedStars",
+  "desc": "Conjunctions between natal planets and major fixed stars."
+ },
+ {
+  "path": "/v1/western/natal/fixed-stars/{name}",
+  "shape": "westernNatal",
+  "pathParams": [
+   "name"
+  ],
+  "method": "fixedStar",
+  "desc": "Whether a named fixed star is conjunct any natal point."
+ },
+ {
+  "path": "/v1/western/natal/asteroids/big-four-plus",
+  "shape": "westernNatal",
+  "method": "asteroidsBigFourPlus",
+  "desc": "Ceres, Pallas, Juno, Vesta plus Chiron."
+ },
+ {
+  "path": "/v1/western/natal/asteroid/{number}",
+  "shape": "westernNatal",
+  "pathParams": [
+   "number"
+  ],
+  "method": "asteroid",
+  "desc": "A single asteroid by MPC number."
+ },
+ {
+  "path": "/v1/western/natal/declinations",
+  "shape": "westernNatal",
+  "desc": "Planetary declinations, parallels and out-of-bounds."
+ },
+ {
+  "path": "/v1/western/natal/antiscia",
+  "shape": "westernNatal",
+  "desc": "Antiscia (solstice points) and contra-antiscia."
+ },
+ {
+  "path": "/v1/western/natal/harmonic/{n}",
+  "shape": "westernNatal",
+  "pathParams": [
+   "n"
+  ],
+  "method": "harmonic",
+  "desc": "Nth harmonic chart (2-32)."
+ },
+ {
+  "path": "/v1/western/dignities/planet",
+  "shape": "custom",
+  "method": "planet",
+  "ns": "western.dignities",
+  "extras": [
+   {
+    "wire": "planet",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lon",
+    "type": "number",
+    "required": true
+   },
+   {
+    "wire": "diurnal",
+    "type": "boolean",
+    "required": false
+   },
+   {
+    "wire": "scheme",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Essential dignities for a planet (domicile/exaltation/triplicity/bound/face + almuten)."
+ },
+ {
+  "path": "/v1/western/transits/positions",
+  "shape": "westernMoment",
+  "ns": "western.transits",
+  "method": "positions",
+  "desc": "Current tropical planetary positions for transit analysis."
+ },
+ {
+  "path": "/v1/western/transits/to-natal",
+  "shape": "birthPrefixed",
+  "ns": "western.transits",
+  "method": "toNatal",
+  "extras": [
+   {
+    "name": "date",
+    "wire": "date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "time",
+    "wire": "time",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "tz",
+    "wire": "tz",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "All current transiting aspects to natal planets."
+ },
+ {
+  "path": "/v1/western/synastry/aspects",
+  "shape": "twoPerson",
+  "ns": "western.synastry",
+  "method": "aspects",
+  "desc": "Cross-chart synastry aspects between two charts."
+ },
+ {
+  "path": "/v1/western/synastry/score",
+  "shape": "twoPerson",
+  "ns": "western.synastry",
+  "method": "score",
+  "desc": "Synastry compatibility score and breakdown."
+ },
+ {
+  "path": "/v1/western/composite/chart",
+  "shape": "twoPerson",
+  "ns": "western.composite",
+  "method": "chart",
+  "desc": "Composite (midpoint) relationship chart."
+ },
+ {
+  "path": "/v1/western/progressions/planets",
+  "shape": "westernNatal",
+  "ns": "western.progressions",
+  "method": "planets",
+  "extras": [
+   {
+    "name": "ageInYears",
+    "wire": "age_in_years",
+    "type": "number",
+    "required": true
+   }
+  ],
+  "desc": "Secondary progressed planetary positions at an age."
+ },
+ {
+  "path": "/v1/western/solar-arc/planets",
+  "shape": "westernNatal",
+  "ns": "western.solarArc",
+  "method": "planets",
+  "extras": [
+   {
+    "name": "ageInYears",
+    "wire": "age_in_years",
+    "type": "number",
+    "required": true
+   }
+  ],
+  "desc": "Solar Arc directed planetary positions at an age."
+ },
+ {
+  "path": "/v1/western/returns/solar",
+  "shape": "westernNatal",
+  "ns": "western.returns",
+  "method": "solar",
+  "extras": [
+   {
+    "name": "returnYear",
+    "wire": "return_year",
+    "type": "integer",
+    "required": true
+   }
+  ],
+  "desc": "Solar Return chart for a year."
+ },
+ {
+  "path": "/v1/western/interpretation/aspect",
+  "shape": "custom",
+  "ns": "western.interpretation",
+  "method": "aspect",
+  "extras": [
+   {
+    "name": "planetA",
+    "wire": "planet_a",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "planetB",
+    "wire": "planet_b",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "aspect",
+    "wire": "kind",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "context",
+    "wire": "context",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Narrative interpretation for a natal/synastry aspect (e.g. Sun square Mars)."
+ },
+ {
+  "path": "/v1/western/interpretation/transit",
+  "shape": "custom",
+  "ns": "western.interpretation",
+  "method": "transit",
+  "extras": [
+   {
+    "name": "transitPlanet",
+    "wire": "transit_planet",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "natalPlanet",
+    "wire": "natal_planet",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "aspect",
+    "wire": "kind",
+    "type": "string",
+    "required": true
+   }
+  ],
+  "desc": "Narrative interpretation for a transiting planet aspecting a natal planet."
+ },
+ {
+  "path": "/v1/western/profections/annual",
+  "shape": "custom",
+  "ns": "western.profections",
+  "method": "annual",
+  "extras": [
+   {
+    "name": "birthDate",
+    "wire": "birth_date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "ascSign",
+    "wire": "asc_sign",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "refDate",
+    "wire": "ref_date",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Annual profections (Hellenistic time-lord); Ascendant advances one sign per year."
+ },
+ {
+  "path": "/v1/western/zodiacal-releasing/fortune",
+  "shape": "custom",
+  "ns": "western.zodiacalReleasing",
+  "method": "fortune",
+  "extras": [
+   {
+    "name": "birthDate",
+    "wire": "birth_date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "lotSign",
+    "wire": "lot_sign",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "refDate",
+    "wire": "ref_date",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Zodiacal Releasing periods from the Lot of Fortune."
+ },
+ {
+  "path": "/v1/western/firdaria",
+  "shape": "custom",
+  "ns": "western",
+  "method": "firdaria",
+  "extras": [
+   {
+    "name": "birthDate",
+    "wire": "birth_date",
+    "type": "string",
+    "required": true
+   },
+   {
+    "name": "refDate",
+    "wire": "ref_date",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Firdaria planetary periods (Persian time-lord cycle)."
+ },
+ {
+  "path": "/v1/western/heliocentric/planets",
+  "shape": "westernMoment",
+  "ns": "western.heliocentric",
+  "method": "planets",
+  "desc": "Heliocentric (Sun-centred) planetary positions."
+ },
+ {
+  "path": "/v1/western/eclipses/upcoming",
+  "shape": "custom",
+  "ns": "western.eclipses",
+  "method": "upcoming",
+  "extras": [
+   {
+    "name": "months",
+    "wire": "months",
+    "type": "integer",
+    "required": false
+   }
+  ],
+  "desc": "Upcoming solar and lunar eclipses (default 12 months ahead)."
+ },
+ {
+  "path": "/v1/western/ingresses",
+  "shape": "dateRange",
+  "ns": "western",
+  "method": "ingresses",
+  "desc": "All planetary sign-change ingresses in a date range."
+ },
+ {
+  "path": "/v1/western/retrograde-window/{planet}",
+  "shape": "dateRange",
+  "ns": "western",
+  "method": "retrogradeWindow",
+  "pathParams": [
+   "planet"
+  ],
+  "desc": "Retrograde station windows for a planet in a date range."
+ },
+ {
+  "path": "/v1/western/astrocartography/planet-lines",
+  "shape": "westernMoment",
+  "ns": "western.astrocartography",
+  "method": "planetLines",
+  "extras": [
+   {
+    "name": "latStep",
+    "wire": "lat_step",
+    "type": "number",
+    "required": false
+   }
+  ],
+  "desc": "Astrocartography planet lines (ASC/DSC/MC/IC) for mapping."
+ },
+ {
+  "path": "/v1/dasha/char",
+  "shape": "birth",
+  "method": "char",
+  "desc": "Full Char Dasha (Jaimini sign-based dasha) schedule — every mahadasha sign period with start/end dates."
+ },
+ {
+  "path": "/v1/dasha/char/major",
+  "shape": "birth",
+  "method": "charMajor",
+  "desc": "Char Dasha mahadasha-level periods only — one row per sign period."
+ },
+ {
+  "path": "/v1/dasha/char/current",
+  "shape": "birth",
+  "method": "charCurrent",
+  "desc": "Currently running Char Dasha (Jaimini) period stack — active mahadasha and antardasha signs with date windows."
+ },
+ {
+  "path": "/v1/dasha/char/{md}",
+  "shape": "birth",
+  "method": "charMaha",
+  "pathParams": [
+   "md"
+  ],
+  "desc": "Antardashas inside one Char Dasha mahadasha sign (md = sign name, e.g. 'leo')."
+ },
+ {
+  "path": "/v1/dasha/char/{md}/{ad}",
+  "shape": "birth",
+  "method": "charAntar",
+  "pathParams": [
+   "md",
+   "ad"
+  ],
+  "desc": "Sub-periods inside a Char Dasha mahadasha+antardasha sign pair."
+ },
+ {
+  "path": "/v1/lalkitab/chart",
+  "shape": "birth",
+  "ns": "lalkitab",
+  "method": "chart",
+  "desc": "Lal Kitab chart — planets mapped into Lal Kitab's fixed Aries-based houses."
+ },
+ {
+  "path": "/v1/lalkitab/dasha",
+  "shape": "birth",
+  "ns": "lalkitab",
+  "method": "dasha",
+  "desc": "Full 35-year Lal Kitab dasha schedule — planet-ruled periods with start/end dates."
+ },
+ {
+  "path": "/v1/lalkitab/dasha/current",
+  "shape": "birth",
+  "ns": "lalkitab",
+  "method": "dashaCurrent",
+  "desc": "Currently active Lal Kitab dasha planet and period window."
+ },
+ {
+  "path": "/v1/vedic/remedies/daan/{id}",
+  "shape": "custom",
+  "ns": "remedies",
+  "method": "daan",
+  "pathParams": [
+   "id"
+  ],
+  "extras": [
+   {
+    "name": "locale",
+    "wire": "locale",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Full details of a daan (charity/donation) remedy by id — what to donate, to whom, and when."
+ },
+ {
+  "path": "/v1/vedic/remedies/rudraksha/{id}",
+  "shape": "custom",
+  "ns": "remedies",
+  "method": "rudraksha",
+  "pathParams": [
+   "id"
+  ],
+  "extras": [
+   {
+    "name": "locale",
+    "wire": "locale",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Full details of a rudraksha remedy by id — mukhi count, ruling planet, wearing procedure."
+ },
+ {
+  "path": "/v1/vedic/remedies/yantra/{id}",
+  "shape": "custom",
+  "ns": "remedies",
+  "method": "yantra",
+  "pathParams": [
+   "id"
+  ],
+  "extras": [
+   {
+    "name": "locale",
+    "wire": "locale",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Full details of a yantra remedy by id — purpose, installation procedure, direction, day, and mantra."
+ },
+ {
+  "path": "/v1/vedic/remedies/lal-kitab",
+  "shape": "custom",
+  "ns": "remedies",
+  "method": "lalkitabList",
+  "extras": [
+   {
+    "name": "planet",
+    "wire": "planet",
+    "type": "string",
+    "required": false
+   },
+   {
+    "name": "locale",
+    "wire": "locale",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "List Lal Kitab remedies (upay), optionally filtered by planet."
+ },
+ {
+  "path": "/v1/vedic/remedies/lal-kitab/{planet}/{house}",
+  "shape": "custom",
+  "ns": "remedies",
+  "method": "lalkitabForPlacement",
+  "pathParams": [
+   "planet",
+   "house"
+  ],
+  "extras": [
+   {
+    "name": "locale",
+    "wire": "locale",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Lal Kitab remedies for a specific planet-in-house placement (e.g. saturn in house 8)."
+ }
+]
