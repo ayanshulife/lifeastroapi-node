@@ -157,10 +157,16 @@
     "required": true
    },
    {
-    "name": "tzOffsetHours",
-    "wire": "tz",
+    "name": "alt",
+    "wire": "alt",
     "type": "number",
-    "required": true
+    "required": false
+   },
+   {
+    "name": "tz",
+    "wire": "tz",
+    "type": "string",
+    "required": false
    },
    {
     "name": "year",
@@ -173,9 +179,33 @@
     "wire": "month",
     "type": "integer",
     "required": true
+   },
+   {
+    "name": "include",
+    "wire": "include",
+    "type": "string",
+    "required": false
+   },
+   {
+    "name": "locale",
+    "wire": "locale",
+    "type": "string",
+    "required": false
+   },
+   {
+    "name": "monthSystem",
+    "wire": "month_system",
+    "type": "string",
+    "required": false
+   },
+   {
+    "name": "ayanamsa",
+    "wire": "ayanamsa",
+    "type": "string",
+    "required": false
    }
   ],
-  "desc": "Full-month panchang calendar (one entry per day). Note: tzOffsetHours is a NUMERIC UTC offset in hours (e.g. 5.5 for IST), not an IANA name."
+  "desc": "Full-month panchang calendar (one entry per day). tz accepts an IANA name (\"Asia/Kolkata\"), a fixed offset (\"+05:30\") or decimal hours (\"5.5\"). Pass include: \"sheet\" for a complete printable Hindu calendar page: per-day tithi/nakshatra/moon-sign end-times (\"27:07+\" notation), kshaya days, moonrise/moonset, Hindu month, Vikram/Shaka samvat, moon phase and every festival of the day, plus the page header."
  },
  {
   "path": "/v1/panchang/nakshatra-prediction",
@@ -657,19 +687,43 @@
     "required": true
    },
    {
+    "name": "lat",
+    "wire": "lat",
+    "type": "number",
+    "required": false
+   },
+   {
+    "name": "lon",
+    "wire": "lon",
+    "type": "number",
+    "required": false
+   },
+   {
     "name": "tz",
     "wire": "tz",
     "type": "string",
-    "required": true
+    "required": false
    },
    {
-    "name": "region",
-    "wire": "region",
+    "name": "locale",
+    "wire": "locale",
+    "type": "string",
+    "required": false
+   },
+   {
+    "name": "monthSystem",
+    "wire": "month_system",
+    "type": "string",
+    "required": false
+   },
+   {
+    "name": "ayanamsa",
+    "wire": "ayanamsa",
     "type": "string",
     "required": false
    }
   ],
-  "desc": "Hindu festivals and observances in a Gregorian month."
+  "desc": "Full Hindu festival calendar for a month at a location: every Ekadashi (smarta + Vaishnava/Gauna with parana window), Pradosh, Sankashti/Vinayaka Chaturthi, Purnima/Amavasya, Chandra Darshana, Sankrantis, major and regional festivals, jayantis, national days and eclipses. Location-aware (defaults to New Delhi / Asia/Kolkata); 100 % match with 14 Drik Panchang city calendars."
  },
  {
   "path": "/v1/planet-moments/retrograde-window",

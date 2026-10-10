@@ -74,9 +74,9 @@ export class Panchang {
     return this._c.request<T>("/v1/panchang/lagna-table", q.qMoment(input), opts);
   }
 
-  /** Full-month panchang calendar (one entry per day). Note: tzOffsetHours is a NUMERIC UTC offset in hours (e.g. 5.5 for IST), not an IANA name. */
-  monthly<T = unknown>(input: { lat: number; lon: number; tzOffsetHours: number; year: number; month: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/monthly", q.applyExtras(q.qNone(input), input, [["lat", "lat"], ["lon", "lon"], ["tzOffsetHours", "tz"], ["year", "year"], ["month", "month"]]), opts);
+  /** Full-month panchang calendar (one entry per day). tz accepts an IANA name ("Asia/Kolkata"), a fixed offset ("+05:30") or decimal hours ("5.5"). Pass include: "sheet" for a complete printable Hindu calendar page: per-day tithi/nakshatra/moon-sign end-times ("27:07+" notation), kshaya days, moonrise/moonset, Hindu month, Vikram/Shaka samvat, moon phase and every festival of the day, plus the page header. */
+  monthly<T = unknown>(input: { lat: number; lon: number; alt?: number; tz?: string; year: number; month: number; include?: string; locale?: string; monthSystem?: string; ayanamsa?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/monthly", q.applyExtras(q.qNone(input), input, [["lat", "lat"], ["lon", "lon"], ["alt", "alt"], ["tz", "tz"], ["year", "year"], ["month", "month"], ["include", "include"], ["locale", "locale"], ["monthSystem", "month_system"], ["ayanamsa", "ayanamsa"]]), opts);
   }
 
   /** Moonrise and moonset times. */

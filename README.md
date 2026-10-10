@@ -145,7 +145,7 @@ await client.chart.planets({ ...birth, ayanamsa: "krishnamurti", houseSystem: "p
 | `prashna` | horary answer, chart, arudha, significators |
 | `eclipses` | solar / lunar / all (date range, optional visibility) |
 | `calendar` | Hindu month, ritu, samvatsara, adhik-maas |
-| `festivals` | festivals by month / on a date |
+| `festivals` | full Hindu festival calendar by month / on a date — location-aware, `locale`, `monthSystem` (amanta/purnimanta); `panchang.monthly({ include: "sheet" })` returns a complete printable calendar page |
 | `planetMoments` | retrograde windows, ingress, combustion window, speed |
 | `ashtakavarga` | sarva, bhinna (per planet), kaksha, transit-score |
 | `geo` | place search, reverse geocode, timezone, place by id |

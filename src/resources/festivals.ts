@@ -9,13 +9,13 @@ import type { RequestOptions } from "../http.js";
 export class Festivals {
   constructor(private readonly _c: ClientCore) {}
 
-  /** Hindu festivals and observances in a Gregorian month. */
-  month<T = unknown>(input: { year: number; month: number; tz: string; region?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/festivals/month", q.applyExtras(q.qNone(input), input, [["year", "year"], ["month", "month"], ["tz", "tz"], ["region", "region"]]), opts);
+  /** Full Hindu festival calendar for a month at a location: every Ekadashi (smarta + Vaishnava/Gauna with parana window), Pradosh, Sankashti/Vinayaka Chaturthi, Purnima/Amavasya, Chandra Darshana, Sankrantis, major and regional festivals, jayantis, national days and eclipses. Location-aware (defaults to New Delhi / Asia/Kolkata); 100 % match with 14 Drik Panchang city calendars. */
+  month<T = unknown>(input: { year: number; month: number; lat?: number; lon?: number; tz?: string; locale?: string; monthSystem?: string; ayanamsa?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/festivals/month", q.applyExtras(q.qNone(input), input, [["year", "year"], ["month", "month"], ["lat", "lat"], ["lon", "lon"], ["tz", "tz"], ["locale", "locale"], ["monthSystem", "month_system"], ["ayanamsa", "ayanamsa"]]), opts);
   }
 
-  /** List Hindu festivals and observances falling on a specific date — Ekadashi, Pradosh, Purnima, Amavasya, major festivals, vratas, and regional observances. */
-  onDate<T = unknown>(input: { date: string; tz?: string; region?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/festivals/on-date", q.applyExtras(q.qNone(input), input, [["date", "date"], ["tz", "tz"], ["region", "region"]]), opts);
+  /** All festivals, vrats and observances on one civil date at a location (same engine and fields as festivals.month): Ekadashi smarta/Vaishnava, Pradosh, Purnima, Amavasya, Sankranti, jayantis, eclipses, each with the windows a panchang prints (moonrise, pradosh kaal, parana). Defaults to New Delhi / Asia/Kolkata. */
+  onDate<T = unknown>(input: { date: string; lat?: number; lon?: number; tz?: string; locale?: string; monthSystem?: string; ayanamsa?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/festivals/on-date", q.applyExtras(q.qNone(input), input, [["date", "date"], ["lat", "lat"], ["lon", "lon"], ["tz", "tz"], ["locale", "locale"], ["monthSystem", "month_system"], ["ayanamsa", "ayanamsa"]]), opts);
   }
 }

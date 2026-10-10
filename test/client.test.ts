@@ -114,10 +114,12 @@ describe("param shapes", () => {
 
   it("custom shape (festivals.month)", async () => {
     const { fetch, calls } = mockFetch(() => ({ body: { data: {} } }));
-    await makeClient(fetch).festivals.month({ year: 2026, month: 11, tz: "Asia/Kolkata", region: "north_india" });
+    await makeClient(fetch).festivals.month({ year: 2026, month: 11, tz: "Asia/Kolkata", lat: 19.076, lon: 72.8777, locale: "mr", monthSystem: "amanta" });
     const url = new URL(calls[0]!.url);
     expect(url.searchParams.get("year")).toBe("2026");
-    expect(url.searchParams.get("region")).toBe("north_india");
+    expect(url.searchParams.get("lat")).toBe("19.076");
+    expect(url.searchParams.get("month_system")).toBe("amanta");
+    expect(url.searchParams.get("locale")).toBe("mr");
   });
 
   it("natalTransit shape maps natal to birth.* and transit flat", async () => {

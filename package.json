@@ -1,6 +1,6 @@
 {
   "name": "lifeastroapi",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Official Node.js / TypeScript SDK for LifeAstroAPI — Vedic & Western astrology, panchang, matchmaking, dashas, numerology and tarot. DrikPanchang-level precision, pay-per-call.",
   "keywords": [
     "astrology",

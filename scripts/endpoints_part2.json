@@ -2113,17 +2113,38 @@
     "required": true
    },
    {
+    "wire": "lat",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "lon",
+    "type": "number",
+    "required": false
+   },
+   {
     "wire": "tz",
     "type": "string",
     "required": false
    },
    {
-    "wire": "region",
+    "wire": "locale",
+    "type": "string",
+    "required": false
+   },
+   {
+    "name": "monthSystem",
+    "wire": "month_system",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "ayanamsa",
     "type": "string",
     "required": false
    }
   ],
-  "desc": "List Hindu festivals and observances falling on a specific date — Ekadashi, Pradosh, Purnima, Amavasya, major festivals, vratas, and regional observances."
+  "desc": "All festivals, vrats and observances on one civil date at a location (same engine and fields as festivals.month): Ekadashi smarta/Vaishnava, Pradosh, Purnima, Amavasya, Sankranti, jayantis, eclipses, each with the windows a panchang prints (moonrise, pradosh kaal, parana). Defaults to New Delhi / Asia/Kolkata."
  },
  {
   "path": "/v1/geo/search",
