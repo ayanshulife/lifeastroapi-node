@@ -624,9 +624,21 @@
     "wire": "lon",
     "type": "number",
     "required": false
+   },
+   {
+    "name": "alt",
+    "wire": "alt",
+    "type": "number",
+    "required": false
+   },
+   {
+    "name": "tz",
+    "wire": "tz",
+    "type": "string",
+    "required": false
    }
   ],
-  "desc": "Solar eclipses in a date range (optionally visible from a location)."
+  "desc": "Solar eclipses in a date range. With lat/lon (and tz) each event carries a `local` block: contact times sparsha…moksha in local time, visibility at that place, and the sutak kaal (12 h before a solar, 9 h before a lunar eclipse, until moksha)."
  },
  {
   "path": "/v1/eclipses/lunar",
@@ -644,9 +656,21 @@
     "wire": "lon",
     "type": "number",
     "required": false
+   },
+   {
+    "name": "alt",
+    "wire": "alt",
+    "type": "number",
+    "required": false
+   },
+   {
+    "name": "tz",
+    "wire": "tz",
+    "type": "string",
+    "required": false
    }
   ],
-  "desc": "Lunar eclipses in a date range (optionally visible from a location)."
+  "desc": "Lunar eclipses in a date range. With lat/lon (and tz) each event carries a `local` block: contact times sparsha…moksha in local time, visibility at that place, and the sutak kaal (12 h before a solar, 9 h before a lunar eclipse, until moksha)."
  },
  {
   "path": "/v1/eclipses/all",
@@ -664,9 +688,21 @@
     "wire": "lon",
     "type": "number",
     "required": false
+   },
+   {
+    "name": "alt",
+    "wire": "alt",
+    "type": "number",
+    "required": false
+   },
+   {
+    "name": "tz",
+    "wire": "tz",
+    "type": "string",
+    "required": false
    }
   ],
-  "desc": "All eclipses (solar + lunar) in a date range."
+  "desc": "All eclipses (solar + lunar) in a date range. With lat/lon (and tz) each event carries a `local` block: contact times sparsha…moksha in local time, visibility at that place, and the sutak kaal (12 h before a solar, 9 h before a lunar eclipse, until moksha)."
  },
  {
   "path": "/v1/festivals/month",

@@ -28,4 +28,9 @@ export class Calendar {
   samvatsara<T = unknown>(input: { date: string; tz: string }, opts?: RequestOptions): Promise<T> {
     return this._c.request<T>("/v1/calendar/samvatsara", q.applyExtras(q.qNone(input), input, [["date", "date"], ["tz", "tz"]]), opts);
   }
+
+  /** Equinoxes and solstices of a year — exact moment (UTC + local), the ayana that begins (tropical Dakshinayana at the June solstice, tropical Uttarayana at the December solstice; the panchang's Uttarayana is Makara Sankranti), and with lat/lon the sunrise, sunset and day length at that place. */
+  solstices<T = unknown>(input: { year: number; tz?: string; lat?: number; lon?: number; alt?: number }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/calendar/solstices", q.applyExtras(q.qNone(input), input, [["year", "year"], ["tz", "tz"], ["lat", "lat"], ["lon", "lon"], ["alt", "alt"]]), opts);
+  }
 }

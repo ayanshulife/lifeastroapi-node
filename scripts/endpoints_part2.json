@@ -2031,6 +2031,39 @@
   "desc": "Get the current Hindu Ritu (season) for a date — one of 6 seasons: Vasanta (spring), Grishma (summer), Varsha (monsoon), Sharad (autumn), Hemanta (pre-winter), Shishira (winter)."
  },
  {
+  "path": "/v1/calendar/solstices",
+  "shape": "custom",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "year",
+    "type": "integer",
+    "required": true
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lat",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "lon",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "alt",
+    "type": "number",
+    "required": false
+   }
+  ],
+  "desc": "Equinoxes and solstices of a year — exact moment (UTC + local), the ayana that begins (tropical Dakshinayana at the June solstice, tropical Uttarayana at the December solstice; the panchang's Uttarayana is Makara Sankranti), and with lat/lon the sunrise, sunset and day length at that place."
+ },
+ {
   "path": "/v1/calendar/samvatsara",
   "shape": "custom",
   "pathParams": [],
@@ -2145,6 +2178,57 @@
    }
   ],
   "desc": "All festivals, vrats and observances on one civil date at a location (same engine and fields as festivals.month): Ekadashi smarta/Vaishnava, Pradosh, Purnima, Amavasya, Sankranti, jayantis, eclipses, each with the windows a panchang prints (moonrise, pradosh kaal, parana). Defaults to New Delhi / Asia/Kolkata."
+ },
+ {
+  "path": "/v1/festivals/vrat",
+  "shape": "custom",
+  "ns": "festivals",
+  "method": "vrat",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "year",
+    "type": "integer",
+    "required": true
+   },
+   {
+    "wire": "type",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "lat",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "lon",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "locale",
+    "type": "string",
+    "required": false
+   },
+   {
+    "name": "monthSystem",
+    "wire": "month_system",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "ayanamsa",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Year-wise Vrat & Upavas dates of one family at a location — type: ekadashi | parana | pradosh | sankashti | vinayaka | purnima | amavasya | chandra_darshana | masik_shivaratri | durgashtami | kalashtami | skanda_shashthi | karthigai | shraddha | janmashtami | sankranti | satyanarayana | bhanu_saptami | eclipse (comma-separated for several). Same occurrence objects as festivals.month."
  },
  {
   "path": "/v1/geo/search",
