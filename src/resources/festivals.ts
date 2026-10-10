@@ -9,7 +9,7 @@ import type { RequestOptions } from "../http.js";
 export class Festivals {
   constructor(private readonly _c: ClientCore) {}
 
-  /** Full Hindu festival calendar for a month at a location: every Ekadashi (smarta + Vaishnava/Gauna with parana window), Pradosh, Sankashti/Vinayaka Chaturthi, Purnima/Amavasya, Chandra Darshana, Sankrantis, major and regional festivals, jayantis, national days and eclipses. Location-aware (defaults to New Delhi / Asia/Kolkata); 100 % match with 14 Drik Panchang city calendars. */
+  /** Full Hindu festival calendar for a month at a location: every Ekadashi (smarta + Vaishnava/Gauna with parana window), Pradosh, Sankashti/Vinayaka Chaturthi, Purnima/Amavasya, Chandra Darshana, Sankrantis, major and regional festivals, jayantis, national days and eclipses. Location-aware (defaults to New Delhi / Asia/Kolkata); verified entry for entry against printed panchang calendars of 14 cities. */
   month<T = unknown>(input: { year: number; month: number; lat?: number; lon?: number; tz?: string; locale?: string; monthSystem?: string; ayanamsa?: string }, opts?: RequestOptions): Promise<T> {
     return this._c.request<T>("/v1/festivals/month", q.applyExtras(q.qNone(input), input, [["year", "year"], ["month", "month"], ["lat", "lat"], ["lon", "lon"], ["tz", "tz"], ["locale", "locale"], ["monthSystem", "month_system"], ["ayanamsa", "ayanamsa"]]), opts);
   }

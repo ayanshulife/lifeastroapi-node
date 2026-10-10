@@ -10,8 +10,7 @@
 - `festivals.month()` / `festivals.onDate()`: new optional `lat`, `lon`, `tz`, `locale`,
   `monthSystem`, `ayanamsa`. Responses now carry `name_en`, `name_hi`, `paksha`, `tithi_index`,
   `hindu_month` (+ amanta/purnimanta), `observance`, `windows` (tithi span, pradosh kaal,
-  moonrise, Ekadashi parana) and `note`. Dates are location-aware and match the Drik Panchang
-  2027 calendars of 14 cities. The `region` parameter (never supported by the API) is removed.
+  moonrise, Ekadashi parana) and `note`. Dates are location-aware and are verified against printed panchang calendars of 14 cities. The `region` parameter (never supported by the API) is removed.
 - `panchang.monthly()`: `tz` is now a string accepting IANA names, fixed offsets or decimal
   hours; new `alt`, `include: "sheet"` (complete printable calendar page), `locale`,
   `monthSystem`, `ayanamsa`.

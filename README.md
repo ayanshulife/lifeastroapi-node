@@ -1,7 +1,7 @@
 # lifeastroapi
 
 Official **Node.js / TypeScript SDK** for [LifeAstroAPI](https://lifeastroapi.com) — a
-B2B Vedic & Western astrology API with DrikPanchang-level precision and
+B2B Vedic & Western astrology API with panchang-grade precision and
 pay-per-call billing.
 
 - ✅ **310 endpoints**, fully typed, across 23 namespaces — panchang, charts, dashas,

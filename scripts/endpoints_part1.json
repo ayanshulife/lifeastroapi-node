@@ -759,7 +759,7 @@
     "required": false
    }
   ],
-  "desc": "Full Hindu festival calendar for a month at a location: every Ekadashi (smarta + Vaishnava/Gauna with parana window), Pradosh, Sankashti/Vinayaka Chaturthi, Purnima/Amavasya, Chandra Darshana, Sankrantis, major and regional festivals, jayantis, national days and eclipses. Location-aware (defaults to New Delhi / Asia/Kolkata); 100 % match with 14 Drik Panchang city calendars."
+  "desc": "Full Hindu festival calendar for a month at a location: every Ekadashi (smarta + Vaishnava/Gauna with parana window), Pradosh, Sankashti/Vinayaka Chaturthi, Purnima/Amavasya, Chandra Darshana, Sankrantis, major and regional festivals, jayantis, national days and eclipses. Location-aware (defaults to New Delhi / Asia/Kolkata); verified entry for entry against printed panchang calendars of 14 cities."
  },
  {
   "path": "/v1/planet-moments/retrograde-window",
