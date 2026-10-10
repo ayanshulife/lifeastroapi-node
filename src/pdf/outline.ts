@@ -3,7 +3,7 @@
  *
  * Chromium's `page.pdf()` / `--print-to-pdf` does NOT emit a document outline
  * from HTML headings, so the navigable "bookmark sidebar" that professional
- * reports (e.g. AstroSage's Brihat Horoscope, 710 bookmarks) rely on is missing.
+ * reports (a long kundli can carry hundreds of bookmarks) rely on is missing.
  *
  * This module appends an `/Outlines` tree to an already-rendered PDF via an
  * **incremental update** (ISO 32000-1 §7.5.6): we never rewrite the original
