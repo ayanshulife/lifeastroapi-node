@@ -4,7 +4,7 @@ Official **Node.js / TypeScript SDK** for [LifeAstroAPI](https://lifeastroapi.co
 B2B Vedic & Western astrology API with panchang-grade precision and
 pay-per-call billing.
 
-- ✅ **310 endpoints**, fully typed, across 23 namespaces — panchang, charts, dashas,
+- ✅ **All 311 endpoints**, fully typed, across 23 namespaces — panchang, charts, dashas,
   matchmaking, transits, horoscopes, numerology, tarot, muhurta, reports, narratives,
   and a complete Western (tropical) module.
 - ✅ **Zero runtime dependencies** — uses the platform `fetch` (Node 18+, Bun, Deno,
