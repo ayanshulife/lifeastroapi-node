@@ -57,6 +57,10 @@ const match = await client.milan.ashtakootaTotal({
 
 > CommonJS works too: `const { LifeAstro } = require("lifeastroapi");`
 
+## Examples
+
+- [**Hindu calendar for any city**](examples/hindu-calendar/) — today's panchang, the month's festivals with the window that decided each date, the next Ekadashis with parana, and an HTML month grid. `npm start -- --city Toronto`.
+
 ## Authentication
 
 Your API key (`dv_live_…`) authenticates every request and is sent as a

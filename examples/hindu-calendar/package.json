@@ -1,0 +1,17 @@
+{
+  "name": "lifeastroapi-example-hindu-calendar",
+  "private": true,
+  "type": "module",
+  "description": "Today's panchang, the month's festivals and the next Ekadashis for any city, with LifeAstroAPI.",
+  "scripts": {
+    "start": "tsx index.ts",
+    "html": "tsx index.ts --html"
+  },
+  "dependencies": {
+    "lifeastroapi": "^0.3.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}
