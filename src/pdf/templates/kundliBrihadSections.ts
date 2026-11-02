@@ -12,11 +12,12 @@
 import { esc, escBody, resolveBranding, type Branding, type RawBranding } from "../shared.js";
 import {
   northIndianChartSvg,
+  planetLabelsFor,
   PLANET_LABELS_EN,
-  PLANET_LABELS_HI,
   PLANET_COLORS,
   type ChartPlanet,
 } from "./northIndianChart.js";
+import { INDIC_FONT_STACK_ATTR, PART_PREFIX_RE, SOUTH_SIGN_INDEX, southPlanetToEn } from "../locales.js";
 import { planetGlyph } from "./planetGlyphs.js";
 
 /**
@@ -55,15 +56,18 @@ export function renderGrahaSthiti(
 
 // ── North-Indian chart glue ─────────────────────────────────────────────────
 
-// Sign-name → 0-based index. Includes EN + Hindi/Marathi names so charts
-// resolve regardless of the report locale (HI JSON emits "धनु" not
-// "Sagittarius"). Devanagari sign names are shared across hi/mr.
+// Sign-name → 0-based index. Includes EN, Hindi/Marathi and te/ta/kn names so
+// charts resolve regardless of the report locale (HI JSON emits "धनु", TE
+// JSON "ధనుస్సు", not "Sagittarius"). Devanagari names are shared by hi/mr.
 const SIGN_INDEX: Record<string, number> = {
   Aries: 0, Taurus: 1, Gemini: 2, Cancer: 3, Leo: 4, Virgo: 5,
   Libra: 6, Scorpio: 7, Sagittarius: 8, Capricorn: 9, Aquarius: 10, Pisces: 11,
   // Hindi / Marathi
   "मेष": 0, "वृषभ": 1, "मिथुन": 2, "कर्क": 3, "सिंह": 4, "कन्या": 5,
   "तुला": 6, "वृश्चिक": 7, "धनु": 8, "मकर": 9, "कुम्भ": 10, "कुंभ": 10, "मीन": 11,
+  "तूळ": 6,
+  // Telugu / Tamil / Kannada (= Go vedic.RashiTE / RashiTA / RashiKN)
+  ...SOUTH_SIGN_INDEX,
 };
 
 // Hindi/Marathi planet name → canonical English key, so charts resolve even
@@ -76,12 +80,12 @@ const PLANET_NAME_TO_EN: Record<string, string> = {
 
 /** Build ChartPlanet[] from {name, house} rows, labelled for the locale. */
 function chartPlanets(rows: { name?: string; house?: number; retro?: boolean }[], locale: string): ChartPlanet[] {
-  const labels = locale === "hi" || locale === "mr" ? PLANET_LABELS_HI : PLANET_LABELS_EN;
+  const labels = planetLabelsFor(locale);
   const out: ChartPlanet[] = [];
   for (const r of rows) {
     const raw = r.name ?? "";
-    // Normalise to the English key whether the JSON gave EN or Devanagari.
-    const key = PLANET_LABELS_EN[raw] ? raw : PLANET_NAME_TO_EN[raw] ?? raw;
+    // Normalise to the English key whether the JSON gave EN, Devanagari or te/ta/kn.
+    const key = PLANET_LABELS_EN[raw] ? raw : PLANET_NAME_TO_EN[raw] ?? (southPlanetToEn(raw) || raw);
     const lbl = labels[key];
     if (!lbl || !r.house) continue;
     out.push({ label: lbl, house: r.house, retro: r.retro, color: PLANET_COLORS[key] });
@@ -199,11 +203,10 @@ export function buildBrihadToc(entries: { title: string; page: number }[], headi
   const rows = entries
     .map((e, i) => {
       const col = TOC_PALETTE[i % TOC_PALETTE.length];
-      // Part dividers ("Part N: …" / "भाग N: …") are level-1 rows: bold,
-      // not indented. Everything else is a level-2 section, indented under it.
-      // (\b is ASCII-only — won't match after Devanagari — so match by the
-      // following whitespace/digit instead.)
-      const isPart = /^(part|भाग)[\s\d]/i.test(e.title.trim());
+      // Part dividers ("Part N: …" / "भाग N: …" / "భాగం N: …" / "பகுதி N: …" /
+      // "ಭಾಗ N: …") are level-1 rows: bold, not indented. Everything else is a
+      // level-2 section, indented under it.
+      const isPart = PART_PREFIX_RE.test(e.title.trim());
       const cls = isPart ? "toc-row toc-part" : "toc-row toc-sub";
       return `<div class="${cls}">
   <span class="toc-title">${esc(e.title)}</span>
@@ -224,7 +227,7 @@ export function brihadHeaderTemplate(branding?: Branding | RawBranding): string 
   const company = esc(b.companyName) || "LifeAstro";
   // Clean, ornamental page number — a gold ✦ + purple number (no heavy box),
   // matching the header/footer star motif. Right: gold ✦ + purple wordmark.
-  return `<div style="width:100%;font-family:Arial,sans-serif;-webkit-print-color-adjust:exact;padding:8mm 14mm 0;">
+  return `<div style="width:100%;font-family:${INDIC_FONT_STACK_ATTR};-webkit-print-color-adjust:exact;padding:8mm 14mm 0;">
   <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:0.35mm solid #e3d9c0;padding-bottom:2mm;">
     <div style="color:#9e2b25;font-size:12px;font-weight:bold;letter-spacing:.5px;">
       <span style="color:#c25e10;">✦</span>&nbsp;<span class="pageNumber"></span>
@@ -243,7 +246,7 @@ export function brihadFooterTemplate(branding?: Branding | RawBranding): string 
   // LifeAstro footer motif: a gold ✦ diamond flourish on each side of the
   // url (purple text) — not the benchmark's colored-square trio.
   const star = `<span style="color:#c25e10;font-size:10px;">✦</span><span style="color:#9e2b25;font-size:7px;">✦</span>`;
-  return `<div style="width:100%;font-family:Arial,sans-serif;-webkit-print-color-adjust:exact;
+  return `<div style="width:100%;font-family:${INDIC_FONT_STACK_ATTR};-webkit-print-color-adjust:exact;
               text-align:center;font-size:9px;color:#9e2b25;padding-bottom:5mm;">
   ${star}<span style="margin:0 5mm;letter-spacing:.3px;">${txt}</span>${star}
 </div>`;

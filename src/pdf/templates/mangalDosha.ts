@@ -133,6 +133,67 @@ const LABELS: Record<string, Record<string, string>> = {
     remedies_intro:
       "मंगळ दोषासाठी सामान्यतः शिफारस केले जाणारे पारंपरिक उपाय खालील आहेत. कोणताही उपाय अंगीकारण्यापूर्वी पात्र ज्योतिषाचा सल्ला घ्या:",
   },
+  // te / ta / kn are written from the Hindi. Telugu names the dosha after
+  // కుజుడు (= PlanetTE "Mars"), Tamil after செவ்வாய். The Hindi "consult a
+  // qualified astrologer" line becomes "check your chart fully first": the
+  // te/ta style guides ban the referral phrase (B2B clients are astrologers).
+  te: {
+    title_mangal: "కుజ దోష నివేదిక",
+    born: "జననం",
+    at: "సమయం",
+    generated: "రూపొందించిన తేదీ",
+    ascendant: "లగ్నం",
+    section_diagnostic: "విశ్లేషణ",
+    section_cancellation: "దోష నివృత్తి",
+    section_marriage: "వివాహంపై ప్రభావం",
+    section_remedies: "సూచించిన పరిహారాలు",
+    mars_sign: "కుజుని రాశి",
+    mars_nakshatra: "కుజుని నక్షత్రం",
+    mars_houses: "కుజుడు ఉన్న భావం",
+    pada: "పాదం",
+    diagnosis: "నిర్ధారణ",
+    cancellation_intro: "శాస్త్ర నియమాల ప్రకారం ఈ కారణాల వల్ల దోషం నివృత్తి అవుతుంది:",
+    remedies_intro:
+      "కుజ దోషానికి సాధారణంగా సూచించే సంప్రదాయ పరిహారాలు ఇవి. ఏ పరిహారాన్నైనా మొదలుపెట్టే ముందు మీ జాతకాన్ని పూర్తిగా పరిశీలించుకోండి:",
+  },
+  ta: {
+    title_mangal: "செவ்வாய் தோஷ அறிக்கை",
+    born: "பிறப்பு",
+    at: "நேரம்",
+    generated: "தயாரித்த நாள்",
+    ascendant: "லக்னம்",
+    section_diagnostic: "பகுப்பாய்வு",
+    section_cancellation: "தோஷ நிவர்த்தி",
+    section_marriage: "திருமணத்தில் தாக்கம்",
+    section_remedies: "பரிந்துரைக்கப்பட்ட பரிகாரங்கள்",
+    mars_sign: "செவ்வாய் இருக்கும் ராசி",
+    mars_nakshatra: "செவ்வாய் இருக்கும் நட்சத்திரம்",
+    mars_houses: "செவ்வாய் இருக்கும் வீடு",
+    pada: "பாதம்",
+    diagnosis: "முடிவு",
+    cancellation_intro: "சாஸ்திர விதிகளின்படி கீழ்க்காணும் காரணங்களால் தோஷம் நிவர்த்தி ஆகிறது:",
+    remedies_intro:
+      "செவ்வாய் தோஷத்துக்குப் பொதுவாகப் பரிந்துரைக்கப்படும் பாரம்பரியப் பரிகாரங்கள் இவை. எந்தப் பரிகாரத்தையும் தொடங்கும் முன் உங்கள் ஜாதகத்தை முழுமையாகச் சரிபார்த்துக்கொள்ளுங்கள்:",
+  },
+  kn: {
+    title_mangal: "ಮಂಗಳ ದೋಷ ವರದಿ",
+    born: "ಜನನ",
+    at: "ಸಮಯ",
+    generated: "ತಯಾರಿಸಿದ ದಿನಾಂಕ",
+    ascendant: "ಲಗ್ನ",
+    section_diagnostic: "ವಿಶ್ಲೇಷಣೆ",
+    section_cancellation: "ದೋಷ ನಿವಾರಣೆ",
+    section_marriage: "ವಿವಾಹದ ಮೇಲಿನ ಪ್ರಭಾವ",
+    section_remedies: "ಶಿಫಾರಸು ಮಾಡಿದ ಪರಿಹಾರಗಳು",
+    mars_sign: "ಮಂಗಳನ ರಾಶಿ",
+    mars_nakshatra: "ಮಂಗಳನ ನಕ್ಷತ್ರ",
+    mars_houses: "ಮಂಗಳನಿರುವ ಭಾವ",
+    pada: "ಪಾದ",
+    diagnosis: "ನಿರ್ಣಯ",
+    cancellation_intro: "ಶಾಸ್ತ್ರೀಯ ನಿಯಮಗಳ ಪ್ರಕಾರ ಈ ಕಾರಣಗಳಿಂದ ದೋಷ ನಿವಾರಣೆಯಾಗುತ್ತದೆ:",
+    remedies_intro:
+      "ಮಂಗಳ ದೋಷಕ್ಕೆ ಸಾಮಾನ್ಯವಾಗಿ ಶಿಫಾರಸು ಮಾಡುವ ಸಾಂಪ್ರದಾಯಿಕ ಪರಿಹಾರಗಳು ಇವು. ಯಾವುದೇ ಪರಿಹಾರವನ್ನು ಆರಂಭಿಸುವ ಮೊದಲು ನಿಮ್ಮ ಜಾತಕವನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ಪರಿಶೀಲಿಸಿಕೊಳ್ಳಿ:",
+  },
 };
 
 /** Remedies keyed by locale AND status ("purn" / "mild" / "none"). */
@@ -188,6 +249,127 @@ const REMEDIES: Record<string, Record<string, string[]>> = {
     ],
     none: ["विशेष मंगळ-संबंधी उपाय आवश्यक नाहीत. नियमित आध्यात्मिक अभ्यास सुरू ठेवा."],
   },
+  te: {
+    purn: [
+      "ప్రతిరోజూ హనుమాన్ చాలీసా పఠించండి, ముఖ్యంగా మంగళవారం.",
+      "ప్రతి మంగళవారం హనుమాన్ ఆలయానికి వెళ్లి ఎర్రని పూలు, సిందూరం సమర్పించండి.",
+      "మంగళవారం మసూర్ పప్పు, బెల్లం లేదా ఎర్రని వస్త్రం దానం చేయండి.",
+      "మంగళవారం ఉపవాసం ఉండండి; ఆ రోజు పండ్లు, పాలు మాత్రమే తీసుకోండి.",
+      "వివాహానికి ముందు కుంభ వివాహం (రావి చెట్టుతో లేదా కుంభంతో ప్రతీకాత్మక వివాహం) గురించి ఆలోచించండి; జాతకాన్ని పూర్తిగా పరిశీలించిన తర్వాతే.",
+      "పగడాన్ని జాతక పరిశీలన తర్వాతే ధరించండి; ఇది అందరికీ సరిపడదు.",
+    ],
+    mild: [
+      "మంగళవారం హనుమాన్ చాలీసా పఠించండి.",
+      "మంగళవారం మసూర్ పప్పు లేదా బెల్లం దానం చేయండి.",
+      "క్రమం తప్పకుండా హనుమాన్ ఆలయానికి వెళ్లండి.",
+      "మంగళవారం హనుమంతుని ఎదుట ఆవనూనె దీపం వెలిగించండి.",
+    ],
+    none: ["ప్రత్యేకంగా కుజ సంబంధ పరిహారాలు అవసరం లేదు. మీ నిత్య ఆధ్యాత్మిక సాధనను కొనసాగించండి."],
+  },
+  ta: {
+    purn: [
+      "தினமும் ஹனுமான் சாலிசா பாராயணம் செய்யுங்கள், குறிப்பாகச் செவ்வாய்க்கிழமை.",
+      "ஒவ்வொரு செவ்வாய்க்கிழமையும் ஆஞ்சநேயர் கோயிலுக்குச் சென்று சிவப்பு மலர்களும் செந்தூரமும் சமர்ப்பியுங்கள்.",
+      "செவ்வாய்க்கிழமை மசூர் பருப்பு, வெல்லம் அல்லது சிவப்பு ஆடையைத் தானம் செய்யுங்கள்.",
+      "செவ்வாய்க்கிழமை விரதம் இருங்கள்; அன்று பழமும் பாலும் மட்டும் உண்ணுங்கள்.",
+      "திருமணத்துக்கு முன் கும்ப விவாகம் (அரச மரத்துடன் அல்லது கும்பத்துடன் அடையாளத் திருமணம்) பற்றி யோசியுங்கள்; ஜாதகத்தை முழுமையாகச் சரிபார்த்த பிறகே.",
+      "பவளத்தை ஜாதகச் சரிபார்ப்புக்குப் பிறகே அணியுங்கள்; அது எல்லோருக்கும் பொருந்தாது.",
+    ],
+    mild: [
+      "செவ்வாய்க்கிழமை ஹனுமான் சாலிசா பாராயணம் செய்யுங்கள்.",
+      "செவ்வாய்க்கிழமை மசூர் பருப்பு அல்லது வெல்லம் தானம் செய்யுங்கள்.",
+      "தவறாமல் ஆஞ்சநேயர் கோயிலுக்குச் செல்லுங்கள்.",
+      "செவ்வாய்க்கிழமை ஆஞ்சநேயர் முன் கடுகு எண்ணெய் தீபம் ஏற்றுங்கள்.",
+    ],
+    none: ["செவ்வாய் தொடர்பான சிறப்புப் பரிகாரம் தேவையில்லை. உங்கள் வழக்கமான ஆன்மிகப் பயிற்சியைத் தொடருங்கள்."],
+  },
+  kn: {
+    purn: [
+      "ಪ್ರತಿದಿನ ಹನುಮಾನ್ ಚಾಲೀಸಾ ಪಠಿಸಿ, ವಿಶೇಷವಾಗಿ ಮಂಗಳವಾರ.",
+      "ಪ್ರತಿ ಮಂಗಳವಾರ ಹನುಮಂತನ ದೇವಸ್ಥಾನಕ್ಕೆ ಹೋಗಿ ಕೆಂಪು ಹೂವು ಮತ್ತು ಸಿಂಧೂರ ಅರ್ಪಿಸಿ.",
+      "ಮಂಗಳವಾರ ಮಸೂರ್ ಬೇಳೆ, ಬೆಲ್ಲ ಅಥವಾ ಕೆಂಪು ವಸ್ತ್ರವನ್ನು ದಾನ ಮಾಡಿ.",
+      "ಮಂಗಳವಾರ ಉಪವಾಸ ಮಾಡಿ; ಆ ದಿನ ಹಣ್ಣು ಮತ್ತು ಹಾಲು ಮಾತ್ರ ಸೇವಿಸಿ.",
+      "ವಿವಾಹಕ್ಕೆ ಮೊದಲು ಕುಂಭ ವಿವಾಹದ (ಅರಳಿ ಮರ ಅಥವಾ ಕುಂಭದೊಂದಿಗೆ ಸಾಂಕೇತಿಕ ವಿವಾಹ) ಬಗ್ಗೆ ಯೋಚಿಸಿ; ಜಾತಕವನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ಪರಿಶೀಲಿಸಿದ ನಂತರವೇ.",
+      "ಹವಳವನ್ನು ಜಾತಕ ಪರಿಶೀಲನೆಯ ನಂತರವೇ ಧರಿಸಿ; ಇದು ಎಲ್ಲರಿಗೂ ಹೊಂದುವುದಿಲ್ಲ.",
+    ],
+    mild: [
+      "ಮಂಗಳವಾರ ಹನುಮಾನ್ ಚಾಲೀಸಾ ಪಠಿಸಿ.",
+      "ಮಂಗಳವಾರ ಮಸೂರ್ ಬೇಳೆ ಅಥವಾ ಬೆಲ್ಲ ದಾನ ಮಾಡಿ.",
+      "ನಿಯಮಿತವಾಗಿ ಹನುಮಂತನ ದೇವಸ್ಥಾನಕ್ಕೆ ಹೋಗಿ.",
+      "ಮಂಗಳವಾರ ಹನುಮಂತನ ಎದುರು ಸಾಸಿವೆ ಎಣ್ಣೆಯ ದೀಪ ಹಚ್ಚಿ.",
+    ],
+    none: ["ಮಂಗಳಕ್ಕೆ ಸಂಬಂಧಿಸಿದ ವಿಶೇಷ ಪರಿಹಾರಗಳ ಅಗತ್ಯವಿಲ್ಲ. ನಿಮ್ಮ ನಿಯಮಿತ ಆಧ್ಯಾತ್ಮಿಕ ಅಭ್ಯಾಸವನ್ನು ಮುಂದುವರಿಸಿ."],
+  },
+};
+
+/** Status, diagnosis and marriage prose for te / ta / kn (written from the Hindi). */
+interface SouthMangalProse {
+  badge: { none: string; cancelled: string; purn: string; mild: string };
+  severity: { purn: string; mild: string; none: string };
+  fromLagna: (hs: string) => string;
+  fromMoon: (hs: string) => string;
+  diagnosisNone: string;
+  diagnosis: (sign: string, houses: string, sev: string) => string;
+  marriage: { none: string; cancelled: string; purn: string; mild: string };
+}
+
+const SOUTH_PROSE: Record<string, SouthMangalProse> = {
+  te: {
+    badge: { none: "కుజ దోషం లేదు", cancelled: "కుజ దోషం (నివృత్తితో)", purn: "పూర్ణ కుజ దోషం", mild: "స్వల్ప కుజ దోషం" },
+    severity: { purn: "పూర్ణ", mild: "స్వల్ప", none: "లేని" },
+    fromLagna: (hs) => `లగ్నం నుండి ${hs}`,
+    fromMoon: (hs) => `చంద్రుని నుండి ${hs}`,
+    diagnosisNone: "కుజుడు దోషకారక భావాలలో (1, 4, 7, 8, 12) లేడు, కాబట్టి కుజ దోషం లేదు.",
+    diagnosis: (sign, houses, sev) => `కుజుడు ${sign}లో ఉన్నాడు (భావం: ${houses}). ఇది కుజ దోషపు ${sev} రూపం.`,
+    marriage: {
+      none: "వివాహ దృష్టితో కుజ దోషానికి సంబంధించిన ఆటంకం ఏదీ లేదు. పొంతన సాధారణంగానే చూడవచ్చు.",
+      cancelled:
+        "కుజ దోషం ఉన్నప్పటికీ, శాస్త్రీయ నివృత్తి వర్తించడం వల్ల దాని ప్రభావం బాగా తగ్గుతుంది. పొంతనలో సాధారణంగా దీనిని పెద్ద ఆటంకంగా పరిగణించరు.",
+      purn:
+        "పూర్ణ కుజ దోషం వివాహ సంబంధాలలో సవాళ్లు తీసుకురావచ్చు. భాగస్వామి జాతకంలోనూ కుజ దోషం (లేదా సమాన తీవ్రత) ఉంటే ప్రభావం సమతుల్యమవుతుందని సంప్రదాయం చెబుతుంది. ఇద్దరి జాతకాల జాగ్రత్తైన పరిశీలన, సరైన పొంతన ముఖ్యం.",
+      mild:
+        "స్వల్ప కుజ దోషం ప్రభావం పరిమితంగా ఉంటుంది, అయినా పొంతన చూసేటప్పుడు దీనిని లెక్కలోకి తీసుకోవడం మంచిది. భాగస్వామి జాతకాన్ని కూడా దీనితో కలిపి పరిశీలించండి.",
+    },
+  },
+  ta: {
+    badge: {
+      none: "செவ்வாய் தோஷம் இல்லை",
+      cancelled: "செவ்வாய் தோஷம் (நிவர்த்தியுடன்)",
+      purn: "முழு செவ்வாய் தோஷம்",
+      mild: "லேசான செவ்வாய் தோஷம்",
+    },
+    severity: { purn: "முழு", mild: "லேசான", none: "இல்லாத" },
+    fromLagna: (hs) => `லக்னத்திலிருந்து ${hs}`,
+    fromMoon: (hs) => `சந்திரனிலிருந்து ${hs}`,
+    diagnosisNone: "செவ்வாய் தோஷம் தரும் வீடுகளில் (1, 4, 7, 8, 12) செவ்வாய் இல்லை, எனவே செவ்வாய் தோஷம் இல்லை.",
+    diagnosis: (sign, houses, sev) => `செவ்வாய் ${sign} ராசியில் இருக்கிறார் (வீடு: ${houses}). இது செவ்வாய் தோஷத்தின் ${sev} வடிவம்.`,
+    marriage: {
+      none: "திருமணக் கோணத்தில் செவ்வாய் தோஷம் தொடர்பான தடை எதுவும் இல்லை. பொருத்தம் வழக்கம்போல் பார்க்கலாம்.",
+      cancelled:
+        "செவ்வாய் தோஷம் இருந்தாலும், சாஸ்திர நிவர்த்தி பொருந்துவதால் அதன் தாக்கம் வெகுவாகக் குறைகிறது. பொருத்தம் பார்க்கும்போது பொதுவாக இது பெரிய தடையாகக் கருதப்படுவதில்லை.",
+      purn:
+        "முழு செவ்வாய் தோஷம் திருமண உறவுகளில் சவால்களைக் கொண்டுவரலாம். துணையின் ஜாதகத்திலும் செவ்வாய் தோஷம் (அல்லது அதே அளவு தீவிரம்) இருந்தால் தாக்கம் சமநிலைப்படும் என்பது மரபு. இருவரின் ஜாதகத்தையும் கவனமாக ஆராய்வதும் சரியான பொருத்தம் பார்ப்பதும் முக்கியம்.",
+      mild:
+        "லேசான செவ்வாய் தோஷத்தின் தாக்கம் குறைவு, ஆனாலும் பொருத்தம் பார்க்கும்போது இதைக் கணக்கில் எடுப்பது நல்லது. துணையின் ஜாதகத்தையும் இதனுடன் சேர்த்து ஆராயுங்கள்.",
+    },
+  },
+  kn: {
+    badge: { none: "ಮಂಗಳ ದೋಷ ಇಲ್ಲ", cancelled: "ಮಂಗಳ ದೋಷ (ನಿವಾರಣೆಯೊಂದಿಗೆ)", purn: "ಪೂರ್ಣ ಮಂಗಳ ದೋಷ", mild: "ಅಲ್ಪ ಮಂಗಳ ದೋಷ" },
+    severity: { purn: "ಪೂರ್ಣ", mild: "ಅಲ್ಪ", none: "ಇಲ್ಲದ" },
+    fromLagna: (hs) => `ಲಗ್ನದಿಂದ ${hs}`,
+    fromMoon: (hs) => `ಚಂದ್ರನಿಂದ ${hs}`,
+    diagnosisNone: "ಮಂಗಳ ದೋಷಕಾರಕ ಭಾವಗಳಲ್ಲಿ (1, 4, 7, 8, 12) ಮಂಗಳ ಇಲ್ಲ, ಆದ್ದರಿಂದ ಮಂಗಳ ದೋಷ ಇಲ್ಲ.",
+    diagnosis: (sign, houses, sev) => `ಮಂಗಳ ${sign} ರಾಶಿಯಲ್ಲಿದ್ದಾನೆ (ಭಾವ: ${houses}). ಇದು ಮಂಗಳ ದೋಷದ ${sev} ರೂಪ.`,
+    marriage: {
+      none: "ವಿವಾಹದ ದೃಷ್ಟಿಯಿಂದ ಮಂಗಳ ದೋಷಕ್ಕೆ ಸಂಬಂಧಿಸಿದ ಯಾವುದೇ ಅಡ್ಡಿ ಇಲ್ಲ. ಜಾತಕ ಹೊಂದಾಣಿಕೆಯನ್ನು ಸಾಮಾನ್ಯವಾಗಿ ನೋಡಬಹುದು.",
+      cancelled:
+        "ಮಂಗಳ ದೋಷ ಇದ್ದರೂ, ಶಾಸ್ತ್ರೀಯ ನಿವಾರಣೆ ಅನ್ವಯಿಸುವುದರಿಂದ ಅದರ ಪ್ರಭಾವ ಬಹಳಷ್ಟು ಕಡಿಮೆಯಾಗುತ್ತದೆ. ಹೊಂದಾಣಿಕೆಯಲ್ಲಿ ಸಾಮಾನ್ಯವಾಗಿ ಇದನ್ನು ದೊಡ್ಡ ಅಡ್ಡಿಯೆಂದು ಪರಿಗಣಿಸುವುದಿಲ್ಲ.",
+      purn:
+        "ಪೂರ್ಣ ಮಂಗಳ ದೋಷ ವಿವಾಹ ಸಂಬಂಧಗಳಲ್ಲಿ ಸವಾಲುಗಳನ್ನು ತರಬಹುದು. ಸಂಗಾತಿಯ ಜಾತಕದಲ್ಲೂ ಮಂಗಳ ದೋಷ (ಅಥವಾ ಸಮಾನ ತೀವ್ರತೆ) ಇದ್ದರೆ ಪ್ರಭಾವ ಸಮತೋಲನಗೊಳ್ಳುತ್ತದೆ ಎಂಬುದು ಸಂಪ್ರದಾಯ. ಇಬ್ಬರ ಜಾತಕಗಳ ಎಚ್ಚರಿಕೆಯ ಪರಿಶೀಲನೆ ಮತ್ತು ಸರಿಯಾದ ಹೊಂದಾಣಿಕೆ ಮುಖ್ಯ.",
+      mild:
+        "ಅಲ್ಪ ಮಂಗಳ ದೋಷದ ಪ್ರಭಾವ ಸೀಮಿತ, ಆದರೂ ಹೊಂದಾಣಿಕೆ ನೋಡುವಾಗ ಇದನ್ನು ಗಣನೆಗೆ ತೆಗೆದುಕೊಳ್ಳುವುದು ಒಳ್ಳೆಯದು. ಸಂಗಾತಿಯ ಜಾತಕವನ್ನೂ ಇದರೊಂದಿಗೆ ಸೇರಿಸಿ ಪರಿಶೀಲಿಸಿ.",
+    },
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -215,6 +397,12 @@ function badgeClass(d: MangalDoshaData): string {
 /** Cover-badge headline — combines dosha presence + cancellation into one label. */
 function statusBadgeText(loc: string, d: MangalDoshaData): string {
   const l = pickLocale(loc);
+  const south = SOUTH_PROSE[l];
+  if (south) {
+    if (!d.HasDosha) return south.badge.none;
+    if (d.Cancelled) return south.badge.cancelled;
+    return d.Status === "purn" ? south.badge.purn : south.badge.mild;
+  }
   if (!d.HasDosha) {
     if (l === "hi") return "मंगल दोष नहीं";
     if (l === "mr") return "मंगळ दोष नाही";
@@ -238,6 +426,8 @@ function statusBadgeText(loc: string, d: MangalDoshaData): string {
 /** "purn"/"mild"/"none" → human severity word. */
 function severityLabel(loc: string, status: string | undefined): string {
   const l = pickLocale(loc);
+  const south = SOUTH_PROSE[l];
+  if (south) return status === "purn" ? south.severity.purn : status === "mild" ? south.severity.mild : south.severity.none;
   if (l === "hi") return status === "purn" ? "पूर्ण" : status === "mild" ? "अल्प" : "कोई नहीं";
   if (l === "mr") return status === "purn" ? "पूर्ण" : status === "mild" ? "अल्प" : "कोणताही नाही";
   return status === "purn" ? "full" : status === "mild" ? "mild" : "no";
@@ -261,6 +451,11 @@ function formatGenerated(iso?: string): string {
 /** One-paragraph plain-prose diagnosis. `MarsPlacement.sign` is locale-resolved. */
 function diagnosisText(loc: string, d: MangalDoshaData): string {
   const l = pickLocale(loc);
+  const south = SOUTH_PROSE[l];
+  if (south) {
+    if (!d.HasDosha) return south.diagnosisNone;
+    return south.diagnosis(d.MarsPlacement?.sign ?? "", formatHouses(loc, d.HousesOccupied), severityLabel(loc, d.Status));
+  }
   if (!d.HasDosha) {
     if (l === "hi")
       return "मंगल का स्थान दोषकारक भावों (1, 4, 7, 8, 12) में नहीं है, अतः मंगल दोष नहीं है।";
@@ -290,7 +485,11 @@ function formatHouses(loc: string, houses?: number[]): string {
   const lagna = hs.filter((h) => h > 0).map(String);
   const moon = hs.filter((h) => h < 0).map((h) => String(-h));
   const parts: string[] = [];
-  if (l === "hi") {
+  const south = SOUTH_PROSE[l];
+  if (south) {
+    if (lagna.length) parts.push(south.fromLagna(lagna.join(", ")));
+    if (moon.length) parts.push(south.fromMoon(moon.join(", ")));
+  } else if (l === "hi") {
     if (lagna.length) parts.push(`लग्न से ${lagna.join(", ")}`);
     if (moon.length) parts.push(`चंद्र से ${moon.join(", ")}`);
   } else if (l === "mr") {
@@ -306,6 +505,12 @@ function formatHouses(loc: string, houses?: number[]): string {
 /** Marriage-implications prose, keyed off status + cancellation state. */
 function marriageImplicationsText(loc: string, d: MangalDoshaData): string {
   const l = pickLocale(loc);
+  const south = SOUTH_PROSE[l];
+  if (south) {
+    if (!d.HasDosha) return south.marriage.none;
+    if (d.Cancelled) return south.marriage.cancelled;
+    return d.Status === "purn" ? south.marriage.purn : south.marriage.mild;
+  }
   if (!d.HasDosha) {
     if (l === "hi")
       return "विवाह के दृष्टिकोण से मंगल दोष से सम्बंधित कोई बाधा नहीं है। मेल मिलान सामान्य रूप से किया जा सकता है।";

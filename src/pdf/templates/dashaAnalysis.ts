@@ -25,6 +25,7 @@ import {
   type Branding,
   type RawBranding,
 } from "../shared.js";
+import { lordLabel } from "../locales.js";
 
 /**
  * One dasha period at any depth (Mahadasha, Antardasha, or Yogini period).
@@ -35,6 +36,8 @@ export interface DashaPeriodView {
   Lord?: string;
   /** Devanagari lord name, e.g. "शनि" (used for hi/mr). */
   LordHI?: string;
+  /** Lord in the request locale (any non-en locale; omitted for en). Preferred when present. */
+  LordLocal?: string;
   /** Pre-formatted start date "YYYY-MM-DD". */
   StartDate?: string;
   /** Pre-formatted end date "YYYY-MM-DD". */
@@ -201,6 +204,110 @@ const LABELS: Record<string, Record<string, string>> = {
     th_duration: "कालावधी",
     years: "वर्षे",
   },
+  te: {
+    title_dasha: "దశా విశ్లేషణ",
+    subtitle_dasha: "వింశోత్తరి లోతైన వివరణ: గత, ప్రస్తుత మరియు రాబోయే దశలు",
+    born: "జననం",
+    at: "సమయం",
+    generated: "రూపొందించిన తేదీ",
+    section_active: "ప్రస్తుతం నడుస్తున్న దశా స్థాయిలు",
+    section_predictions: "నడుస్తున్న ఉప దశల ఫలితాలు",
+    section_all_md: "మొత్తం 9 మహాదశలు (120 సంవత్సరాల చక్రం)",
+    section_past: "గత 20 సంవత్సరాల సమీక్ష",
+    section_future: "రాబోయే 10 సంవత్సరాల ముందుచూపు",
+    section_yogini: "యోగిని దశ (రెండవ పద్ధతి)",
+    active_intro:
+      "ఈ ఐదు దశా స్థాయిలు ఇప్పుడు ఒకేసారి నడుస్తున్నాయి. బయటి మహాదశ విస్తృత భావాన్ని నిర్ణయిస్తుంది; లోపలి ప్రతి స్థాయి మరింత సూక్ష్మమైన సమయ సూచన ఇస్తుంది.",
+    active_unavailable: "ఈ జాతకానికి నడుస్తున్న దశా స్థాయిలు అందుబాటులో లేవు.",
+    past_intro: "గత 20 సంవత్సరాలలో వచ్చిన మహాదశలు; వెనక్కి తిరిగి చూసుకోవడానికి ఉపయోగపడతాయి.",
+    past_none: "ఈ జాతకానికి గత 20 సంవత్సరాల మహాదశలు ఏవీ అందుబాటులో లేవు.",
+    future_intro:
+      "రాబోయే 10 సంవత్సరాలలోని అంతర్దశలు; దగ్గరి కాలపు ప్రణాళికకు మహాదశ కంటే మరింత సూక్ష్మ దృష్టి.",
+    future_none: "రాబోయే 10 సంవత్సరాలకు దశలు ఏవీ అందుబాటులో లేవు.",
+    yogini_intro:
+      "యోగిని దశ ఎనిమిది కాలాల రెండవ పద్ధతి; సమయ నిర్ణయాన్ని ధృవీకరించడానికి వింశోత్తరితో పాటు దీనిని ఉపయోగిస్తారు.",
+    md_unavailable: "ఈ జాతకానికి మహాదశల క్రమం అందుబాటులో లేదు.",
+    lvl_maha: "మహాదశ",
+    lvl_antar: "అంతర్దశ",
+    lvl_pratyantar: "ప్రత్యంతర్దశ",
+    lvl_sookshma: "సూక్ష్మ దశ",
+    lvl_prana: "ప్రాణ దశ",
+    th_lord: "అధిపతి",
+    th_start: "ప్రారంభం",
+    th_end: "ముగింపు",
+    th_duration: "కాలం",
+    years: "సంవత్సరాలు",
+  },
+  // Tamil names the levels the way Tamil readers say them: திசை, புக்தி,
+  // அந்தரம் (not மகாதசா / அந்தர்தசா).
+  ta: {
+    title_dasha: "திசா பகுப்பாய்வு",
+    subtitle_dasha: "விம்சோத்தரி ஆழ்ந்த விளக்கம்: கடந்த, நடப்பு, வரவிருக்கும் திசைகள்",
+    born: "பிறப்பு",
+    at: "நேரம்",
+    generated: "தயாரித்த நாள்",
+    section_active: "தற்போது நடக்கும் திசை நிலைகள்",
+    section_predictions: "நடக்கும் உப காலங்களுக்கான பலன்கள்",
+    section_all_md: "அனைத்து 9 திசைகள் (120 ஆண்டு சுழற்சி)",
+    section_past: "கடந்த 20 ஆண்டுகளின் மீளாய்வு",
+    section_future: "அடுத்த 10 ஆண்டுகளின் முன்னோட்டம்",
+    section_yogini: "யோகினி திசை (இரண்டாம் முறை)",
+    active_intro:
+      "இந்த ஐந்து திசை நிலைகளும் இப்போது ஒரே நேரத்தில் நடக்கின்றன. வெளியே உள்ள திசை பொதுவான போக்கை அமைக்கிறது; உள்ளே உள்ள ஒவ்வொரு நிலையும் இன்னும் நுட்பமான கால அறிகுறியைத் தருகிறது.",
+    active_unavailable: "இந்த ஜாதகத்துக்கு நடக்கும் திசை நிலைகள் கிடைக்கவில்லை.",
+    past_intro: "கடந்த 20 ஆண்டுகளில் நடந்த திசைகள்; திரும்பிப் பார்த்துப் புரிந்துகொள்ள உதவும்.",
+    past_none: "இந்த ஜாதகத்துக்கு கடந்த 20 ஆண்டுகளின் திசை எதுவும் கிடைக்கவில்லை.",
+    future_intro:
+      "அடுத்த 10 ஆண்டுகளில் வரும் புக்திகள்; அருகிலுள்ள காலத் திட்டமிடலுக்கு திசையை விட நுட்பமான பார்வை.",
+    future_none: "அடுத்த 10 ஆண்டுகளுக்கு திசை எதுவும் கிடைக்கவில்லை.",
+    yogini_intro:
+      "யோகினி திசை எட்டு காலங்கள் கொண்ட இரண்டாம் முறை; கால நிர்ணயத்தை உறுதிப்படுத்த விம்சோத்தரியுடன் சேர்த்துப் பயன்படுத்தப்படுகிறது.",
+    md_unavailable: "இந்த ஜாதகத்துக்கு திசை வரிசை கிடைக்கவில்லை.",
+    lvl_maha: "திசை",
+    lvl_antar: "புக்தி",
+    lvl_pratyantar: "அந்தரம்",
+    lvl_sookshma: "சூட்சுமம்",
+    lvl_prana: "பிராணம்",
+    th_lord: "அதிபதி",
+    th_start: "தொடக்கம்",
+    th_end: "முடிவு",
+    th_duration: "காலம்",
+    years: "ஆண்டுகள்",
+  },
+  kn: {
+    title_dasha: "ದಶಾ ವಿಶ್ಲೇಷಣೆ",
+    subtitle_dasha: "ವಿಂಶೋತ್ತರಿ ಆಳವಾದ ವಿವರಣೆ: ಹಿಂದಿನ, ಪ್ರಸ್ತುತ ಮತ್ತು ಮುಂಬರುವ ದಶೆಗಳು",
+    born: "ಜನನ",
+    at: "ಸಮಯ",
+    generated: "ತಯಾರಿಸಿದ ದಿನಾಂಕ",
+    section_active: "ಈಗ ನಡೆಯುತ್ತಿರುವ ದಶಾ ಹಂತಗಳು",
+    section_predictions: "ನಡೆಯುತ್ತಿರುವ ಉಪ ದಶೆಗಳ ಫಲಗಳು",
+    section_all_md: "ಎಲ್ಲಾ 9 ಮಹಾದಶೆಗಳು (120 ವರ್ಷಗಳ ಚಕ್ರ)",
+    section_past: "ಕಳೆದ 20 ವರ್ಷಗಳ ಅವಲೋಕನ",
+    section_future: "ಮುಂದಿನ 10 ವರ್ಷಗಳ ಮುನ್ನೋಟ",
+    section_yogini: "ಯೋಗಿನಿ ದಶೆ (ಎರಡನೇ ಪದ್ಧತಿ)",
+    active_intro:
+      "ಈ ಐದು ದಶಾ ಹಂತಗಳು ಈಗ ಒಟ್ಟಿಗೆ ನಡೆಯುತ್ತಿವೆ. ಹೊರಗಿನ ಮಹಾದಶೆ ವಿಶಾಲ ಭಾವವನ್ನು ನಿರ್ಧರಿಸುತ್ತದೆ; ಒಳಗಿನ ಪ್ರತಿಯೊಂದು ಹಂತವೂ ಇನ್ನಷ್ಟು ಸೂಕ್ಷ್ಮ ಸಮಯ ಸೂಚನೆ ನೀಡುತ್ತದೆ.",
+    active_unavailable: "ಈ ಜಾತಕಕ್ಕೆ ನಡೆಯುತ್ತಿರುವ ದಶಾ ಹಂತಗಳು ಲಭ್ಯವಿಲ್ಲ.",
+    past_intro: "ಕಳೆದ 20 ವರ್ಷಗಳಲ್ಲಿ ಬಂದ ಮಹಾದಶೆಗಳು; ಹಿನ್ನೋಟಕ್ಕೆ ಉಪಯುಕ್ತ.",
+    past_none: "ಈ ಜಾತಕಕ್ಕೆ ಕಳೆದ 20 ವರ್ಷಗಳ ಯಾವುದೇ ಮಹಾದಶೆ ಲಭ್ಯವಿಲ್ಲ.",
+    future_intro:
+      "ಮುಂದಿನ 10 ವರ್ಷಗಳ ಅಂತರ್ದಶೆಗಳು; ಹತ್ತಿರದ ಕಾಲದ ಯೋಜನೆಗೆ ಮಹಾದಶೆಗಿಂತ ಹೆಚ್ಚು ಸೂಕ್ಷ್ಮ ದೃಷ್ಟಿ.",
+    future_none: "ಮುಂದಿನ 10 ವರ್ಷಗಳಿಗೆ ಯಾವುದೇ ದಶೆ ಲಭ್ಯವಿಲ್ಲ.",
+    yogini_intro:
+      "ಯೋಗಿನಿ ದಶೆ ಎಂಟು ಕಾಲಗಳ ಎರಡನೇ ಪದ್ಧತಿ; ಸಮಯ ನಿರ್ಣಯವನ್ನು ದೃಢಪಡಿಸಲು ವಿಂಶೋತ್ತರಿಯ ಜೊತೆಗೆ ಇದನ್ನು ಬಳಸಲಾಗುತ್ತದೆ.",
+    md_unavailable: "ಈ ಜಾತಕಕ್ಕೆ ಮಹಾದಶೆಗಳ ಕ್ರಮ ಲಭ್ಯವಿಲ್ಲ.",
+    lvl_maha: "ಮಹಾದಶೆ",
+    lvl_antar: "ಅಂತರ್ದಶೆ",
+    lvl_pratyantar: "ಪ್ರತ್ಯಂತರ ದಶೆ",
+    lvl_sookshma: "ಸೂಕ್ಷ್ಮ ದಶೆ",
+    lvl_prana: "ಪ್ರಾಣ ದಶೆ",
+    th_lord: "ಅಧಿಪತಿ",
+    th_start: "ಆರಂಭ",
+    th_end: "ಅಂತ್ಯ",
+    th_duration: "ಅವಧಿ",
+    years: "ವರ್ಷಗಳು",
+  },
 };
 
 /** Report-specific CSS, ported from the Go template's <style> block. */
@@ -240,11 +347,15 @@ const EXTRA_CSS = `
 .empty-list { margin: 3mm 0; color: var(--brand-secondary); font-style: italic; }
 `;
 
-/** Resolve a period's lord name for the locale (Devanagari for hi/mr). */
+/**
+ * Resolve a period's lord name for the locale: the API's LordLocal when present
+ * (any non-en locale), else LordHI for hi/mr, the engine's native planet /
+ * Yogini name for te/ta/kn (older API builds sent only Lord + LordHI).
+ */
 function periodLord(period: DashaPeriodView | undefined, locale: string): string {
   if (!period) return "";
-  if ((locale === "hi" || locale === "mr") && period.LordHI) return period.LordHI;
-  return period.Lord ?? "";
+  if (period.LordLocal) return period.LordLocal;
+  return lordLabel(locale, period.Lord, period.LordHI);
 }
 
 /** One row of the active 5-level stack. */

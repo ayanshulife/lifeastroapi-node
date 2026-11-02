@@ -36,6 +36,7 @@ import { renderMangalDoshaHtml } from "./templates/mangalDosha.js";
 import { htmlToPdf, measureTocEntries, tocPagesFromPdf, type HtmlToPdfOptions } from "./render.js";
 import { addPdfOutline, type OutlineItem } from "./outline.js";
 import type { Branding } from "./shared.js";
+import { PART_PREFIX_RE, TOC_HEADING } from "./locales.js";
 import {
   brihadHeaderTemplate,
   brihadFooterTemplate,
@@ -184,17 +185,15 @@ export const kundliBrihadPdf = async (
  * all sections resolve to level 1 — still a flat, fully navigable sidebar.
  */
 function brihadOutlineLevel(title: string): number {
-  // A Part heading is emitted as "Part N: …" / "भाग N: …" by the renderer.
-  // NOTE: \b is ASCII-only and never matches after a Devanagari letter, so we
-  // match "Part"/"भाग" followed by whitespace or a digit instead.
-  return /^(part|भाग)[\s\d]/i.test(title.trim()) ? 1 : 2;
+  // A Part heading is emitted as "Part N: …" / "भाग N: …" / "భాగం N: …" /
+  // "பகுதி N: …" / "ಭಾಗ N: …" by the renderer (see PART_PREFIX_RE).
+  return PART_PREFIX_RE.test(title.trim()) ? 1 : 2;
 }
 
 /** Locale-aware TOC heading. */
 function pickTocHeading(data: unknown): string {
   const loc = (data as { Locale?: string }).Locale ?? "en";
-  if (loc === "hi" || loc === "mr") return "विषय-सूची";
-  return "Table of Contents";
+  return TOC_HEADING[loc] ?? (TOC_HEADING.en as string);
 }
 
 /** Insert a TOC section immediately after the cover section. */

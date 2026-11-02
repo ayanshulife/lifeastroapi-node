@@ -31,6 +31,7 @@ import {
   type BrihadDeepData,
   type BrihadNarrativeChapter,
 } from "./kundliBrihadSections.js";
+import { isDevanagariLocale, lordLabel } from "../locales.js";
 
 // ---------------------------------------------------------------------------
 // Data shapes — JSON keys exactly as emitted by the Go struct.
@@ -71,6 +72,8 @@ export interface BrihadHouseSection {
   HouseNum?: number;
   LordEN?: string;
   LordHI?: string;
+  /** Lord in the request locale (any non-en locale; omitted for en). Preferred when present. */
+  LordLocal?: string;
   LordSign?: string;
   Body?: string;
 }
@@ -79,6 +82,8 @@ export interface BrihadHouseSection {
 export interface BrihadYoga {
   NameEN?: string;
   NameHI?: string;
+  /** Name in the request locale (any non-en locale; omitted for en). Preferred when present. */
+  NameLocal?: string;
   Effect?: string;
   Source?: string;
 }
@@ -87,6 +92,8 @@ export interface BrihadYoga {
 export interface BrihadDashaPeriod {
   Lord?: string;
   LordHI?: string;
+  /** Lord in the request locale (any non-en locale; omitted for en). Preferred when present. */
+  LordLocal?: string;
   StartDate?: string;
   EndDate?: string;
   DurationY?: number;
@@ -120,6 +127,8 @@ export interface BrihadDivisional {
 export interface BrihadDoshaEntry {
   NameEN?: string;
   NameHI?: string;
+  /** Name in the request locale (any non-en locale; omitted for en). Preferred when present. */
+  NameLocal?: string;
   Severity?: string;
   Body?: string;
   Source?: string;
@@ -574,6 +583,407 @@ export const LABELS: Record<string, Record<string, string>> = {
     citations_intro:
       "या अहवालातील प्रत्येक व्याख्या एखाद्या शास्त्रीय ग्रंथावर आधारित आहे. खाली उद्धृत स्रोतांची यादी दिली आहे:",
   },
+  // te / ta / kn are written from the Hindi block above (owner rule: Hindi is
+  // the source for regional languages). Planet/sign names in the data come
+  // from the API; these are only the template's own words.
+  te: {
+    section_avakahada: "అవకహడ చక్రం (జన్మ వివరాలు)",
+    avk_paya: "పాయ", avk_varna: "వర్ణం", avk_vashya: "వశ్యం", avk_yoni: "యోని",
+    avk_gana: "గణం", avk_nadi: "నాడి", avk_tatva: "తత్త్వం", avk_nak_lord: "నక్షత్రాధిపతి",
+    avk_rashi_lord: "రాశ్యధిపతి", avk_lagna_lord: "లగ్నాధిపతి",
+    section_panchang: "జన్మ సమయ పంచాంగం",
+    panchang_intro: "మీ జనన సమయంలోని పంచాంగం: తిథి, వారం, నక్షత్రం, యోగం మరియు కరణం.",
+    panchang_tithi: "తిథి", panchang_vara: "వారం", panchang_nakshatra: "నక్షత్రం",
+    panchang_yoga: "యోగం", panchang_karana: "కరణం",
+    section_gems: "రత్న సూచన",
+    gems_intro: "మీ జాతకంలో అత్యంత శుభ భావాల (లగ్నం మరియు త్రికోణాలు) అధిపతులకు బలాన్నిచ్చే రత్నాలు.",
+    gems_kind: "రకం", gems_stone: "రత్నం", gems_planet: "గ్రహం", gems_reason: "ఆధారం",
+    gems_note: "మీ జాతకాన్ని పూర్తిగా పరిశీలించిన తర్వాతే రత్నాన్ని ధరించండి; సరైన బరువు, లోహం మరియు ధరించే రోజు ముఖ్యం.",
+    section_ghata: "ఘాత చక్రం (అశుభ అంశాలు)",
+    ghata_intro: "ఘాత చక్రం మీకు అశుభమైన వారం, తిథి, మాసం మరియు నక్షత్రాన్ని సూచిస్తుంది.",
+    ghata_weekday: "అశుభ వారం", ghata_tithi: "తిథి", ghata_month: "మాసం",
+    ghata_nakshatra: "నక్షత్రం", ghata_yoga: "యోగం", ghata_karana: "కరణం",
+    ghata_prahar: "జాము", ghata_rashi: "ఘాత రాశి",
+    section_chalit: "భావ చలితం (భావ సంధి చక్రం)",
+    chalit_intro: "చలిత చక్రం గ్రహాలను ఖచ్చితమైన భావ సంధుల (శ్రీపతి పద్ధతి) ప్రకారం ఉంచుతుంది, దీనివల్ల రాశి చక్రంలో కనిపించని భావ మార్పులు బయటపడతాయి.",
+    chalit_house: "భావం", chalit_begin: "ప్రారంభం", chalit_madhya: "మధ్యం",
+    chalit_planets: "గ్రహాల భావ మార్పులు", chalit_rashi_house: "రాశి భావం",
+    chalit_bhava_house: "చలిత భావం", chalit_shifted: "మారింది",
+    section_kp: "కేపీ పద్ధతి (కృష్ణమూర్తి పద్ధతి)",
+    kp_intro: "కేపీ నక్షత్ర పద్ధతి ప్రకారం భావ సంధి ఉప అధిపతులు మరియు గ్రహ కారకాలు.",
+    kp_star_lord: "నక్షత్రాధిపతి", kp_sub_lord: "ఉప అధిపతి", kp_subsub_lord: "ఉప ఉప అధిపతి",
+    kp_significators: "గ్రహ కారకాలు", kp_signifies_houses: "సూచించే భావాలు",
+    kp_ruling_planets: "పాలక గ్రహాలు", kp_rp_role: "పాత్ర",
+    kp_rp_lagna_nakshatra_lord: "లగ్న నక్షత్రాధిపతి", kp_rp_lagna_rashi_lord: "లగ్న రాశ్యధిపతి",
+    kp_rp_moon_nakshatra_lord: "చంద్ర నక్షత్రాధిపతి", kp_rp_moon_rashi_lord: "చంద్ర రాశ్యధిపతి",
+    kp_rp_day_lord: "వారాధిపతి", kp_rp_lagna_sub_lord: "లగ్న ఉప అధిపతి", kp_rp_moon_sub_lord: "చంద్ర ఉప అధిపతి",
+    section_jaimini: "జైమిని పద్ధతి",
+    jaimini_charakarakas: "చర కారకాలు", jaimini_karaka: "కారకుడు",
+    jaimini_karakamsa: "కారకాంశ", jaimini_swamsa: "స్వాంశ", jaimini_arudha: "ఆరూఢ పదాలు",
+    jaimini_pada: "పదం",
+    section_ishta: "ఇష్ట దేవత",
+    ishta_intro: "ఇష్ట దేవత ఆధ్యాత్మిక పురోగతికి మీ వ్యక్తిగత దైవం; కారకాంశ నుండి పన్నెండవ భావం ద్వారా తెలుస్తుంది.",
+    ishta_deity: "దేవత", ishta_12th_sign: "కారకాంశ నుండి 12వ రాశి", ishta_graha: "నిర్ణయించే గ్రహం",
+    section_maitri: "మైత్రీ చక్రం (గ్రహ మైత్రి)",
+    maitri_intro: "గ్రహాల మధ్య నైసర్గిక, తాత్కాలిక మరియు పంచధా (సంయుక్త) మైత్రీ సంబంధాలు.",
+    maitri_naisargik: "నైసర్గిక (సహజ)", maitri_tatkalik: "తాత్కాలిక",
+    maitri_panchadha: "పంచధా (సంయుక్త)",
+    section_avastha: "గ్రహ అవస్థలు",
+    avastha_intro: "బాలాది, జాగ్రదాది మరియు దీప్తాది పద్ధతుల ప్రకారం ప్రతి గ్రహపు అవస్థలు.",
+    avastha_baladi: "బాలాది", avastha_jagradadi: "జాగ్రదాది", avastha_deeptadi: "దీప్తాది",
+    section_lalkitab: "లాల్ కితాబ్ విశ్లేషణ",
+    lalkitab_intro: "లాల్ కితాబ్ భావాలు, పితృ ఋణాలు మరియు తేవా వర్గీకరణ.",
+    lalkitab_planets: "గ్రహ స్థితి", lalkitab_rins: "పితృ ఋణాలు",
+    lalkitab_rin: "ఋణం", lalkitab_status: "స్థితి",
+    lk_present: "ఉంది", lk_absent: "లేదు",
+    section_shadbala: "షడ్బలం (ఆరు విధాల బలం)",
+    shadbala_intro: "రూపాలలో మొత్తం షడ్బలం, అత్యంత బలమైన గ్రహం నుండి బలహీనమైన గ్రహం వరకు క్రమంలో.",
+    shadbala_rupas: "రూపాలు", shadbala_rank: "క్రమం",
+    section_bhavabala: "భావ బలం (భావాల శక్తి)",
+    bhavabala_intro: "పన్నెండు భావాలలో ప్రతి దాని బలం: భావాధిపతి బలం, దిగ్బలం మరియు దృష్టి బలం.",
+    bb_lord: "భావాధిపతి బలం", bb_dig: "దిగ్బలం", bb_drsti: "దృష్టి బలం", bb_total: "మొత్తం",
+    section_ashtakavarga: "అష్టకవర్గ",
+    ashtakavarga_intro: "ప్రతి రాశికి సర్వాష్టకవర్గ (SAV) శుభ బిందువుల మొత్తం, మరియు గ్రహాల వారీగా భిన్నాష్టకవర్గ.",
+    ashtakavarga_sav: "రాశి", ashtakavarga_bindus: "బిందువులు", ashtakavarga_total: "మొత్తం",
+    ashtakavarga_prastar: "గ్రహాల వారీ మొత్తం", ashtakavarga_planet_total: "మొత్తం బిందువులు",
+    section_varshaphal: "వర్షఫలం (వార్షిక జాతకం)",
+    section_mudda: "మాసవారీ ఫలితాలు (ముద్దా దశ)",
+    varshaphal_to: "నుండి",
+    varshaphal_intro: "ముంథా, వర్షాధిపతి, సహమలు మరియు పంచవర్గీయ బలంతో కూడిన వార్షిక సౌర పునరాగమన విశ్లేషణ.",
+    varshaphal_year: "సంవత్సరం", varshaphal_muntha: "ముంథా", varshaphal_lord: "వర్షాధిపతి",
+    varshaphal_sahams: "సహమలు (సున్నిత బిందువులు)", varshaphal_saham: "సహమం",
+    varshaphal_panchavargeeya: "పంచవర్గీయ బలం", varshaphal_vishwa: "విశ్వ",
+    section_rajyoga: "రాజయోగ బలం మరియు స్వర్ణ కాలాలు",
+    rajyoga_strength: "రాజయోగ బలం", rajyoga_planets: "యోగకారక గ్రహాలు",
+    rajyoga_swarnim: "స్వర్ణ కాలాలు", rajyoga_from: "నుండి", rajyoga_to: "వరకు",
+    title_brihad: "బృహత్ జాతకం",
+    subtitle_brihad: "సమగ్ర వైదిక జ్యోతిష విశ్లేషణ",
+    born: "జననం",
+    at: "సమయం",
+    in: "స్థానం:",
+    generated: "రూపొందించిన తేదీ",
+    part_foundations: "భాగం 1: పునాదులు",
+    part_life_reading: "భాగం 2: మీ జీవన ఫలితాలు",
+    part_yoga_dosha: "భాగం 3: యోగాలు మరియు దోషాలు",
+    part_dasha: "భాగం 4: దశా ఫలితాలు",
+    part_remedies: "భాగం 5: పరిహారాలు మరియు మార్గదర్శనం",
+    part_technical: "భాగం 6: సాంకేతిక పట్టికలు",
+    part_varshaphal: "భాగం 7: వర్షఫలం (వార్షిక)",
+    section_chart: "జన్మ జాతక సారాంశం",
+    chart_lagna: "లగ్న చక్రం", chart_navamsa: "నవాంశ చక్రం",
+    section_graha_sthiti: "గ్రహ స్థితి",
+    section_planets_analysis: "గ్రహ విశ్లేషణ",
+    section_houses: "భావ విశ్లేషణ",
+    section_yogas: "జాతకంలోని యోగాలు",
+    section_dashas: "వింశోత్తరి దశ: జీవన కాలాలు",
+    section_remedies: "సూచించిన పరిహారాలు",
+    ascendant: "లగ్నం",
+    nakshatra: "నక్షత్రం",
+    pada: "పాదం",
+    planet: "గ్రహం",
+    sign: "రాశి",
+    degree: "భాగలు",
+    house: "భావం",
+    lord: "అధిపతి",
+    current_dasha: "ప్రస్తుత మహాదశ",
+    upcoming_dashas: "రాబోయే మహాదశలు",
+    years: "సంవత్సరాలు",
+    date_to: "నుండి",
+    yogas_none: "ఈ జాతకంలో ప్రధాన యోగాలు ఏవీ కనిపించలేదు.",
+    dashas_none: "ఈ జాతకానికి దశా గణన అందుబాటులో లేదు.",
+    remedies_none: "ప్రస్తుతం ప్రత్యేక పరిహారాలు అవసరం లేదు.",
+    house_no_content: "ఈ భావానికి వివరమైన వ్యాఖ్యానం సిద్ధమవుతోంది.",
+    source: "ఆధారం",
+    section_divisionals: "వర్గ చక్రాలు",
+    divisionals_intro: "వర్గ చక్రాలు జీవితంలోని ప్రత్యేక రంగాలను లోతుగా చూపిస్తాయి; ప్రతి చక్రం ఒక్కో అంశాన్ని సూక్ష్మంగా విశ్లేషిస్తుంది, ఉదాహరణకు ధనం, తోబుట్టువులు, వివాహం, వృత్తి మరియు ఆధ్యాత్మిక పురోగతి.",
+    section_doshas: "దోష విశ్లేషణ",
+    section_predictions: "జీవిత రంగాల వారీగా ఫలితాలు",
+    section_citations: "శాస్త్రీయ ఆధారాలు మరియు ప్రమాణాలు",
+    divisional_lagna: "లగ్నం",
+    dosha_mangal: "కుజ దోషం",
+    dosha_kaalsarp: "కాలసర్ప దోషం",
+    dosha_pitra: "పితృ దోషం",
+    dosha_severity_present: "ఉంది",
+    dosha_severity_cancelled: "నివారితం",
+    dosha_severity_mild: "స్వల్పం",
+    doshas_none_detected: "ఈ జాతకంలో ప్రధాన దోషాలు ఏవీ కనిపించలేదు.",
+    area_career: "వృత్తి మరియు వ్యాపారం",
+    area_marriage: "వివాహం మరియు సంబంధాలు",
+    area_wealth: "ధనం మరియు ఆర్థికం",
+    area_health: "ఆరోగ్యం మరియు తేజస్సు",
+    area_education: "విద్య మరియు అభ్యాసం",
+    area_family: "కుటుంబం మరియు ఇల్లు",
+    predictions_none: "ఈ జాతకానికి వ్యక్తిగత ఫలితాలు సిద్ధమవుతున్నాయి.",
+    citations_none: "ఈ జాతకానికి ప్రస్తుతం శాస్త్రీయ ఆధారాలు అందుబాటులో లేవు.",
+    citations_intro:
+      "ఈ నివేదికలోని ప్రతి వ్యాఖ్యానం ఏదో ఒక శాస్త్రీయ గ్రంథంపై ఆధారపడి ఉంది. ఉదహరించిన ఆధారాల జాబితా కింద ఇవ్వబడింది:",
+  },
+  ta: {
+    section_avakahada: "அவகஹடா சக்கரம் (ஜனன விவரம்)",
+    avk_paya: "பாயா", avk_varna: "வர்ணம்", avk_vashya: "வசியம்", avk_yoni: "யோனி",
+    avk_gana: "கணம்", avk_nadi: "நாடி", avk_tatva: "தத்துவம்", avk_nak_lord: "நட்சத்திர அதிபதி",
+    avk_rashi_lord: "ராசி அதிபதி", avk_lagna_lord: "லக்ன அதிபதி",
+    section_panchang: "ஜனன கால பஞ்சாங்கம்",
+    panchang_intro: "நீங்கள் பிறந்த நேரத்தின் பஞ்சாங்கம்: திதி, வாரம், நட்சத்திரம், யோகம், கரணம்.",
+    panchang_tithi: "திதி", panchang_vara: "வாரம்", panchang_nakshatra: "நட்சத்திரம்",
+    panchang_yoga: "யோகம்", panchang_karana: "கரணம்",
+    section_gems: "ரத்தின பரிந்துரை",
+    gems_intro: "உங்கள் ஜாதகத்தின் மிகச் சுபமான வீடுகளின் (லக்னம், திரிகோணங்கள்) அதிபதிகளுக்கு பலம் தரும் ரத்தினங்கள்.",
+    gems_kind: "வகை", gems_stone: "ரத்தினம்", gems_planet: "கிரகம்", gems_reason: "அடிப்படை",
+    gems_note: "உங்கள் ஜாதகத்தை முழுமையாகச் சரிபார்த்த பிறகே ரத்தினம் அணியுங்கள்; சரியான எடை, உலோகம், அணியும் நாள் ஆகியவை முக்கியம்.",
+    section_ghata: "காத சக்கரம் (அசுப அம்சங்கள்)",
+    ghata_intro: "காத சக்கரம் உங்களுக்கு அசுபமான வாரம், திதி, மாதம், நட்சத்திரம் ஆகியவற்றைக் காட்டுகிறது.",
+    ghata_weekday: "அசுப வாரம்", ghata_tithi: "திதி", ghata_month: "மாதம்",
+    ghata_nakshatra: "நட்சத்திரம்", ghata_yoga: "யோகம்", ghata_karana: "கரணம்",
+    ghata_prahar: "ஜாமம்", ghata_rashi: "காத ராசி",
+    // House is வீடு, never பாவம் (பாவம் also means "sin"), so "Bhava Chalit"
+    // and "Bhava Bala" are named by the house word too.
+    section_chalit: "சலித சக்கரம் (வீட்டு சந்திகள்)",
+    chalit_intro: "சலித சக்கரம் கிரகங்களைத் துல்லியமான வீட்டு சந்திகளின் (ஸ்ரீபதி முறை) படி வைக்கிறது; இதனால் ராசி சக்கரத்தில் தெரியாத வீட்டு மாற்றங்கள் வெளிப்படுகின்றன.",
+    chalit_house: "வீடு", chalit_begin: "தொடக்கம்", chalit_madhya: "மத்தியம்",
+    chalit_planets: "கிரகங்களின் வீட்டு மாற்றம்", chalit_rashi_house: "ராசி வீடு",
+    chalit_bhava_house: "சலித வீடு", chalit_shifted: "மாறியது",
+    section_kp: "கேபி முறை (கிருஷ்ணமூர்த்தி பத்ததி)",
+    kp_intro: "கேபி நட்சத்திர முறைப்படி வீட்டு சந்தி உப அதிபதிகளும் கிரக காரகங்களும்.",
+    kp_star_lord: "நட்சத்திர அதிபதி", kp_sub_lord: "உப அதிபதி", kp_subsub_lord: "உப உப அதிபதி",
+    kp_significators: "கிரக காரகங்கள்", kp_signifies_houses: "குறிக்கும் வீடுகள்",
+    kp_ruling_planets: "ஆளும் கிரகங்கள்", kp_rp_role: "பங்கு",
+    kp_rp_lagna_nakshatra_lord: "லக்ன நட்சத்திர அதிபதி", kp_rp_lagna_rashi_lord: "லக்ன ராசி அதிபதி",
+    kp_rp_moon_nakshatra_lord: "சந்திர நட்சத்திர அதிபதி", kp_rp_moon_rashi_lord: "சந்திர ராசி அதிபதி",
+    kp_rp_day_lord: "கிழமை அதிபதி", kp_rp_lagna_sub_lord: "லக்ன உப அதிபதி", kp_rp_moon_sub_lord: "சந்திர உப அதிபதி",
+    section_jaimini: "ஜைமினி முறை",
+    jaimini_charakarakas: "சர காரகங்கள்", jaimini_karaka: "காரகம்",
+    jaimini_karakamsa: "காரகாம்சம்", jaimini_swamsa: "ஸ்வாம்சம்", jaimini_arudha: "ஆரூட பதங்கள்",
+    jaimini_pada: "பதம்",
+    section_ishta: "இஷ்ட தெய்வம்",
+    ishta_intro: "இஷ்ட தெய்வம் ஆன்மிக முன்னேற்றத்துக்கான உங்கள் தனிப்பட்ட தெய்வம்; காரகாம்சத்திலிருந்து பன்னிரண்டாம் வீட்டைக் கொண்டு அறியப்படுகிறது.",
+    ishta_deity: "தெய்வம்", ishta_12th_sign: "காரகாம்சத்திலிருந்து 12-ஆம் ராசி", ishta_graha: "நிர்ணயிக்கும் கிரகம்",
+    section_maitri: "மைத்திரி சக்கரம் (கிரக நட்பு)",
+    maitri_intro: "கிரகங்களுக்கு இடையிலான இயற்கை, தற்காலிக, பஞ்சதா (கூட்டு) நட்பு உறவுகள்.",
+    maitri_naisargik: "நைசர்கிக (இயற்கை)", maitri_tatkalik: "தாத்காலிக (தற்காலிக)",
+    maitri_panchadha: "பஞ்சதா (கூட்டு)",
+    section_avastha: "கிரக அவஸ்தைகள்",
+    avastha_intro: "பாலாதி, ஜாக்ரதாதி, தீப்தாதி முறைகளின்படி ஒவ்வொரு கிரகத்தின் அவஸ்தைகள்.",
+    avastha_baladi: "பாலாதி", avastha_jagradadi: "ஜாக்ரதாதி", avastha_deeptadi: "தீப்தாதி",
+    section_lalkitab: "லால் கிதாப் பகுப்பாய்வு",
+    lalkitab_intro: "லால் கிதாப் வீடுகள், பித்ரு கடன்கள், தேவா வகைப்பாடு.",
+    lalkitab_planets: "கிரக நிலை", lalkitab_rins: "பித்ரு கடன்கள் (ரிணம்)",
+    lalkitab_rin: "கடன்", lalkitab_status: "நிலை",
+    lk_present: "உள்ளது", lk_absent: "இல்லை",
+    section_shadbala: "ஷட்பலம் (ஆறு வகை பலம்)",
+    shadbala_intro: "ரூபங்களில் மொத்த ஷட்பலம், வலுவான கிரகத்திலிருந்து வலுக்குறைந்த கிரகம் வரை வரிசைப்படுத்தப்பட்டது.",
+    shadbala_rupas: "ரூபம்", shadbala_rank: "வரிசை",
+    section_bhavabala: "வீட்டு பலம்",
+    bhavabala_intro: "பன்னிரண்டு வீடுகள் ஒவ்வொன்றின் பலம்: வீட்டு அதிபதி பலம், திக் பலம், திருஷ்டி பலம்.",
+    bb_lord: "அதிபதி பலம்", bb_dig: "திக் பலம்", bb_drsti: "திருஷ்டி பலம்", bb_total: "மொத்தம்",
+    section_ashtakavarga: "அஷ்டகவர்க்கம்",
+    ashtakavarga_intro: "ஒவ்வொரு ராசிக்கும் சர்வாஷ்டகவர்க்க (SAV) சுப பிந்துக்களின் கூட்டுத்தொகை, கிரக வாரியான பின்னாஷ்டகவர்க்கம்.",
+    ashtakavarga_sav: "ராசி", ashtakavarga_bindus: "பிந்துக்கள்", ashtakavarga_total: "மொத்தம்",
+    ashtakavarga_prastar: "கிரக வாரியான மொத்தம்", ashtakavarga_planet_total: "மொத்த பிந்துக்கள்",
+    section_varshaphal: "வருஷ பலன் (ஆண்டு ஜாதகம்)",
+    section_mudda: "மாதாந்திர பலன் (முத்தா திசை)",
+    varshaphal_to: "முதல்",
+    varshaphal_intro: "முந்தா, வருஷ அதிபதி, சகமங்கள், பஞ்சவர்கீய பலம் ஆகியவற்றுடன் ஆண்டு சூரிய மீள்வருகை பகுப்பாய்வு.",
+    varshaphal_year: "ஆண்டு", varshaphal_muntha: "முந்தா", varshaphal_lord: "வருஷ அதிபதி",
+    varshaphal_sahams: "சகமங்கள் (நுட்பமான புள்ளிகள்)", varshaphal_saham: "சகமம்",
+    varshaphal_panchavargeeya: "பஞ்சவர்கீய பலம்", varshaphal_vishwa: "விஸ்வ",
+    section_rajyoga: "ராஜயோக பலமும் பொற்காலங்களும்",
+    rajyoga_strength: "ராஜயோக பலம்", rajyoga_planets: "யோககாரக கிரகங்கள்",
+    rajyoga_swarnim: "பொற்காலங்கள்", rajyoga_from: "முதல்", rajyoga_to: "வரை",
+    title_brihad: "பிருஹத் ஜாதகம்",
+    subtitle_brihad: "விரிவான வேத ஜோதிட பகுப்பாய்வு",
+    born: "பிறப்பு",
+    at: "நேரம்",
+    in: "நிலை:",
+    generated: "தயாரித்த நாள்",
+    part_foundations: "பகுதி 1: அடிப்படைகள்",
+    part_life_reading: "பகுதி 2: உங்கள் வாழ்க்கைப் பலன்",
+    part_yoga_dosha: "பகுதி 3: யோகங்களும் தோஷங்களும்",
+    part_dasha: "பகுதி 4: திசா பலன்",
+    part_remedies: "பகுதி 5: பரிகாரங்களும் வழிகாட்டலும்",
+    part_technical: "பகுதி 6: தொழில்நுட்ப அட்டவணைகள்",
+    part_varshaphal: "பகுதி 7: வருஷ பலன் (ஆண்டு)",
+    section_chart: "ஜனன ஜாதகச் சுருக்கம்",
+    chart_lagna: "லக்ன சக்கரம்", chart_navamsa: "நவாம்ச சக்கரம்",
+    section_graha_sthiti: "கிரக நிலை",
+    section_planets_analysis: "கிரக பகுப்பாய்வு",
+    section_houses: "வீடுகளின் பகுப்பாய்வு",
+    section_yogas: "ஜாதகத்தில் உள்ள யோகங்கள்",
+    section_dashas: "விம்சோத்தரி திசை: வாழ்க்கைக் காலங்கள்",
+    section_remedies: "பரிந்துரைக்கப்பட்ட பரிகாரங்கள்",
+    ascendant: "லக்னம்",
+    nakshatra: "நட்சத்திரம்",
+    pada: "பாதம்",
+    planet: "கிரகம்",
+    sign: "ராசி",
+    degree: "பாகை",
+    house: "வீடு",
+    lord: "அதிபதி",
+    current_dasha: "நடப்பு திசை",
+    upcoming_dashas: "வரவிருக்கும் திசைகள்",
+    years: "ஆண்டுகள்",
+    date_to: "முதல்",
+    yogas_none: "இந்த ஜாதகத்தில் முக்கிய யோகங்கள் எதுவும் காணப்படவில்லை.",
+    dashas_none: "இந்த ஜாதகத்துக்கு திசை கணிப்பு கிடைக்கவில்லை.",
+    remedies_none: "தற்போது சிறப்புப் பரிகாரம் எதுவும் தேவையில்லை.",
+    house_no_content: "இந்த வீட்டுக்கான விரிவான விளக்கம் தயாராகிறது.",
+    source: "ஆதாரம்",
+    section_divisionals: "வர்க்க சக்கரங்கள்",
+    divisionals_intro: "வர்க்க சக்கரங்கள் வாழ்க்கையின் குறிப்பிட்ட துறைகளை ஆழமாகக் காட்டுகின்றன; ஒவ்வொன்றும் ஒரு பக்கத்தை நுட்பமாக விளக்குகிறது: செல்வம், உடன்பிறந்தோர், திருமணம், தொழில், ஆன்மிக முன்னேற்றம் போன்றவை.",
+    section_doshas: "தோஷ பகுப்பாய்வு",
+    section_predictions: "வாழ்க்கைத் துறை வாரியான பலன்கள்",
+    section_citations: "சாஸ்திர ஆதாரங்களும் மேற்கோள்களும்",
+    divisional_lagna: "லக்னம்",
+    dosha_mangal: "செவ்வாய் தோஷம்",
+    dosha_kaalsarp: "கால சர்ப்ப தோஷம்",
+    dosha_pitra: "பித்ரு தோஷம்",
+    dosha_severity_present: "உள்ளது",
+    dosha_severity_cancelled: "நிவர்த்தி",
+    dosha_severity_mild: "லேசானது",
+    doshas_none_detected: "இந்த ஜாதகத்தில் முக்கிய தோஷம் எதுவும் காணப்படவில்லை.",
+    area_career: "தொழிலும் வணிகமும்",
+    area_marriage: "திருமணமும் உறவுகளும்",
+    area_wealth: "செல்வமும் பொருளாதாரமும்",
+    area_health: "உடல்நலமும் தேஜஸும்",
+    area_education: "கல்வியும் கற்றலும்",
+    area_family: "குடும்பமும் இல்லமும்",
+    predictions_none: "இந்த ஜாதகத்துக்கான தனிப்பட்ட பலன்கள் தயாராகின்றன.",
+    citations_none: "இந்த ஜாதகத்துக்கு இப்போது சாஸ்திர மேற்கோள்கள் எதுவும் கிடைக்கவில்லை.",
+    citations_intro:
+      "இந்த அறிக்கையின் ஒவ்வொரு விளக்கமும் ஏதேனும் ஒரு சாஸ்திர நூலை அடிப்படையாகக் கொண்டது. மேற்கோள் காட்டப்பட்ட ஆதாரங்களின் பட்டியல் கீழே:",
+  },
+  kn: {
+    section_avakahada: "ಅವಕಹಡಾ ಚಕ್ರ (ಜನ್ಮ ವಿವರ)",
+    avk_paya: "ಪಾಯ", avk_varna: "ವರ್ಣ", avk_vashya: "ವಶ್ಯ", avk_yoni: "ಯೋನಿ",
+    avk_gana: "ಗಣ", avk_nadi: "ನಾಡಿ", avk_tatva: "ತತ್ವ", avk_nak_lord: "ನಕ್ಷತ್ರಾಧಿಪತಿ",
+    avk_rashi_lord: "ರಾಶ್ಯಧಿಪತಿ", avk_lagna_lord: "ಲಗ್ನಾಧಿಪತಿ",
+    section_panchang: "ಜನನ ಕಾಲದ ಪಂಚಾಂಗ",
+    panchang_intro: "ನಿಮ್ಮ ಜನನ ಸಮಯದ ಪಂಚಾಂಗ: ತಿಥಿ, ವಾರ, ನಕ್ಷತ್ರ, ಯೋಗ ಮತ್ತು ಕರಣ.",
+    panchang_tithi: "ತಿಥಿ", panchang_vara: "ವಾರ", panchang_nakshatra: "ನಕ್ಷತ್ರ",
+    panchang_yoga: "ಯೋಗ", panchang_karana: "ಕರಣ",
+    section_gems: "ರತ್ನ ಶಿಫಾರಸು",
+    gems_intro: "ನಿಮ್ಮ ಜಾತಕದ ಅತ್ಯಂತ ಶುಭ ಭಾವಗಳ (ಲಗ್ನ ಮತ್ತು ತ್ರಿಕೋಣಗಳು) ಅಧಿಪತಿಗಳಿಗೆ ಬಲ ನೀಡುವ ರತ್ನಗಳು.",
+    gems_kind: "ಪ್ರಕಾರ", gems_stone: "ರತ್ನ", gems_planet: "ಗ್ರಹ", gems_reason: "ಆಧಾರ",
+    gems_note: "ನಿಮ್ಮ ಜಾತಕವನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ಪರಿಶೀಲಿಸಿದ ನಂತರವೇ ರತ್ನವನ್ನು ಧರಿಸಿ; ಸರಿಯಾದ ತೂಕ, ಲೋಹ ಮತ್ತು ಧರಿಸುವ ದಿನ ಮುಖ್ಯ.",
+    section_ghata: "ಘಾತ ಚಕ್ರ (ಅಶುಭ ಅಂಶಗಳು)",
+    ghata_intro: "ಘಾತ ಚಕ್ರ ನಿಮಗೆ ಅಶುಭವಾದ ವಾರ, ತಿಥಿ, ಮಾಸ ಮತ್ತು ನಕ್ಷತ್ರವನ್ನು ತೋರಿಸುತ್ತದೆ.",
+    ghata_weekday: "ಅಶುಭ ವಾರ", ghata_tithi: "ತಿಥಿ", ghata_month: "ಮಾಸ",
+    ghata_nakshatra: "ನಕ್ಷತ್ರ", ghata_yoga: "ಯೋಗ", ghata_karana: "ಕರಣ",
+    ghata_prahar: "ಪ್ರಹರ", ghata_rashi: "ಘಾತ ರಾಶಿ",
+    section_chalit: "ಭಾವ ಚಲಿತ (ಭಾವ ಸಂಧಿ ಚಕ್ರ)",
+    chalit_intro: "ಚಲಿತ ಚಕ್ರ ಗ್ರಹಗಳನ್ನು ನಿಖರವಾದ ಭಾವ ಸಂಧಿಗಳ (ಶ್ರೀಪತಿ ಪದ್ಧತಿ) ಪ್ರಕಾರ ಇರಿಸುತ್ತದೆ; ಇದರಿಂದ ರಾಶಿ ಚಕ್ರದಲ್ಲಿ ಕಾಣದ ಭಾವ ಬದಲಾವಣೆಗಳು ಹೊರಬರುತ್ತವೆ.",
+    chalit_house: "ಭಾವ", chalit_begin: "ಆರಂಭ", chalit_madhya: "ಮಧ್ಯ",
+    chalit_planets: "ಗ್ರಹಗಳ ಭಾವ ಬದಲಾವಣೆ", chalit_rashi_house: "ರಾಶಿ ಭಾವ",
+    chalit_bhava_house: "ಚಲಿತ ಭಾವ", chalit_shifted: "ಬದಲಾಗಿದೆ",
+    section_kp: "ಕೆಪಿ ಪದ್ಧತಿ (ಕೃಷ್ಣಮೂರ್ತಿ ಪದ್ಧತಿ)",
+    kp_intro: "ಕೆಪಿ ನಕ್ಷತ್ರ ಪದ್ಧತಿಯ ಪ್ರಕಾರ ಭಾವ ಸಂಧಿ ಉಪ ಅಧಿಪತಿಗಳು ಮತ್ತು ಗ್ರಹ ಕಾರಕಗಳು.",
+    kp_star_lord: "ನಕ್ಷತ್ರಾಧಿಪತಿ", kp_sub_lord: "ಉಪ ಅಧಿಪತಿ", kp_subsub_lord: "ಉಪ ಉಪ ಅಧಿಪತಿ",
+    kp_significators: "ಗ್ರಹ ಕಾರಕಗಳು", kp_signifies_houses: "ಸೂಚಿಸುವ ಭಾವಗಳು",
+    kp_ruling_planets: "ಆಳುವ ಗ್ರಹಗಳು", kp_rp_role: "ಪಾತ್ರ",
+    kp_rp_lagna_nakshatra_lord: "ಲಗ್ನ ನಕ್ಷತ್ರಾಧಿಪತಿ", kp_rp_lagna_rashi_lord: "ಲಗ್ನ ರಾಶ್ಯಧಿಪತಿ",
+    kp_rp_moon_nakshatra_lord: "ಚಂದ್ರ ನಕ್ಷತ್ರಾಧಿಪತಿ", kp_rp_moon_rashi_lord: "ಚಂದ್ರ ರಾಶ್ಯಧಿಪತಿ",
+    kp_rp_day_lord: "ವಾರಾಧಿಪತಿ", kp_rp_lagna_sub_lord: "ಲಗ್ನ ಉಪ ಅಧಿಪತಿ", kp_rp_moon_sub_lord: "ಚಂದ್ರ ಉಪ ಅಧಿಪತಿ",
+    section_jaimini: "ಜೈಮಿನಿ ಪದ್ಧತಿ",
+    jaimini_charakarakas: "ಚರ ಕಾರಕಗಳು", jaimini_karaka: "ಕಾರಕ",
+    jaimini_karakamsa: "ಕಾರಕಾಂಶ", jaimini_swamsa: "ಸ್ವಾಂಶ", jaimini_arudha: "ಆರೂಢ ಪದಗಳು",
+    jaimini_pada: "ಪದ",
+    section_ishta: "ಇಷ್ಟ ದೇವತೆ",
+    ishta_intro: "ಇಷ್ಟ ದೇವತೆ ಆಧ್ಯಾತ್ಮಿಕ ಪ್ರಗತಿಗಾಗಿ ನಿಮ್ಮ ವೈಯಕ್ತಿಕ ದೇವರು; ಕಾರಕಾಂಶದಿಂದ ಹನ್ನೆರಡನೇ ಭಾವದ ಮೂಲಕ ತಿಳಿಯುತ್ತದೆ.",
+    ishta_deity: "ದೇವತೆ", ishta_12th_sign: "ಕಾರಕಾಂಶದಿಂದ 12ನೇ ರಾಶಿ", ishta_graha: "ನಿರ್ಧರಿಸುವ ಗ್ರಹ",
+    section_maitri: "ಮೈತ್ರಿ ಚಕ್ರ (ಗ್ರಹ ಮೈತ್ರಿ)",
+    maitri_intro: "ಗ್ರಹಗಳ ನಡುವಿನ ನೈಸರ್ಗಿಕ, ತಾತ್ಕಾಲಿಕ ಮತ್ತು ಪಂಚಧಾ (ಸಂಯುಕ್ತ) ಮೈತ್ರಿ ಸಂಬಂಧಗಳು.",
+    maitri_naisargik: "ನೈಸರ್ಗಿಕ (ಸಹಜ)", maitri_tatkalik: "ತಾತ್ಕಾಲಿಕ",
+    maitri_panchadha: "ಪಂಚಧಾ (ಸಂಯುಕ್ತ)",
+    section_avastha: "ಗ್ರಹ ಅವಸ್ಥೆಗಳು",
+    avastha_intro: "ಬಾಲಾದಿ, ಜಾಗ್ರದಾದಿ ಮತ್ತು ದೀಪ್ತಾದಿ ಪದ್ಧತಿಗಳ ಪ್ರಕಾರ ಪ್ರತಿಯೊಂದು ಗ್ರಹದ ಅವಸ್ಥೆಗಳು.",
+    avastha_baladi: "ಬಾಲಾದಿ", avastha_jagradadi: "ಜಾಗ್ರದಾದಿ", avastha_deeptadi: "ದೀಪ್ತಾದಿ",
+    section_lalkitab: "ಲಾಲ್ ಕಿತಾಬ್ ವಿಶ್ಲೇಷಣೆ",
+    lalkitab_intro: "ಲಾಲ್ ಕಿತಾಬ್ ಭಾವಗಳು, ಪಿತೃ ಋಣಗಳು ಮತ್ತು ತೇವಾ ವರ್ಗೀಕರಣ.",
+    lalkitab_planets: "ಗ್ರಹ ಸ್ಥಿತಿ", lalkitab_rins: "ಪಿತೃ ಋಣಗಳು",
+    lalkitab_rin: "ಋಣ", lalkitab_status: "ಸ್ಥಿತಿ",
+    lk_present: "ಇದೆ", lk_absent: "ಇಲ್ಲ",
+    section_shadbala: "ಷಡ್ಬಲ (ಆರು ಬಗೆಯ ಬಲ)",
+    shadbala_intro: "ರೂಪಗಳಲ್ಲಿ ಒಟ್ಟು ಷಡ್ಬಲ, ಅತ್ಯಂತ ಬಲಿಷ್ಠ ಗ್ರಹದಿಂದ ಅತ್ಯಂತ ದುರ್ಬಲ ಗ್ರಹದವರೆಗೆ ಕ್ರಮವಾಗಿ.",
+    shadbala_rupas: "ರೂಪ", shadbala_rank: "ಕ್ರಮ",
+    section_bhavabala: "ಭಾವ ಬಲ (ಭಾವಗಳ ಶಕ್ತಿ)",
+    bhavabala_intro: "ಹನ್ನೆರಡು ಭಾವಗಳಲ್ಲಿ ಪ್ರತಿಯೊಂದರ ಬಲ: ಭಾವಾಧಿಪತಿ ಬಲ, ದಿಗ್ಬಲ ಮತ್ತು ದೃಷ್ಟಿ ಬಲ.",
+    bb_lord: "ಭಾವಾಧಿಪತಿ ಬಲ", bb_dig: "ದಿಗ್ಬಲ", bb_drsti: "ದೃಷ್ಟಿ ಬಲ", bb_total: "ಒಟ್ಟು",
+    section_ashtakavarga: "ಅಷ್ಟಕವರ್ಗ",
+    ashtakavarga_intro: "ಪ್ರತಿ ರಾಶಿಯ ಸರ್ವಾಷ್ಟಕವರ್ಗ (SAV) ಶುಭ ಬಿಂದುಗಳ ಒಟ್ಟು, ಮತ್ತು ಗ್ರಹವಾರು ಭಿನ್ನಾಷ್ಟಕವರ್ಗ.",
+    ashtakavarga_sav: "ರಾಶಿ", ashtakavarga_bindus: "ಬಿಂದುಗಳು", ashtakavarga_total: "ಒಟ್ಟು",
+    ashtakavarga_prastar: "ಗ್ರಹವಾರು ಒಟ್ಟು", ashtakavarga_planet_total: "ಒಟ್ಟು ಬಿಂದುಗಳು",
+    section_varshaphal: "ವರ್ಷಫಲ (ವಾರ್ಷಿಕ ಜಾತಕ)",
+    section_mudda: "ಮಾಸಿಕ ಫಲ (ಮುದ್ದಾ ದಶೆ)",
+    varshaphal_to: "ರಿಂದ",
+    varshaphal_intro: "ಮುಂಥಾ, ವರ್ಷಾಧಿಪತಿ, ಸಹಮಗಳು ಮತ್ತು ಪಂಚವರ್ಗೀಯ ಬಲದೊಂದಿಗೆ ವಾರ್ಷಿಕ ಸೌರ ಪುನರಾಗಮನ ವಿಶ್ಲೇಷಣೆ.",
+    varshaphal_year: "ವರ್ಷ", varshaphal_muntha: "ಮುಂಥಾ", varshaphal_lord: "ವರ್ಷಾಧಿಪತಿ",
+    varshaphal_sahams: "ಸಹಮಗಳು (ಸೂಕ್ಷ್ಮ ಬಿಂದುಗಳು)", varshaphal_saham: "ಸಹಮ",
+    varshaphal_panchavargeeya: "ಪಂಚವರ್ಗೀಯ ಬಲ", varshaphal_vishwa: "ವಿಶ್ವ",
+    section_rajyoga: "ರಾಜಯೋಗ ಬಲ ಮತ್ತು ಸುವರ್ಣ ಕಾಲ",
+    rajyoga_strength: "ರಾಜಯೋಗ ಬಲ", rajyoga_planets: "ಯೋಗಕಾರಕ ಗ್ರಹಗಳು",
+    rajyoga_swarnim: "ಸುವರ್ಣ ಕಾಲ", rajyoga_from: "ರಿಂದ", rajyoga_to: "ವರೆಗೆ",
+    title_brihad: "ಬೃಹತ್ ಜಾತಕ",
+    subtitle_brihad: "ಸಮಗ್ರ ವೈದಿಕ ಜ್ಯೋತಿಷ ವಿಶ್ಲೇಷಣೆ",
+    born: "ಜನನ",
+    at: "ಸಮಯ",
+    in: "ಸ್ಥಿತಿ:",
+    generated: "ತಯಾರಿಸಿದ ದಿನಾಂಕ",
+    part_foundations: "ಭಾಗ 1: ಅಡಿಪಾಯ",
+    part_life_reading: "ಭಾಗ 2: ನಿಮ್ಮ ಜೀವನ ಫಲ",
+    part_yoga_dosha: "ಭಾಗ 3: ಯೋಗಗಳು ಮತ್ತು ದೋಷಗಳು",
+    part_dasha: "ಭಾಗ 4: ದಶಾ ಫಲ",
+    part_remedies: "ಭಾಗ 5: ಪರಿಹಾರಗಳು ಮತ್ತು ಮಾರ್ಗದರ್ಶನ",
+    part_technical: "ಭಾಗ 6: ತಾಂತ್ರಿಕ ಕೋಷ್ಟಕಗಳು",
+    part_varshaphal: "ಭಾಗ 7: ವರ್ಷಫಲ (ವಾರ್ಷಿಕ)",
+    section_chart: "ಜನ್ಮ ಜಾತಕ ಸಾರಾಂಶ",
+    chart_lagna: "ಲಗ್ನ ಕುಂಡಲಿ", chart_navamsa: "ನವಾಂಶ ಕುಂಡಲಿ",
+    section_graha_sthiti: "ಗ್ರಹ ಸ್ಥಿತಿ",
+    section_planets_analysis: "ಗ್ರಹ ವಿಶ್ಲೇಷಣೆ",
+    section_houses: "ಭಾವ ವಿಶ್ಲೇಷಣೆ",
+    section_yogas: "ಜಾತಕದಲ್ಲಿನ ಯೋಗಗಳು",
+    section_dashas: "ವಿಂಶೋತ್ತರಿ ದಶೆ: ಜೀವನ ಕಾಲಗಳು",
+    section_remedies: "ಶಿಫಾರಸು ಮಾಡಿದ ಪರಿಹಾರಗಳು",
+    ascendant: "ಲಗ್ನ",
+    nakshatra: "ನಕ್ಷತ್ರ",
+    pada: "ಪಾದ",
+    planet: "ಗ್ರಹ",
+    sign: "ರಾಶಿ",
+    degree: "ಅಂಶ",
+    house: "ಭಾವ",
+    lord: "ಅಧಿಪತಿ",
+    current_dasha: "ಪ್ರಸ್ತುತ ಮಹಾದಶೆ",
+    upcoming_dashas: "ಮುಂಬರುವ ಮಹಾದಶೆಗಳು",
+    years: "ವರ್ಷಗಳು",
+    date_to: "ರಿಂದ",
+    yogas_none: "ಈ ಜಾತಕದಲ್ಲಿ ಯಾವುದೇ ಪ್ರಮುಖ ಯೋಗ ಕಂಡುಬಂದಿಲ್ಲ.",
+    dashas_none: "ಈ ಜಾತಕಕ್ಕೆ ದಶಾ ಗಣನೆ ಲಭ್ಯವಿಲ್ಲ.",
+    remedies_none: "ಈಗ ಯಾವುದೇ ವಿಶೇಷ ಪರಿಹಾರದ ಅಗತ್ಯವಿಲ್ಲ.",
+    house_no_content: "ಈ ಭಾವದ ವಿವರವಾದ ವ್ಯಾಖ್ಯಾನ ಸಿದ್ಧವಾಗುತ್ತಿದೆ.",
+    source: "ಆಧಾರ",
+    section_divisionals: "ವರ್ಗ ಚಕ್ರಗಳು",
+    divisionals_intro: "ವರ್ಗ ಚಕ್ರಗಳು ಜೀವನದ ನಿರ್ದಿಷ್ಟ ಕ್ಷೇತ್ರಗಳನ್ನು ಆಳವಾಗಿ ತೋರಿಸುತ್ತವೆ; ಪ್ರತಿಯೊಂದೂ ಒಂದು ಅಂಶದ ಸೂಕ್ಷ್ಮ ವಿಶ್ಲೇಷಣೆ ನೀಡುತ್ತದೆ, ಉದಾಹರಣೆಗೆ ಧನ, ಸಹೋದರರು, ವಿವಾಹ, ವೃತ್ತಿ ಮತ್ತು ಆಧ್ಯಾತ್ಮಿಕ ಪ್ರಗತಿ.",
+    section_doshas: "ದೋಷ ವಿಶ್ಲೇಷಣೆ",
+    section_predictions: "ಜೀವನ ಕ್ಷೇತ್ರವಾರು ಫಲಗಳು",
+    section_citations: "ಶಾಸ್ತ್ರೀಯ ಆಧಾರಗಳು ಮತ್ತು ಉಲ್ಲೇಖಗಳು",
+    divisional_lagna: "ಲಗ್ನ",
+    dosha_mangal: "ಮಂಗಳ ದೋಷ",
+    dosha_kaalsarp: "ಕಾಲಸರ್ಪ ದೋಷ",
+    dosha_pitra: "ಪಿತೃ ದೋಷ",
+    dosha_severity_present: "ಇದೆ",
+    dosha_severity_cancelled: "ನಿವಾರಣೆಯಾಗಿದೆ",
+    dosha_severity_mild: "ಅಲ್ಪ",
+    doshas_none_detected: "ಈ ಜಾತಕದಲ್ಲಿ ಯಾವುದೇ ಪ್ರಮುಖ ದೋಷ ಕಂಡುಬಂದಿಲ್ಲ.",
+    area_career: "ವೃತ್ತಿ ಮತ್ತು ವ್ಯವಹಾರ",
+    area_marriage: "ವಿವಾಹ ಮತ್ತು ಸಂಬಂಧಗಳು",
+    area_wealth: "ಧನ ಮತ್ತು ಆರ್ಥಿಕ ಸ್ಥಿತಿ",
+    area_health: "ಆರೋಗ್ಯ ಮತ್ತು ಚೈತನ್ಯ",
+    area_education: "ವಿದ್ಯೆ ಮತ್ತು ಕಲಿಕೆ",
+    area_family: "ಕುಟುಂಬ ಮತ್ತು ಮನೆ",
+    predictions_none: "ಈ ಜಾತಕಕ್ಕೆ ವೈಯಕ್ತಿಕ ಫಲಗಳು ಸಿದ್ಧವಾಗುತ್ತಿವೆ.",
+    citations_none: "ಈ ಜಾತಕಕ್ಕೆ ಸದ್ಯ ಯಾವುದೇ ಶಾಸ್ತ್ರೀಯ ಉಲ್ಲೇಖ ಲಭ್ಯವಿಲ್ಲ.",
+    citations_intro:
+      "ಈ ವರದಿಯ ಪ್ರತಿಯೊಂದು ವ್ಯಾಖ್ಯಾನವೂ ಯಾವುದಾದರೂ ಒಂದು ಶಾಸ್ತ್ರೀಯ ಗ್ರಂಥವನ್ನು ಆಧರಿಸಿದೆ. ಉಲ್ಲೇಖಿಸಿದ ಆಧಾರಗಳ ಪಟ್ಟಿ ಕೆಳಗಿದೆ:",
+  },
 };
 
 /** House number 1..12 → primary significations (ported from houseTopics). */
@@ -620,6 +1030,48 @@ const HOUSE_TOPICS: Record<string, Record<number, string>> = {
     11: "लाभ, मित्र, आकांक्षा",
     12: "व्यय, मोक्ष, परदेश",
   },
+  te: {
+    1: "స్వభావం, లగ్నం, వ్యక్తిత్వం",
+    2: "ధనం, కుటుంబం, వాక్కు",
+    3: "తోబుట్టువులు, ధైర్యం, సంభాషణ",
+    4: "తల్లి, ఇల్లు, సుఖం",
+    5: "సంతానం, విద్య, సృజన",
+    6: "శత్రువులు, ఆరోగ్యం, సేవ",
+    7: "వివాహం, భాగస్వామ్యం, వ్యాపారం",
+    8: "ఆయుష్షు, రహస్యం, పరివర్తన",
+    9: "తండ్రి, భాగ్యం, ధర్మం",
+    10: "కర్మ, పదవి, కార్యం",
+    11: "లాభం, మిత్రులు, ఆకాంక్షలు",
+    12: "వ్యయం, మోక్షం, విదేశం",
+  },
+  ta: {
+    1: "சுயம், லக்னம், ஆளுமை",
+    2: "செல்வம், குடும்பம், வாக்கு",
+    3: "உடன்பிறந்தோர், தைரியம், தொடர்பு",
+    4: "தாய், இல்லம், சுகம்",
+    5: "குழந்தைகள், கல்வி, படைப்பாற்றல்",
+    6: "எதிரிகள், உடல்நலம், சேவை",
+    7: "திருமணம், கூட்டாண்மை, வணிகம்",
+    8: "ஆயுள், மறைபொருள், மாற்றம்",
+    9: "தந்தை, பாக்கியம், தர்மம்",
+    10: "கர்மம், பதவி, செயல்",
+    11: "லாபம், நண்பர்கள், ஆசைகள்",
+    12: "விரயம், மோட்சம், வெளிநாடு",
+  },
+  kn: {
+    1: "ಸ್ವಭಾವ, ಲಗ್ನ, ವ್ಯಕ್ತಿತ್ವ",
+    2: "ಧನ, ಕುಟುಂಬ, ವಾಕ್",
+    3: "ಸಹೋದರರು, ಧೈರ್ಯ, ಸಂವಹನ",
+    4: "ತಾಯಿ, ಮನೆ, ಸುಖ",
+    5: "ಸಂತಾನ, ವಿದ್ಯೆ, ಸೃಜನಶೀಲತೆ",
+    6: "ಶತ್ರುಗಳು, ಆರೋಗ್ಯ, ಸೇವೆ",
+    7: "ವಿವಾಹ, ಪಾಲುದಾರಿಕೆ, ವ್ಯವಹಾರ",
+    8: "ಆಯುಷ್ಯ, ರಹಸ್ಯ, ಪರಿವರ್ತನೆ",
+    9: "ತಂದೆ, ಭಾಗ್ಯ, ಧರ್ಮ",
+    10: "ಕರ್ಮ, ಸ್ಥಾನಮಾನ, ಕಾರ್ಯ",
+    11: "ಲಾಭ, ಸ್ನೇಹಿತರು, ಆಕಾಂಕ್ಷೆಗಳು",
+    12: "ವ್ಯಯ, ಮೋಕ್ಷ, ವಿದೇಶ",
+  },
 };
 
 /** Remedy category → localized label (ported from remedyCategoryLabels). */
@@ -627,6 +1079,9 @@ const REMEDY_CATEGORY_LABELS: Record<string, Record<string, string>> = {
   en: { mantra: "Mantra", donation: "Donation", fast: "Fast", gemstone: "Gemstone", yantra: "Yantra" },
   hi: { mantra: "मंत्र", donation: "दान", fast: "व्रत", gemstone: "रत्न", yantra: "यंत्र" },
   mr: { mantra: "मंत्र", donation: "दान", fast: "उपवास", gemstone: "रत्न", yantra: "यंत्र" },
+  te: { mantra: "మంత్రం", donation: "దానం", fast: "వ్రతం", gemstone: "రత్నం", yantra: "యంత్రం" },
+  ta: { mantra: "மந்திரம்", donation: "தானம்", fast: "விரதம்", gemstone: "ரத்தினம்", yantra: "யந்திரம்" },
+  kn: { mantra: "ಮಂತ್ರ", donation: "ದಾನ", fast: "ವ್ರತ", gemstone: "ರತ್ನ", yantra: "ಯಂತ್ರ" },
 };
 
 /** Per-planet generic summary (ported from planetSummaries). */
@@ -664,6 +1119,39 @@ const PLANET_SUMMARIES: Record<string, Record<string, string>> = {
     Rahu: "सांसारिक इच्छा, परदेश, महत्त्वाकांक्षा — एकाच वेळी वाढवतो आणि लपवतो.",
     Ketu: "वैराग्य, अध्यात्म, पूर्व कर्म — आसक्ती विरघळवतो, अंतर्दृष्टी देतो.",
   },
+  te: {
+    Sun: "ఆత్మ, తేజస్సు, అధికారం, తండ్రి. మీ అంతరంగ స్వభావాన్ని, ప్రాణశక్తిని సూచిస్తాడు.",
+    Moon: "మనస్సు, భావాలు, తల్లి, ప్రజలు. మానసిక శ్రేయస్సుకు, అంతర్దృష్టికి అధిపతి.",
+    Mars: "శక్తి, ధైర్యం, కర్మ, తోబుట్టువులు. చొరవను, శారీరక బలాన్ని నడిపిస్తాడు.",
+    Mercury: "బుద్ధి, వాక్కు, అభ్యాసం, సంభాషణ. విశ్లేషణ సామర్థ్యాన్ని తీర్చిదిద్దుతాడు.",
+    Jupiter: "జ్ఞానం, భాగ్యం, ధర్మం, గురుజనులు. విస్తరణ, పరోపకారం, సమృద్ధికి మూలం.",
+    Venus: "ప్రేమ, సౌందర్యం, సుఖం, భాగస్వామ్యం. సౌందర్య దృష్టికి, సంబంధాలకు అధిపతి.",
+    Saturn: "క్రమశిక్షణ, ఆయుష్షు, కర్మ, కష్టం. నెమ్మదిగా, క్రమంగా, శాశ్వతంగా నిలిచే పాఠాలు నేర్పుతాడు.",
+    Rahu: "ప్రాపంచిక కోరికలు, విదేశం, ఆకాంక్ష. ఒకేసారి పెంచుతాడు, మరుగుపరుస్తాడు.",
+    Ketu: "వైరాగ్యం, ఆధ్యాత్మికత, పూర్వ కర్మ. ఆసక్తిని కరిగిస్తాడు, అంతర్దృష్టిని ఇస్తాడు.",
+  },
+  ta: {
+    Sun: "ஆன்மா, தேஜஸ், அதிகாரம், தந்தை. உங்கள் அக இயல்பையும் உயிர்ச்சக்தியையும் குறிக்கிறார்.",
+    Moon: "மனம், உணர்வுகள், தாய், பொதுமக்கள். மன நலத்துக்கும் உள்ளுணர்வுக்கும் அதிபதி.",
+    Mars: "ஆற்றல், தைரியம், செயல், உடன்பிறந்தோர். முன்முயற்சியையும் உடல் வலிமையையும் இயக்குகிறார்.",
+    Mercury: "புத்தி, வாக்கு, கற்றல், தொடர்பு. பகுத்தாயும் திறனை வடிவமைக்கிறார்.",
+    Jupiter: "ஞானம், பாக்கியம், தர்மம், வழிகாட்டிகள். விரிவு, பரோபகாரம், வளம் ஆகியவற்றின் மூலம்.",
+    Venus: "அன்பு, அழகு, சுகம், கூட்டாண்மை. அழகுணர்ச்சிக்கும் உறவுகளுக்கும் அதிபதி.",
+    Saturn: "ஒழுக்கம், ஆயுள், கர்மம், கஷ்டம். மெதுவான, ஒழுங்கான, நிலைத்து நிற்கும் பாடங்களைத் தருகிறார்.",
+    Rahu: "உலக ஆசைகள், வெளிநாடு, லட்சியம். ஒரே நேரத்தில் பெருக்கவும் மறைக்கவும் செய்கிறார்.",
+    Ketu: "வைராக்கியம், ஆன்மிகம், பூர்வ கர்மம். பற்றைக் கரைத்து உள்நோக்கைத் தருகிறார்.",
+  },
+  kn: {
+    Sun: "ಆತ್ಮ, ತೇಜಸ್ಸು, ಅಧಿಕಾರ, ತಂದೆ. ನಿಮ್ಮ ಅಂತರಂಗದ ಸ್ವಭಾವ ಮತ್ತು ಪ್ರಾಣಶಕ್ತಿಯನ್ನು ಸೂಚಿಸುತ್ತಾನೆ.",
+    Moon: "ಮನಸ್ಸು, ಭಾವನೆ, ತಾಯಿ, ಜನಸಾಮಾನ್ಯರು. ಮಾನಸಿಕ ಯೋಗಕ್ಷೇಮ ಮತ್ತು ಅಂತರ್ಜ್ಞಾನದ ಅಧಿಪತಿ.",
+    Mars: "ಶಕ್ತಿ, ಧೈರ್ಯ, ಕರ್ಮ, ಸಹೋದರರು. ಉಪಕ್ರಮ ಮತ್ತು ದೈಹಿಕ ಬಲವನ್ನು ನಡೆಸುತ್ತಾನೆ.",
+    Mercury: "ಬುದ್ಧಿ, ವಾಕ್, ಕಲಿಕೆ, ಸಂವಹನ. ವಿಶ್ಲೇಷಣಾ ಸಾಮರ್ಥ್ಯವನ್ನು ರೂಪಿಸುತ್ತಾನೆ.",
+    Jupiter: "ಜ್ಞಾನ, ಭಾಗ್ಯ, ಧರ್ಮ, ಗುರುಜನರು. ವಿಸ್ತಾರ, ಪರೋಪಕಾರ ಮತ್ತು ಸಮೃದ್ಧಿಯ ಮೂಲ.",
+    Venus: "ಪ್ರೀತಿ, ಸೌಂದರ್ಯ, ಸುಖ, ಪಾಲುದಾರಿಕೆ. ಸೌಂದರ್ಯಪ್ರಜ್ಞೆ ಮತ್ತು ಸಂಬಂಧಗಳ ಅಧಿಪತಿ.",
+    Saturn: "ಶಿಸ್ತು, ಆಯುಷ್ಯ, ಕರ್ಮ, ಕಷ್ಟ. ನಿಧಾನವಾದ, ಕ್ರಮಬದ್ಧ, ಶಾಶ್ವತ ಪಾಠಗಳನ್ನು ಕಲಿಸುತ್ತಾನೆ.",
+    Rahu: "ಲೌಕಿಕ ಆಸೆ, ವಿದೇಶ, ಮಹತ್ವಾಕಾಂಕ್ಷೆ. ಏಕಕಾಲದಲ್ಲಿ ಹೆಚ್ಚಿಸುತ್ತಾನೆ ಮತ್ತು ಮರೆಮಾಡುತ್ತಾನೆ.",
+    Ketu: "ವೈರಾಗ್ಯ, ಆಧ್ಯಾತ್ಮ, ಪೂರ್ವ ಕರ್ಮ. ಆಸಕ್ತಿಯನ್ನು ಕರಗಿಸಿ ಒಳನೋಟವನ್ನು ನೀಡುತ್ತಾನೆ.",
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -688,20 +1176,34 @@ function planetSummary(loc: string, name: string | undefined): string {
   return PLANET_SUMMARIES[loc]?.[n] ?? PLANET_SUMMARIES.en?.[n] ?? "";
 }
 
-/** Lord label: prefer LordHI for hi/mr, else LordEN. */
+/**
+ * Lord label: the API's LordLocal when present (any non-en locale), else LordHI
+ * for hi/mr, the engine's native planet name for te/ta/kn, else LordEN.
+ */
 export function houseLordLabel(loc: string, h: BrihadHouseSection): string {
-  if ((loc === "hi" || loc === "mr") && h.LordHI) return h.LordHI;
-  return h.LordEN ?? "";
+  if (h.LordLocal) return h.LordLocal;
+  return lordLabel(loc, h.LordEN, h.LordHI);
 }
 
+/**
+ * Yoga display name: the API's NameLocal when present (any non-en locale),
+ * else NameHI for hi/mr, else NameEN. (Older API builds sent no NameLocal; the
+ * Devanagari NameHI is never shown for te/ta/kn because it is the wrong script.)
+ */
 export function yogaNameLabel(loc: string, y: BrihadYoga): string {
-  if ((loc === "hi" || loc === "mr") && y.NameHI) return y.NameHI;
+  if (y.NameLocal) return y.NameLocal;
+  if (isDevanagariLocale(loc) && y.NameHI) return y.NameHI;
   return y.NameEN ?? "";
 }
 
 export function dashaLordLabel(loc: string, d: BrihadDashaPeriod): string {
-  if ((loc === "hi" || loc === "mr") && d.LordHI) return d.LordHI;
-  return d.Lord ?? "";
+  if (d.LordLocal) return d.LordLocal;
+  return lordLabel(loc, d.Lord, d.LordHI);
+}
+
+/** Dosha display name: the API's NameLocal when present, else the template label. */
+export function doshaNameLabel(label: (k: string) => string, entry: BrihadDoshaEntry, nameKey: string): string {
+  return entry.NameLocal || label(nameKey);
 }
 
 /** severityLabel: look up "dosha_severity_<severity>", fall back to raw. */
@@ -1386,7 +1888,7 @@ ${blocks}
         // Source name intentionally omitted (hard rule: no source names in body).
         return `<div class="dosha-block ${esc(sev)}">
 <div class="header-row">
-<span class="name">${esc(label(nameKey))}</span>
+<span class="name">${esc(doshaNameLabel(label, entry, nameKey))}</span>
 <span class="severity">${esc(severityLabel(label, sev))}</span>
 </div>
 <p>${escBody(entry.Body, loc)}</p>

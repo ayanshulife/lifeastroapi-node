@@ -8,6 +8,8 @@
  * self-contained HTML document ready to convert to PDF (see `htmlToPdf`).
  */
 
+import { INDIC_FONT_STACK } from "./locales.js";
+
 /** Branding overrides supplied by the SDK caller (camelCase, all optional). */
 export interface Branding {
   companyName?: string;
@@ -199,6 +201,13 @@ export function cleanNarrative(text: string, locale = "en"): string {
       .replace(/जातकाचे/g, "तुमचे")
       .replace(/जातकाचा/g, "तुमचा")
       .replace(/जातक/g, "तुम्ही");
+  } else if (locale === "te" || locale === "ta" || locale === "kn") {
+    // Deliberately no rewrite. te/ta are already second person at the source
+    // (మీరు / நீங்கள், gate-clean). Kannada rows still read third person, but
+    // in agglutinative Kannada/Telugu/Tamil the person is carried by the verb
+    // ending, so swapping the noun (ಜಾತಕ → ನೀವು) would leave broken grammar;
+    // the fix belongs in the corpus. The English rules below must not run on
+    // this prose either.
   } else {
     s = s
       .replace(/\bthe native's\b/g, "your")
@@ -245,10 +254,11 @@ export function orDash(value: unknown): string {
  */
 export const BASE_CSS = `
 * { box-sizing: border-box; }
+/* Form controls and headings do not always inherit font-family in print, so
+   the Indic stack is set on them explicitly too. */
+h1, h2, h3, h4, th, td, li, dt, dd, input, button { font-family: inherit; }
 html, body {
-  font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Tamil',
-               'Noto Sans Telugu', 'Noto Sans Bengali', 'Noto Sans Gujarati',
-               'Noto Sans Kannada', 'Noto Sans Gurmukhi', sans-serif;
+  font-family: ${INDIC_FONT_STACK};
   color: #1a1a1a;
   font-size: 11pt;
   line-height: 1.45;
@@ -291,6 +301,14 @@ footer {
   margin-top: 10mm;
 }
 @media print { footer { display: none; } }
+/* Telugu and Kannada stack vowel signs and conjuncts above and below the
+   line and Tamil has tall marks too, so their lines get a little more height
+   (Devanagari keeps the 1.45 it was tuned for). Letter-spacing and uppercase are Latin
+   typography; spacing splits Indic clusters apart, so drop it.
+   :where() keeps the specificity of a plain "body" rule, so a report's own
+   body line-height (Brihad sets 1.8) still wins. */
+:where(html:lang(te), html:lang(ta), html:lang(kn)) body { line-height: 1.6; }
+:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn)) * { letter-spacing: normal !important; }
 `;
 
 function watermarkCss(b: ResolvedBranding): string {
@@ -317,7 +335,7 @@ function footerCss(b: ResolvedBranding): string {
 @page {
   @bottom-center {
     content: "${cssString(b.footerText)}";
-    font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif;
+    font-family: ${INDIC_FONT_STACK};
     font-size: 8pt;
     color: ${cssColor(b.secondaryColor)};
   }

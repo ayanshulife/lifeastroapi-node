@@ -158,6 +158,69 @@ export const LABELS: Record<string, Record<string, string>> = {
     sign: "राशी",
     degree: "अंश",
   },
+  te: {
+    title_varsha: "వర్షఫలం: వార్షిక ఫలితాలు",
+    born: "జననం",
+    at: "సమయం",
+    generated: "రూపొందించిన తేదీ",
+    section_solar_return: "సౌర పునరాగమన క్షణం",
+    section_planets_sr: "సౌర పునరాగమన సమయంలో గ్రహ స్థితి",
+    section_outlook: "సంవత్సర దృక్పథం",
+    solar_return_at: "సౌర పునరాగమన సమయం",
+    ascendant: "లగ్నం",
+    nakshatra: "నక్షత్రం",
+    pada: "పాదం",
+    muntha: "ముంథా",
+    varsha_lord: "వర్షాధిపతి",
+    house: "భావం",
+    from_natal_lagna: "జన్మ లగ్నం నుండి",
+    hora_number: "హోర",
+    planet: "గ్రహం",
+    sign: "రాశి",
+    degree: "భాగలు",
+  },
+  ta: {
+    title_varsha: "வருஷ பலன்: ஆண்டுப் பலன்கள்",
+    born: "பிறப்பு",
+    at: "நேரம்",
+    generated: "தயாரித்த நாள்",
+    section_solar_return: "சூரிய மீள்வருகைத் தருணம்",
+    section_planets_sr: "சூரிய மீள்வருகையின்போது கிரக நிலை",
+    section_outlook: "ஆண்டுப் பார்வை",
+    solar_return_at: "சூரிய மீள்வருகை நேரம்",
+    ascendant: "லக்னம்",
+    nakshatra: "நட்சத்திரம்",
+    pada: "பாதம்",
+    muntha: "முந்தா",
+    varsha_lord: "வருஷ அதிபதி",
+    house: "வீடு",
+    from_natal_lagna: "ஜனன லக்னத்திலிருந்து",
+    hora_number: "ஹோரை",
+    planet: "கிரகம்",
+    sign: "ராசி",
+    degree: "பாகை",
+  },
+  kn: {
+    title_varsha: "ವರ್ಷಫಲ: ವಾರ್ಷಿಕ ಫಲ",
+    born: "ಜನನ",
+    at: "ಸಮಯ",
+    generated: "ತಯಾರಿಸಿದ ದಿನಾಂಕ",
+    section_solar_return: "ಸೌರ ಪುನರಾಗಮನ ಕ್ಷಣ",
+    section_planets_sr: "ಸೌರ ಪುನರಾಗಮನದ ಸಮಯದ ಗ್ರಹ ಸ್ಥಿತಿ",
+    section_outlook: "ವರ್ಷದ ದೃಷ್ಟಿಕೋನ",
+    solar_return_at: "ಸೌರ ಪುನರಾಗಮನ ಸಮಯ",
+    ascendant: "ಲಗ್ನ",
+    nakshatra: "ನಕ್ಷತ್ರ",
+    pada: "ಪಾದ",
+    muntha: "ಮುಂಥಾ",
+    varsha_lord: "ವರ್ಷಾಧಿಪತಿ",
+    house: "ಭಾವ",
+    from_natal_lagna: "ಜನ್ಮ ಲಗ್ನದಿಂದ",
+    hora_number: "ಹೋರಾ",
+    planet: "ಗ್ರಹ",
+    sign: "ರಾಶಿ",
+    degree: "ಅಂಶ",
+  },
 };
 
 /** Report-specific CSS: the prominent year badge on the cover, plus the
@@ -249,6 +312,36 @@ function outlookText(
     }
     return `मुन्था ${house} व्या स्थानात आहे — ${year} वर्षात मिश्र परिणाम संभाव्य. महत्त्वाच्या निर्णयांसाठी ज्योतिषाचा सल्ला घ्या.`;
   }
+  // te / ta / kn are written from the Hindi; the "consult an astrologer" line
+  // of the mixed band becomes "study your chart first" (te/ta style guides
+  // ban the referral phrase).
+  if (locale === "te") {
+    if (band === "favorable") {
+      return `ముంథా ${house}వ భావంలో ఉండటం వల్ల ${year} సంవత్సరం సాధారణంగా అనుకూలంగా ఉంటుంది; లక్ష్య సాధన, స్థిరత్వం లేదా ఆధ్యాత్మిక పురోగతికి అవకాశాలు పెరుగుతాయి.`;
+    }
+    if (band === "challenging") {
+      return `ముంథా ${house}వ భావంలో ఉండటం వల్ల ${year} సంవత్సరం సవాలుగా ఉండవచ్చు. ఆరోగ్యం, ఖర్చులు లేదా అప్పులకు సంబంధించిన విషయాలలో జాగ్రత్తగా ఉండండి.`;
+    }
+    return `ముంథా ${house}వ భావంలో ఉంది; ${year} సంవత్సరంలో మిశ్రమ ఫలితాలు రావచ్చు. ముఖ్యమైన నిర్ణయాలకు ముందు మీ జాతకాన్ని లోతుగా పరిశీలించుకోండి.`;
+  }
+  if (locale === "ta") {
+    if (band === "favorable") {
+      return `முந்தா ${house}-ஆம் வீட்டில் இருப்பதால் ${year} ஆம் ஆண்டு பொதுவாகச் சாதகமாக இருக்கும்; இலக்கை அடைதல், நிலைத்தன்மை அல்லது ஆன்மிக முன்னேற்றத்துக்கான வாய்ப்புகள் கூடும்.`;
+    }
+    if (band === "challenging") {
+      return `முந்தா ${house}-ஆம் வீட்டில் இருப்பதால் ${year} ஆம் ஆண்டு சவாலாக இருக்கலாம். உடல்நலம், செலவு, கடன் தொடர்பான விஷயங்களில் கவனமாக இருங்கள்.`;
+    }
+    return `முந்தா ${house}-ஆம் வீட்டில் உள்ளது; ${year} ஆம் ஆண்டில் கலவையான பலன்கள் வரலாம். முக்கிய முடிவுகளுக்கு முன் உங்கள் ஜாதகத்தை ஆழமாகப் பார்த்துக்கொள்ளுங்கள்.`;
+  }
+  if (locale === "kn") {
+    if (band === "favorable") {
+      return `ಮುಂಥಾ ${house}ನೇ ಭಾವದಲ್ಲಿರುವುದರಿಂದ ${year} ವರ್ಷ ಸಾಮಾನ್ಯವಾಗಿ ಅನುಕೂಲಕರವಾಗಿರುತ್ತದೆ; ಗುರಿ ಸಾಧನೆ, ಸ್ಥಿರತೆ ಅಥವಾ ಆಧ್ಯಾತ್ಮಿಕ ಪ್ರಗತಿಯ ಸಾಧ್ಯತೆಗಳು ಹೆಚ್ಚುತ್ತವೆ.`;
+    }
+    if (band === "challenging") {
+      return `ಮುಂಥಾ ${house}ನೇ ಭಾವದಲ್ಲಿರುವುದರಿಂದ ${year} ವರ್ಷ ಸವಾಲಿನದಾಗಿರಬಹುದು. ಆರೋಗ್ಯ, ಖರ್ಚು ಅಥವಾ ಸಾಲಕ್ಕೆ ಸಂಬಂಧಿಸಿದ ವಿಷಯಗಳಲ್ಲಿ ಎಚ್ಚರಿಕೆಯಿಂದಿರಿ.`;
+    }
+    return `ಮುಂಥಾ ${house}ನೇ ಭಾವದಲ್ಲಿದೆ; ${year} ವರ್ಷದಲ್ಲಿ ಮಿಶ್ರ ಫಲಿತಾಂಶಗಳು ಸಾಧ್ಯ. ಮುಖ್ಯ ನಿರ್ಧಾರಗಳ ಮೊದಲು ನಿಮ್ಮ ಜಾತಕವನ್ನು ಆಳವಾಗಿ ಪರಿಶೀಲಿಸಿಕೊಳ್ಳಿ.`;
+  }
   if (band === "favorable") {
     return `Muntha in house ${house} makes ${year} broadly favorable — increased likelihood of goal attainment, stability, or spiritual progress.`;
   }
@@ -272,7 +365,7 @@ export function renderVarshaphalHtml(
 ): string {
   const resolved = resolveBranding(data.Branding, branding);
   const t = makeLabeler(LABELS, data.Locale);
-  // Narrow the locale to one the outlook prose is authored for (en/hi/mr),
+  // Narrow the locale to one the outlook prose is authored for (en/hi/mr/te/ta/kn),
   // matching Go's pickVarshaphalLocale fallback to "en".
   const loc = data.Locale && LABELS[data.Locale] ? data.Locale : "en";
 

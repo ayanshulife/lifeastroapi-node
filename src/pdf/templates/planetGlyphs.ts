@@ -8,6 +8,8 @@
  * Rahu / Ketu (node serpent-head/tail icons).
  */
 
+import { southPlanetToEn } from "../locales.js";
+
 const G = (inner: string): string =>
   `<svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;
 
@@ -65,9 +67,9 @@ const HI_TO_EN: Record<string, string> = {
   "राहु": "Rahu", "केतु": "Ketu", "अरुण": "Uranus", "वरुण": "Neptune", "यम": "Pluto",
 };
 
-/** Return the glyph SVG for a planet name (EN or Devanagari), or "". */
+/** Return the glyph SVG for a planet name (EN, Devanagari, te/ta/kn), or "". */
 export function planetGlyph(name: string | undefined): string {
   if (!name) return "";
-  const key = PLANET_GLYPHS[name] ? name : HI_TO_EN[name] ?? name;
+  const key = PLANET_GLYPHS[name] ? name : HI_TO_EN[name] ?? (southPlanetToEn(name) || name);
   return PLANET_GLYPHS[key] ?? "";
 }

@@ -11,6 +11,7 @@
  */
 
 import { esc } from "../shared.js";
+import { INDIC_FONT_STACK_ATTR } from "../locales.js";
 
 /** One planet to place: short label + house (1..12) + optional flags. */
 export interface ChartPlanet {
@@ -132,7 +133,7 @@ export function northIndianChartSvg(opts: NorthChartOptions): string {
 
   return `<div class="north-chart" style="display:inline-block;text-align:center;margin:2mm 3mm;">
 ${titleHtml}
-<svg viewBox="0 0 100 100" width="${size}" height="${size}" style="font-family:Arial,sans-serif;">
+<svg viewBox="0 0 100 100" width="${size}" height="${size}" style="font-family:${INDIC_FONT_STACK_ATTR};">
 ${frame}
 ${signs}
 ${planetsSvg}
@@ -140,7 +141,7 @@ ${planetsSvg}
 </div>`;
 }
 
-/** Short planet labels (EN + Devanagari) for chart cells. */
+/** Short planet labels for chart cells: EN, Devanagari (hi/mr), te, ta, kn. */
 export const PLANET_LABELS_EN: Record<string, string> = {
   Sun: "Su", Moon: "Mo", Mars: "Ma", Mercury: "Me", Jupiter: "Ju",
   Venus: "Ve", Saturn: "Sa", Rahu: "Ra", Ketu: "Ke",
@@ -151,6 +152,40 @@ export const PLANET_LABELS_HI: Record<string, string> = {
   Venus: "शु", Saturn: "श", Rahu: "रा", Ketu: "के",
   Uranus: "यू", Neptune: "ने", Pluto: "प्लू",
 };
+// South-Indian chart abbreviations, cut from the engine's planet names
+// (PlanetTE: కుజుడు for Mars; PlanetKN: ಮಂಗಳ; PlanetTA: செவ்வாய், சனி).
+export const PLANET_LABELS_TE: Record<string, string> = {
+  Sun: "సూ", Moon: "చం", Mars: "కు", Mercury: "బు", Jupiter: "గు",
+  Venus: "శు", Saturn: "శ", Rahu: "రా", Ketu: "కే",
+  Uranus: "యు", Neptune: "నె", Pluto: "ప్లు",
+};
+export const PLANET_LABELS_TA: Record<string, string> = {
+  Sun: "சூ", Moon: "சந்", Mars: "செ", Mercury: "பு", Jupiter: "கு",
+  Venus: "சு", Saturn: "சனி", Rahu: "ரா", Ketu: "கே",
+  Uranus: "யு", Neptune: "நெ", Pluto: "ப்ளு",
+};
+export const PLANET_LABELS_KN: Record<string, string> = {
+  Sun: "ಸೂ", Moon: "ಚಂ", Mars: "ಮಂ", Mercury: "ಬು", Jupiter: "ಗು",
+  Venus: "ಶು", Saturn: "ಶ", Rahu: "ರಾ", Ketu: "ಕೇ",
+  Uranus: "ಯು", Neptune: "ನೆ", Pluto: "ಪ್ಲು",
+};
+
+/** The chart-cell label table for a locale (English abbreviations by default). */
+export function planetLabelsFor(locale: string | undefined): Record<string, string> {
+  switch (locale) {
+    case "hi":
+    case "mr":
+      return PLANET_LABELS_HI;
+    case "te":
+      return PLANET_LABELS_TE;
+    case "ta":
+      return PLANET_LABELS_TA;
+    case "kn":
+      return PLANET_LABELS_KN;
+    default:
+      return PLANET_LABELS_EN;
+  }
+}
 
 /** Per-planet colors (loosely matching benchmark's colorful abbreviations). */
 export const PLANET_COLORS: Record<string, string> = {

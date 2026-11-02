@@ -175,6 +175,57 @@ export const LABELS: Record<string, Record<string, string>> = {
     mangal_dosha: "मंगळ दोष",
     nadi_dosha: "नाडी दोष",
   },
+  te: {
+    title_match: "జాతక పొంతన: వివాహ అనుకూలత",
+    born: "జననం",
+    generated: "రూపొందించిన తేదీ",
+    section_ashtakoota: "అష్టకూట: 8 కూటాల పొంతన",
+    section_doshas: "దోషాలు",
+    section_final: "తుది నిర్ణయం",
+    koota: "కూటం",
+    max: "గరిష్ఠం",
+    score: "గుణాలు",
+    details: "వివరాలు",
+    total: "మొత్తం",
+    nakshatra: "నక్షత్రం",
+    ashtakoota_verdict: "అష్టకూట నిర్ణయం",
+    mangal_dosha: "కుజ దోషం",
+    nadi_dosha: "నాడీ దోషం",
+  },
+  ta: {
+    title_match: "ஜாதகப் பொருத்தம்: திருமண இணக்கம்",
+    born: "பிறப்பு",
+    generated: "தயாரித்த நாள்",
+    section_ashtakoota: "அஷ்டகூடம்: 8 கூடப் பொருத்தம்",
+    section_doshas: "தோஷங்கள்",
+    section_final: "இறுதி முடிவு",
+    koota: "கூடம்",
+    max: "அதிகபட்சம்",
+    score: "புள்ளிகள்",
+    details: "விவரம்",
+    total: "மொத்தம்",
+    nakshatra: "நட்சத்திரம்",
+    ashtakoota_verdict: "அஷ்டகூட முடிவு",
+    mangal_dosha: "செவ்வாய் தோஷம்",
+    nadi_dosha: "நாடி தோஷம்",
+  },
+  kn: {
+    title_match: "ಜಾತಕ ಹೊಂದಾಣಿಕೆ: ವಿವಾಹ ಅನುರೂಪತೆ",
+    born: "ಜನನ",
+    generated: "ತಯಾರಿಸಿದ ದಿನಾಂಕ",
+    section_ashtakoota: "ಅಷ್ಟಕೂಟ: 8 ಕೂಟಗಳ ಹೊಂದಾಣಿಕೆ",
+    section_doshas: "ದೋಷಗಳು",
+    section_final: "ಅಂತಿಮ ನಿರ್ಣಯ",
+    koota: "ಕೂಟ",
+    max: "ಗರಿಷ್ಠ",
+    score: "ಗುಣ",
+    details: "ವಿವರ",
+    total: "ಒಟ್ಟು",
+    nakshatra: "ನಕ್ಷತ್ರ",
+    ashtakoota_verdict: "ಅಷ್ಟಕೂಟ ನಿರ್ಣಯ",
+    mangal_dosha: "ಮಂಗಳ ದೋಷ",
+    nadi_dosha: "ನಾಡಿ ದೋಷ",
+  },
 };
 
 /**
@@ -185,6 +236,85 @@ export const VERDICT_LABELS: Record<string, Record<string, string>> = {
   en: { poor: "Poor", fair: "Fair", good: "Good", excellent: "Excellent" },
   hi: { poor: "अल्प", fair: "सामान्य", good: "अच्छा", excellent: "उत्तम" },
   mr: { poor: "अल्प", fair: "सामान्य", good: "चांगला", excellent: "उत्तम" },
+  te: { poor: "తక్కువ", fair: "సాధారణం", good: "మంచిది", excellent: "ఉత్తమం" },
+  ta: { poor: "குறைவு", fair: "சுமார்", good: "நல்லது", excellent: "உத்தமம்" },
+  kn: { poor: "ಕಡಿಮೆ", fair: "ಸಾಧಾರಣ", good: "ಉತ್ತಮ", excellent: "ಅತ್ಯುತ್ತಮ" },
+};
+
+/** Verdict, dosha and nadi prose for te / ta / kn (written from the Hindi). */
+interface SouthMatchProse {
+  verdict: { excellent: string; good: string; fair: string; poor: string };
+  mangalNotComputed: string;
+  mangalNone: string;
+  typePurn: string;
+  typeMild: string;
+  fromLagna: (hs: string) => string;
+  fromMoon: (hs: string) => string;
+  mangal: (type: string, houses: string) => string;
+  cancelled: string;
+  nadiNone: (boy: string, girl: string) => string;
+  nadiExempted: (exc: string) => string;
+  nadiHigh: (boy: string) => string;
+}
+
+const SOUTH_MATCH: Record<string, SouthMatchProse> = {
+  te: {
+    verdict: {
+      excellent: "ఉత్తమ పొంతన: అన్ని రంగాలలో సామరస్యానికి అవకాశం ఎక్కువ.",
+      good: "మంచి పొంతన: వివాహానికి అనుకూల సూచనలు ఉన్నాయి.",
+      fair: "సాధారణ పొంతన: కొన్ని కూటాలలో లోటు ఉంది, అయినా ముందుకు సాగవచ్చు.",
+      poor: "తక్కువ పొంతన: చాలా కూటాలలో లోటు ఉంది, జాగ్రత్తగా ఆలోచించడం అవసరం.",
+    },
+    mangalNotComputed: "కుజ దోషం పరిశీలించలేదు: జన్మ స్థలం (అక్షాంశం/రేఖాంశం) ఇవ్వలేదు.",
+    mangalNone: "కుజ దోషం లేదు.",
+    typePurn: "పూర్ణ",
+    typeMild: "స్వల్ప",
+    fromLagna: (hs) => `లగ్నం నుండి ${hs}`,
+    fromMoon: (hs) => `చంద్రుని నుండి ${hs}`,
+    mangal: (type, houses) => `కుజ దోషం (${type}), భావం: ${houses}.`,
+    cancelled: " నివృత్తి: ",
+    nadiNone: (boy, girl) => `నాడీ దోషం లేదు. (వరుడు: ${boy}, వధువు: ${girl})`,
+    nadiExempted: (exc) => `నాడీ దోషం ఉంది, కానీ శాస్త్రీయ మినహాయింపు వల్ల రద్దయింది (${exc})`,
+    nadiHigh: (boy) => `నాడీ దోషం: ఇద్దరిదీ ఒకే నాడి (${boy}). శాస్త్రపరంగా ప్రతికూలం.`,
+  },
+  ta: {
+    verdict: {
+      excellent: "உத்தமப் பொருத்தம்: எல்லாத் துறைகளிலும் இணக்கத்துக்கான வாய்ப்பு அதிகம்.",
+      good: "நல்ல பொருத்தம்: திருமணத்துக்குச் சாதகமான அறிகுறிகள் உள்ளன.",
+      fair: "சுமாரான பொருத்தம்: சில கூடங்களில் குறை உள்ளது, ஆனாலும் முன்னேறலாம்.",
+      poor: "குறைவான பொருத்தம்: பல கூடங்களில் குறை உள்ளது, கவனமாக யோசிப்பது அவசியம்.",
+    },
+    mangalNotComputed: "செவ்வாய் தோஷம் சரிபார்க்கப்படவில்லை: பிறந்த இடம் (அட்சரேகை/தீர்க்கரேகை) கொடுக்கப்படவில்லை.",
+    mangalNone: "செவ்வாய் தோஷம் இல்லை.",
+    typePurn: "முழு",
+    typeMild: "லேசான",
+    fromLagna: (hs) => `லக்னத்திலிருந்து ${hs}`,
+    fromMoon: (hs) => `சந்திரனிலிருந்து ${hs}`,
+    mangal: (type, houses) => `செவ்வாய் தோஷம் (${type}), வீடு: ${houses}.`,
+    cancelled: " நிவர்த்தி: ",
+    nadiNone: (boy, girl) => `நாடி தோஷம் இல்லை. (மணமகன்: ${boy}, மணமகள்: ${girl})`,
+    nadiExempted: (exc) => `நாடி தோஷம் உள்ளது, ஆனால் சாஸ்திர விதிவிலக்கால் நீங்குகிறது (${exc})`,
+    nadiHigh: (boy) => `நாடி தோஷம்: இருவருக்கும் ஒரே நாடி (${boy}). சாஸ்திரப்படி பாதகமானது.`,
+  },
+  kn: {
+    verdict: {
+      excellent: "ಅತ್ಯುತ್ತಮ ಹೊಂದಾಣಿಕೆ: ಎಲ್ಲಾ ಕ್ಷೇತ್ರಗಳಲ್ಲೂ ಸಾಮರಸ್ಯದ ಸಾಧ್ಯತೆ ಹೆಚ್ಚು.",
+      good: "ಉತ್ತಮ ಹೊಂದಾಣಿಕೆ: ವಿವಾಹಕ್ಕೆ ಅನುಕೂಲಕರ ಸೂಚನೆಗಳಿವೆ.",
+      fair: "ಸಾಧಾರಣ ಹೊಂದಾಣಿಕೆ: ಕೆಲವು ಕೂಟಗಳಲ್ಲಿ ಕೊರತೆ ಇದೆ, ಆದರೂ ಮುಂದುವರಿಯಬಹುದು.",
+      poor: "ಕಡಿಮೆ ಹೊಂದಾಣಿಕೆ: ಹಲವು ಕೂಟಗಳಲ್ಲಿ ಕೊರತೆ ಇದೆ, ಎಚ್ಚರಿಕೆಯಿಂದ ಯೋಚಿಸುವುದು ಅಗತ್ಯ.",
+    },
+    mangalNotComputed: "ಮಂಗಳ ದೋಷ ಪರಿಶೀಲಿಸಿಲ್ಲ: ಜನ್ಮ ಸ್ಥಳ (ಅಕ್ಷಾಂಶ/ರೇಖಾಂಶ) ನೀಡಿಲ್ಲ.",
+    mangalNone: "ಮಂಗಳ ದೋಷ ಇಲ್ಲ.",
+    typePurn: "ಪೂರ್ಣ",
+    typeMild: "ಅಲ್ಪ",
+    fromLagna: (hs) => `ಲಗ್ನದಿಂದ ${hs}`,
+    fromMoon: (hs) => `ಚಂದ್ರನಿಂದ ${hs}`,
+    mangal: (type, houses) => `ಮಂಗಳ ದೋಷ (${type}), ಭಾವ: ${houses}.`,
+    cancelled: " ನಿವಾರಣೆ: ",
+    nadiNone: (boy, girl) => `ನಾಡಿ ದೋಷ ಇಲ್ಲ. (ವರ: ${boy}, ವಧು: ${girl})`,
+    nadiExempted: (exc) => `ನಾಡಿ ದೋಷ ಇದೆ, ಆದರೆ ಶಾಸ್ತ್ರೀಯ ವಿನಾಯಿತಿಯಿಂದ ರದ್ದಾಗಿದೆ (${exc})`,
+    nadiHigh: (boy) => `ನಾಡಿ ದೋಷ: ಇಬ್ಬರದೂ ಒಂದೇ ನಾಡಿ (${boy}). ಶಾಸ್ತ್ರದ ಪ್ರಕಾರ ಪ್ರತಿಕೂಲ.`,
+  },
 };
 
 /** Narrow a request locale to one we have labels for (fail-open to "en"). */
@@ -204,6 +334,11 @@ function verdictLabel(loc: string | undefined, verdict: string | undefined): str
  */
 function verdictDescription(loc: string | undefined, verdict: string | undefined): string {
   const l = pickLocale(loc);
+  const south = SOUTH_MATCH[l];
+  if (south) {
+    if (verdict === "excellent" || verdict === "good" || verdict === "fair") return south.verdict[verdict];
+    return south.verdict.poor;
+  }
   switch (verdict) {
     case "excellent":
       if (l === "hi") return "उत्तम मिलान — सभी क्षेत्रों में सामंजस्य की संभावना अधिक है।";
@@ -243,6 +378,21 @@ function joinStrings(items: string[] | undefined, sep: string): string {
  */
 function doshaSummary(loc: string | undefined, d: MatchMakingDosha): string {
   const l = pickLocale(loc);
+  const south = SOUTH_MATCH[l];
+  if (south) {
+    if (!d.Computed) return south.mangalNotComputed;
+    if (!d.HasDosha) return south.mangalNone;
+    const type = d.Type === "purn" ? south.typePurn : d.Type === "mild" ? south.typeMild : (d.Type ?? "");
+    const hs = d.HousesOccupied ?? [];
+    const lag = hs.filter((h) => h > 0).map(String);
+    const moon = hs.filter((h) => h < 0).map((h) => String(-h));
+    const parts: string[] = [];
+    if (lag.length) parts.push(south.fromLagna(lag.join(", ")));
+    if (moon.length) parts.push(south.fromMoon(moon.join(", ")));
+    let out = south.mangal(type, parts.join("; "));
+    if (d.Cancelled) out += south.cancelled + joinStrings(d.CancelReasons, ", ");
+    return out;
+  }
   if (!d.Computed) {
     if (l === "hi") return "मंगल दोष की जाँच नहीं हुई — जन्म स्थान (अक्षांश/देशांतर) नहीं दिया गया।";
     if (l === "mr") return "मंगळ दोष तपासला नाही — जन्मस्थान (अक्षांश/रेखांश) दिलेले नाही.";
@@ -314,6 +464,12 @@ function nadiSummary(loc: string | undefined, n: MatchMakingNadiDosha): string {
   const l = pickLocale(loc);
   const boy = n.BoyNadi ?? "";
   const girl = n.GirlNadi ?? "";
+  const south = SOUTH_MATCH[l];
+  if (south) {
+    if (n.Severity === "none") return south.nadiNone(boy, girl);
+    if (n.Severity === "exempted") return south.nadiExempted(joinStrings(n.Exceptions, ", "));
+    return south.nadiHigh(boy);
+  }
   switch (n.Severity) {
     case "none":
       if (l === "hi") return `नाड़ी दोष नहीं है। (वर: ${boy}, वधू: ${girl})`;

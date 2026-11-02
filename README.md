@@ -1,8 +1,9 @@
 # lifeastroapi
 
-Official **Node.js / TypeScript SDK** for [LifeAstroAPI](https://lifeastroapi.com) — a
-B2B Vedic & Western astrology API with panchang-grade precision and
-pay-per-call billing.
+Official **Node.js / TypeScript SDK** for [LifeAstroAPI](https://lifeastroapi.com) — a REST
+[astrology API](https://lifeastroapi.com/apis/) for Vedic astrology, panchang, Hindu festivals,
+kundli, muhurat and Western charts, with location-aware calculations and pay-per-call billing.
+Free tier: 1,500 credits a month, no card — [get a key](https://lifeastroapi.com/signup/).
 
 - ✅ **All 311 endpoints**, fully typed, across 23 namespaces — panchang, charts, dashas,
   matchmaking, transits, horoscopes, numerology, tarot, muhurta, reports, narratives,

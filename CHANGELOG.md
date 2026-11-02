@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0 — 2026-11-02
+
+- PDF reports now render fully in Telugu (`te`), Tamil (`ta`) and Kannada (`kn`): all 10 templates have native labels, chart sign and planet names, dasha and Yogini lord names, and font stacks that cover the three scripts.
+- PDFs use the API's new `NameLocal` (yogas, doshas) and `LordLocal` (house and dasha lords) fields when present, so yoga names and lords appear in the report's language for every locale.
+- Line height and letter spacing are tuned for Indic scripts so conjuncts are not split.
+
 ## 0.3.0 — 2026-10-10
 
 - New `festivals.vrat({ year, type })`: year-wise Vrat & Upavas lists (ekadashi, pradosh, sankashti, purnima, amavasya, shraddha, janmashtami, …). Occurrences now carry `vrat_type`.
