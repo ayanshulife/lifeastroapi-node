@@ -499,3 +499,48 @@ describe("endpoints corrected against the live API", () => {
     expect(calls.map((x) => new URL(x.url).pathname)).toEqual(["/v1/meta/endpoints", "/v1/meta/vedic/yogas"]);
   });
 });
+
+describe("natal chart + transit moment are separate (0.5.0)", () => {
+  const MOMENT = { birth: BIRTH, date: "2027-01-15", time: "06:00", tz: "Asia/Kolkata" };
+
+  const cases: [string, (c: LifeAstro) => Promise<unknown>, boolean][] = [
+    ["/v1/vedic/narrative/transit-phal", (c) => c.narrative.transitPhal(MOMENT), true],
+    ["/v1/vedic/narrative/dasha-phal", (c) => c.narrative.dashaPhal(MOMENT), true],
+    ["/v1/vedic/narrative/transit-double", (c) => c.narrative.transitDouble(MOMENT), false],
+    ["/v1/vedic/narrative/sade-sati-status", (c) => c.narrative.sadeSatiStatus(MOMENT), false],
+    ["/v1/vedic/narrative/sade-sati-phase", (c) => c.narrative.sadeSatiPhase(MOMENT), false],
+    ["/v1/vedic/narrative/sade-sati-history", (c) => c.narrative.sadeSatiHistory(MOMENT), false],
+    ["/v1/ashtakavarga/kaksha", (c) => c.ashtakavarga.kaksha(MOMENT), false],
+    ["/v1/ashtakavarga/transit-score", (c) => c.ashtakavarga.transitScore(MOMENT), false],
+    ["/v1/transit/small-panoti", (c) => c.transit.smallPanoti(MOMENT), false],
+  ];
+
+  for (const [path, call, place] of cases) {
+    it(`${path}: birth.* is the chart, date is the transit moment`, async () => {
+      const { fetch, calls } = mockFetch(() => ({ body: {} }));
+      await call(makeClient(fetch));
+      const url = new URL(calls[0]!.url);
+      expect(url.pathname).toBe(path);
+      const q = url.searchParams;
+      expect(q.get("birth.date")).toBe("1990-01-15");
+      expect(q.get("birth.time")).toBe("10:30");
+      expect(q.get("birth.lat")).toBe("19.076");
+      expect(q.get("date")).toBe("2027-01-15");
+      expect(q.get("tz")).toBe("Asia/Kolkata");
+      // Endpoints that cast the natal lagna read the birth place unprefixed.
+      expect(q.get("lat")).toBe(place ? "19.076" : null);
+    });
+  }
+
+  it("narrative.prashna sends the question moment, topic and house", async () => {
+    const { fetch, calls } = mockFetch(() => ({ body: {} }));
+    await makeClient(fetch).narrative.prashna({ lat: 19.076, lon: 72.8777, tz: "Asia/Kolkata", date: "2027-01-15", time: "10:00", topic: "career", questionHouse: 10, lang: "hi" });
+    const q = new URL(calls[0]!.url).searchParams;
+    expect(new URL(calls[0]!.url).pathname).toBe("/v1/vedic/narrative/prashna");
+    expect(q.get("date")).toBe("2027-01-15");
+    expect(q.get("time")).toBe("10:00");
+    expect(q.get("topic")).toBe("career");
+    expect(q.get("question_house")).toBe("10");
+    expect(q.get("locale")).toBe("hi");
+  });
+});

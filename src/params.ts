@@ -214,6 +214,19 @@ export function qNatalTransit(i: AnyInput): QueryParams {
   return q;
 }
 
+/**
+ * Like {@link qNatalTransit}, but also sends the birth place as unprefixed
+ * `lat`/`lon`, which endpoints such as `/v1/vedic/narrative/transit-phal`
+ * read to cast the natal lagna.
+ */
+export function qNatalTransitPlace(i: AnyInput): QueryParams {
+  const q = qNatalTransit(i);
+  const b = (i.birth ?? {}) as AnyInput;
+  set(q, "lat", b.lat);
+  set(q, "lon", b.lon);
+  return q;
+}
+
 /** A location-less moment: date (default today) + optional time + tz (default UTC) + ayanamsa. */
 export function qInstant(i: AnyInput = {}): QueryParams {
   const q: QueryParams = {};

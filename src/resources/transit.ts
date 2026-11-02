@@ -30,8 +30,8 @@ export class Transit {
   }
 
   /** Check whether a person is currently in Small Panoti (Ashtama Shani) — the 2.5-year Saturn transit through the 8th house from natal Moon, considered challenging. */
-  smallPanoti<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { date?: string; time?: string; tz?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/transit/small-panoti", q.applyExtras(q.qBirthPrefixed(input), input, [["date", "date"], ["time", "time"], ["tz", "tz"]]), opts);
+  smallPanoti<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/transit/small-panoti", q.qNatalTransit(input), opts);
   }
 
   /** Get the complete history and future windows of Small Panoti (Ashtama Shani) for a natal chart — all past and upcoming 2.5-year periods when Saturn transits the 8th house from natal Moon. */

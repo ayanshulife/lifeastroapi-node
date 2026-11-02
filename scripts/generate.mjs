@@ -33,6 +33,7 @@ const SHAPES = {
   westernMoment: { ts: "Types.WesternMomentInput", builder: "qWesternMoment", required: true },
   muhurta: { ts: "Types.MuhurtaInput", builder: "qMuhurta", required: true },
   natalTransit: { ts: "Types.NatalTransitInput & Types.VedicMomentSettings", builder: "qNatalTransit", required: true },
+  natalTransitPlace: { ts: "Types.NatalTransitInput & Types.VedicMomentSettings", builder: "qNatalTransitPlace", required: true },
   instant: { ts: "Types.InstantInput & Types.VedicMomentSettings", builder: "qInstant", required: false },
   none: { ts: "", builder: "qNone", required: false },
   custom: { ts: "", builder: "qNone", required: false },

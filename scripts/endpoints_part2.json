@@ -914,7 +914,7 @@
     "required": false
    }
   ],
-  "desc": "Get the Dasha Phal (period interpretation) narrative for the currently running Vimshottari Mahadasha + Antardasha combination — a human-readable explanation of what this dasha pair typically brings and how it interacts with the natal chart."
+  "desc": "Get the Dasha Phal (period interpretation) narrative for the Vimshottari dasha running at the given moment — Mahadasha, Antardasha and Pratyantar down to the sookshma and prana levels, plus dasha-sandhi sections when a period change is near. `birth` is the natal chart; date/time/tz are the moment to read."
  },
  {
   "path": "/v1/vedic/narrative/dasha-tree-phal",
@@ -1166,7 +1166,30 @@
     "required": false
    }
   ],
-  "desc": "Get a narrative compatibility analysis for a couple — goes beyond the numeric Ashtakoota score with a written interpretation of compatibility across all factors (guna milan, mangal dosha, dashas, navamsa)."
+  "desc": "Get a narrative compatibility analysis for a couple — a written reading of the Ashtakoota result (verdict and each koota; Tara and Graha Maitri are scored both ways) plus synastry sections from the graha signs of both charts."
+ },
+ {
+  "path": "/v1/vedic/narrative/prashna",
+  "shape": "moment",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "topic",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "question_house",
+    "type": "integer",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Get a Prashna (horary) narrative for the moment and place a question is asked — the Prashna lagna and Moon sections, plus the topic reading for the Prashna lagna. topic: career, financial, health, litigation, marriage, missing_person, property or travel; or questionHouse 1-12 when topic is not given (with neither, only the lagna and Moon sections). An unknown topic or a house outside 1-12 returns 400."
  },
  {
   "path": "/v1/vedic/narrative/moon-sign",
@@ -1433,7 +1456,7 @@
     "required": false
    }
   ],
-  "desc": "Get the Transit Phal (gochar results) narrative — a written analysis of all current major planetary transits over the natal chart, their house positions from Moon, and the classical effects expected from each transit."
+  "desc": "Get the Transit Phal (gochar results) narrative — the slow grahas (Mars, Jupiter, Saturn, Rahu, Ketu) by sign, their transit counted from the natal Moon and from the natal lagna, Sade Sati while it runs, the Sun's transit house, and Jupiter/Saturn/Rahu passing over natal grahas. `birth` is the natal chart (its lat/lon are sent as the birth place for the lagna sections); date/time/tz are the transit moment."
  },
  {
   "path": "/v1/vedic/narrative/varshaphal-themes",
@@ -2674,7 +2697,7 @@
     "required": true
    }
   ],
-  "desc": "Get the Varsha Lord (year ruler) for an annual chart — the planet that rules the Varshaphal year based on the Tajika system."
+  "desc": "Get the Varsha Lord (Varshesha, year ruler) for an annual chart, chosen by the Tajika Panchadhikari rule from the five office-bearers (Munthesh, Janmesh, Varsha Lagnesh, Trirashipati, Dina/Ratripati); the response also lists the candidates and the hora lord of the return."
  },
  {
   "path": "/v1/varshaphal/muntha",

@@ -5,7 +5,7 @@ Official **Node.js / TypeScript SDK** for [LifeAstroAPI](https://lifeastroapi.co
 kundli, muhurat and Western charts, with location-aware calculations and pay-per-call billing.
 Free tier: 1,500 credits a month, no card — [get a key](https://lifeastroapi.com/signup/).
 
-- ✅ **All 311 endpoints**, fully typed, across 23 namespaces — panchang, charts, dashas,
+- ✅ **All 312 endpoints**, fully typed, across 23 namespaces — panchang, charts, dashas,
   matchmaking, transits, horoscopes, numerology, tarot, muhurta, reports, narratives,
   and a complete Western (tropical) module.
 - ✅ **Zero runtime dependencies** — uses the platform `fetch` (Node 18+, Bun, Deno,
@@ -106,7 +106,7 @@ exact wire parameters the API expects (`birth.lat`, `boy.date`, `start_date`, �
 
 | Shape | Used by | Example fields |
 |-------|---------|----------------|
-| **Moment** | `panchang.*`, `muhurta.*` (single date), `prashna.*` | `{ lat, lon, tz, date?, time? }` |
+| **Moment** | `panchang.*`, `muhurta.*` (single date), `prashna.*`, `narrative.prashna` | `{ lat, lon, tz, date?, time? }` |
 | **Instant** | `transit.positions`, `transit.doubleTransit`, `meta.ayanamsas` | `{ date?, time?, tz? }` |
 | **Birth** | `chart.*`, `dasha.*`, `numerology`, narratives, reports | `{ date, time, tz, lat, lon }` |
 | **Boy/Girl** | `milan.*`, `reports.matchMaking` | `{ boy: Birth, girl: Birth }` |
@@ -114,7 +114,7 @@ exact wire parameters the API expects (`birth.lat`, `boy.date`, `start_date`, �
 | **Rashi** | `horoscope.*` | `{ rashi: "aries", date?, lang? }` |
 | **Date range** | `eclipses.*`, `western.ingresses` | `{ startDate, endDate }` |
 | **Muhurta (search)** | `muhurta.bestTime` | `{ lat, lon, tz, startDate, endDate }` |
-| **Natal + transit** | `transit.tarabala`, `transit.vedha`, `western.transits.toNatal` | `{ birth: Birth, date, time, tz }` |
+| **Natal + transit** | `transit.tarabala`, `transit.vedha`, `transit.smallPanoti`, `ashtakavarga.kaksha`, `ashtakavarga.transitScore`, `western.transits.toNatal`, `narrative.transitPhal`, `narrative.dashaPhal`, `narrative.transitDouble`, `narrative.sadeSatiStatus` / `Phase` / `History` | `{ birth: Birth, date, time, tz }` |
 
 **Dates.** The API requires a `date` on every moment endpoint — it has no "today"
 default. Where a shape marks `date?` optional, the SDK sends today's date in the `tz`
@@ -156,7 +156,7 @@ await client.chart.planets({ ...birth, ayanamsa: "krishnamurti", houseSystem: "p
 | `geo` | place search, reverse geocode, timezone, place by id |
 | `tarot` | cards, single card, daily, spread, yes/no |
 | `reports` | kundli (lite/detailed/brihad), match-making, mangal-dosha, sade-sati, varshaphal, numerology, horoscopes |
-| `narrative` | authored Vedic interpretations (lagna, planets, yogas, doshas, dasha-phal, outlooks, …) in `en/hi/mr/bn/kn/ta/te/gu` |
+| `narrative` | authored Vedic interpretations (lagna, planets, yogas, doshas, dasha-phal, transit-phal, prashna, outlooks, …) in `en/hi/mr/bn/kn/ta/te/gu` |
 | `remedies` | remedies by rule id; mantra / pooja / vrat / daan / rudraksha / yantra detail; Lal Kitab remedies |
 | `lalkitab` | Lal Kitab chart and dasha |
 | `meta` | free catalogs: `endpoints` (credit cost of every route), `ayanamsas`, `vedicYogas`, `vedicDoshas`, `vedicLocales`, `version` |

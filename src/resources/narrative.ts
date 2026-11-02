@@ -14,9 +14,9 @@ export class Narrative {
     return this._c.request<T>("/v1/vedic/narrative/career-outlook", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
-  /** Get the Dasha Phal (period interpretation) narrative for the currently running Vimshottari Mahadasha + Antardasha combination — a human-readable explanation of what this dasha pair typically brings and how it interacts with the natal chart. */
-  dashaPhal<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { date?: string; tz?: string; lang?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/vedic/narrative/dasha-phal", q.applyExtras(q.qBirthPrefixed(input), input, [["date", "date"], ["tz", "tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
+  /** Get the Dasha Phal (period interpretation) narrative for the Vimshottari dasha running at the given moment — Mahadasha, Antardasha and Pratyantar down to the sookshma and prana levels, plus dasha-sandhi sections when a period change is near. `birth` is the natal chart; date/time/tz are the moment to read. */
+  dashaPhal<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings & { lang?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/vedic/narrative/dasha-phal", q.applyExtras(q.qNatalTransitPlace(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get narrative interpretations for a specific dasha combination — pass mahadasha lord (and optionally antardasha lord) to get the meaning of that specific period for the natal chart. */
@@ -94,7 +94,7 @@ export class Narrative {
     return this._c.request<T>("/v1/vedic/narrative/marriage-outlook", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
-  /** Get a narrative compatibility analysis for a couple — goes beyond the numeric Ashtakoota score with a written interpretation of compatibility across all factors (guna milan, mangal dosha, dashas, navamsa). */
+  /** Get a narrative compatibility analysis for a couple — a written reading of the Ashtakoota result (verdict and each koota; Tara and Graha Maitri are scored both ways) plus synastry sections from the graha signs of both charts. */
   milan<T = unknown>(input: { boyDate: string; boyTime: string; boyTz: string; girlDate: string; girlTime: string; girlTz: string; lang?: string }, opts?: RequestOptions): Promise<T> {
     return this._c.request<T>("/v1/vedic/narrative/milan", q.applyExtras(q.qNone(input), input, [["boyDate", "boy.date"], ["boyTime", "boy.time"], ["boyTz", "boy.tz"], ["girlDate", "girl.date"], ["girlTime", "girl.time"], ["girlTz", "girl.tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
@@ -129,6 +129,11 @@ export class Narrative {
     return this._c.request<T>("/v1/vedic/narrative/planets-in-signs", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
+  /** Get a Prashna (horary) narrative for the moment and place a question is asked — the Prashna lagna and Moon sections, plus the topic reading for the Prashna lagna. topic: career, financial, health, litigation, marriage, missing_person, property or travel; or questionHouse 1-12 when topic is not given (with neither, only the lagna and Moon sections). An unknown topic or a house outside 1-12 returns 400. */
+  prashna<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { topic?: string; questionHouse?: number; lang?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/vedic/narrative/prashna", q.applyExtras(q.qMoment(input), input, [["topic", "topic"], ["questionHouse", "question_house"], ["lang", "lang"], ["lang", "locale"]]), opts);
+  }
+
   /** Get a holistic birth chart profile narrative — an executive summary of the entire chart covering lagna, Moon sign, key planetary strengths/weaknesses, dominant yogas, current dasha, and life-theme highlights in a single comprehensive reading. */
   profile<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: string }, opts?: RequestOptions): Promise<T> {
     return this._c.request<T>("/v1/vedic/narrative/profile", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
@@ -145,18 +150,18 @@ export class Narrative {
   }
 
   /** Get a narrative of all past and future Sade Sati periods for a birth chart — written descriptions of each 7.5-year Saturn transit cycle with dates, life themes expected, and which phase (rising/peak/setting) the person experienced. */
-  sadeSatiHistory<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { date?: string; tz?: string; lang?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/vedic/narrative/sade-sati-history", q.applyExtras(q.qBirthPrefixed(input), input, [["date", "date"], ["tz", "tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
+  sadeSatiHistory<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings & { lang?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/vedic/narrative/sade-sati-history", q.applyExtras(q.qNatalTransit(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get a narrative interpretation of the current Sade Sati phase (rising, peak, or setting) — what the current phase typically brings and remedies. */
-  sadeSatiPhase<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { date?: string; tz?: string; lang?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/vedic/narrative/sade-sati-phase", q.applyExtras(q.qBirthPrefixed(input), input, [["date", "date"], ["tz", "tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
+  sadeSatiPhase<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings & { lang?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/vedic/narrative/sade-sati-phase", q.applyExtras(q.qNatalTransit(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get the current Sade Sati status with narrative context — whether the person is in Sade Sati, which phase, start/end dates, and a written description of the current transit's meaning for their Moon sign. */
-  sadeSatiStatus<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { date?: string; tz?: string; lang?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/vedic/narrative/sade-sati-status", q.applyExtras(q.qBirthPrefixed(input), input, [["date", "date"], ["tz", "tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
+  sadeSatiStatus<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings & { lang?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/vedic/narrative/sade-sati-status", q.applyExtras(q.qNatalTransit(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get a narrative interpretation of the natal Sun sign (Surya Rashi) — covers ego, identity, father, authority, vitality, and the life-purpose themes associated with the Sun's sidereal sign placement. */
@@ -170,13 +175,13 @@ export class Narrative {
   }
 
   /** Get a narrative of the Double Transit analysis — written explanation of which life events the current Jupiter-Saturn joint transit is activating in the chart, and when the confluence is strongest. */
-  transitDouble<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { date?: string; tz?: string; lang?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/vedic/narrative/transit-double", q.applyExtras(q.qBirthPrefixed(input), input, [["date", "date"], ["tz", "tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
+  transitDouble<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings & { lang?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/vedic/narrative/transit-double", q.applyExtras(q.qNatalTransit(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
-  /** Get the Transit Phal (gochar results) narrative — a written analysis of all current major planetary transits over the natal chart, their house positions from Moon, and the classical effects expected from each transit. */
-  transitPhal<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { date?: string; tz?: string; lang?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/vedic/narrative/transit-phal", q.applyExtras(q.qBirthPrefixed(input), input, [["date", "date"], ["tz", "tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
+  /** Get the Transit Phal (gochar results) narrative — the slow grahas (Mars, Jupiter, Saturn, Rahu, Ketu) by sign, their transit counted from the natal Moon and from the natal lagna, Sade Sati while it runs, the Sun's transit house, and Jupiter/Saturn/Rahu passing over natal grahas. `birth` is the natal chart (its lat/lon are sent as the birth place for the lagna sections); date/time/tz are the transit moment. */
+  transitPhal<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings & { lang?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/vedic/narrative/transit-phal", q.applyExtras(q.qNatalTransitPlace(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get a narrative of the key themes for the current Varshaphal (solar-return) year — written analysis of the annual chart's varsha lord, muntha, annual lagna, and tajika yogas as a prediction for the year's major themes. */

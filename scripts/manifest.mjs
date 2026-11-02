@@ -19,7 +19,7 @@ const part1 = JSON.parse(readFileSync(join(__dirname, "endpoints_part1.json"), "
 const part2 = JSON.parse(readFileSync(join(__dirname, "endpoints_part2.json"), "utf8"));
 
 /**
- * Per-path manifest fixups applied after load. Used for the two endpoints that
+ * Per-path manifest fixups applied after load. Used for the endpoints that
  * carry both a natal chart (birth.*) and a distinct transit moment, and to
  * keep sade-sati a pure natal query.
  */
@@ -32,6 +32,24 @@ const OVERRIDES = {
     method: "transitSummary",
   },
   "/v1/transit/sade-sati": { extras: [] },
+  // Natal chart under birth.*, the moment unprefixed. Before 0.5.0 these sent
+  // the birth date as the transit/dasha date as well.
+  "/v1/vedic/narrative/transit-phal": {
+    shape: "natalTransitPlace",
+    extras: [{ wire: "lang", type: "string", required: false }],
+  },
+  "/v1/vedic/narrative/dasha-phal": {
+    shape: "natalTransitPlace",
+    extras: [{ wire: "lang", type: "string", required: false }],
+  },
+  "/v1/vedic/narrative/transit-double": { shape: "natalTransit", extras: [{ wire: "lang", type: "string", required: false }] },
+  "/v1/vedic/narrative/sade-sati-status": { shape: "natalTransit", extras: [{ wire: "lang", type: "string", required: false }] },
+  "/v1/vedic/narrative/sade-sati-phase": { shape: "natalTransit", extras: [{ wire: "lang", type: "string", required: false }] },
+  "/v1/vedic/narrative/sade-sati-history": { shape: "natalTransit", extras: [{ wire: "lang", type: "string", required: false }] },
+  // birth.* (with birth.lat/lon for the natal chart) + the transit date/tz.
+  "/v1/ashtakavarga/kaksha": { shape: "natalTransit", extras: [] },
+  "/v1/ashtakavarga/transit-score": { shape: "natalTransit", extras: [] },
+  "/v1/transit/small-panoti": { shape: "natalTransit", extras: [] },
 };
 
 const byPath = new Map();

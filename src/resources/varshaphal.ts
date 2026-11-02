@@ -19,7 +19,7 @@ export class Varshaphal {
     return this._c.request<T>("/v1/varshaphal/harsha-bala", q.applyExtras(q.qBirth(input), input, [["year", "year"]]), opts);
   }
 
-  /** Get the Varsha Lord (year ruler) for an annual chart — the planet that rules the Varshaphal year based on the Tajika system. */
+  /** Get the Varsha Lord (Varshesha, year ruler) for an annual chart, chosen by the Tajika Panchadhikari rule from the five office-bearers (Munthesh, Janmesh, Varsha Lagnesh, Trirashipati, Dina/Ratripati); the response also lists the candidates and the hora lord of the return. */
   lord<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { year: number }, opts?: RequestOptions): Promise<T> {
     return this._c.request<T>("/v1/varshaphal/lord", q.applyExtras(q.qBirth(input), input, [["year", "year"]]), opts);
   }

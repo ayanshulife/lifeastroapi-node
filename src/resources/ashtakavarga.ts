@@ -15,8 +15,8 @@ export class Ashtakavarga {
   }
 
   /** Get Kaksha (sub-division) level Ashtakavarga analysis — divides each sign into 8 equal 3°45′ segments, each ruled by a graha. */
-  kaksha<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { date: string; tz: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/ashtakavarga/kaksha", q.applyExtras(q.qBirthPrefixed(input), input, [["date", "date"], ["tz", "tz"]]), opts);
+  kaksha<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/ashtakavarga/kaksha", q.qNatalTransit(input), opts);
   }
 
   /** Get the Sarvashtakavarga table — the combined 12-sign benefic-point grid from all 9 grahas. */
@@ -25,7 +25,7 @@ export class Ashtakavarga {
   }
 
   /** Score current (or a given date's) planetary transits against a natal chart using Ashtakavarga benefic points. */
-  transitScore<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { date: string; tz: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/ashtakavarga/transit-score", q.applyExtras(q.qBirthPrefixed(input), input, [["date", "date"], ["tz", "tz"]]), opts);
+  transitScore<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/ashtakavarga/transit-score", q.qNatalTransit(input), opts);
   }
 }
