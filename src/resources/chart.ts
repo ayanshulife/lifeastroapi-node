@@ -59,6 +59,11 @@ export class Chart {
     return this._c.request<T>(q.buildPath("/v1/chart/divisional/{varga}", input, ["varga"]), q.qBirth(input), opts);
   }
 
+  /** Doshas in a birth chart as data (20 credits): kaalsarp, mangal (from lagna, Moon and Venus with cancellation), pitra, combust, debilitation (with neecha bhanga), retrograde, gandanta, grahan, papakartari, mrityu bhaga, guru chandal, visha kanya, ganda moola. Same item fields as chart.yogas. all=true also lists absent ids. Ids only, no text: planets sun..ketu, sign_index 0-based (Aries=0), house 1-based whole-sign from the lagna, nakshatra index 0-based (Ashwini=0). */
+  doshas<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { all?: boolean; gender?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/doshas", q.applyExtras(q.qBirth(input), input, [["all", "all"], ["gender", "gender"]]), opts);
+  }
+
   /** Ghatak Chakra (inauspicious indicators) for the chart. */
   ghatak<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
     return this._c.request<T>("/v1/chart/ghatak", q.qBirth(input), opts);
@@ -89,6 +94,11 @@ export class Chart {
     return this._c.request<T>("/v1/chart/kp-sublord", q.applyExtras(q.qBirth(input), input, [["planet", "planet"]]), opts);
   }
 
+  /** Whole birth chart as data in one call (50 credits): lagna; planets with sign, degree, house, nakshatra, pada, retrograde, combust, dignity, neecha bhanga, vargottama, houses ruled, shadbala, avastha and varga placements; houses with sign, lord, SAV bindus, bhava bala, occupants and aspecting planets; Jaimini chara karakas; avakhada. vargas: comma list (default D9, max 16, D1 rejected). include: shadbala, bhavabala, ashtakvarga, aspects, avastha, karakas, avakhada, yogas or all (default all but yogas). gender narrows Mahabhagya. Ids only, no text: planets sun..ketu, sign_index 0-based (Aries=0), house 1-based whole-sign from the lagna, nakshatra index 0-based (Ashwini=0). Anything not computable is in skipped. */
+  kundliFacts<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { vargas?: string; include?: string; gender?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/kundli-facts", q.applyExtras(q.qBirth(input), input, [["vargas", "vargas"], ["include", "include"], ["gender", "gender"]]), opts);
+  }
+
   /** Birth (Janma) nakshatra and pada. */
   nakshatra<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
     return this._c.request<T>("/v1/chart/nakshatra", q.qBirth(input), opts);
@@ -109,6 +119,11 @@ export class Chart {
     return this._c.request<T>("/v1/chart/planets", q.qBirth(input), opts);
   }
 
+  /** Birth-time sensitivity (20 credits): for D1 and each varga (default D9,D10,D24) the lagna sign at birth and how many minutes before/after it stays the same, with the neighbouring signs; the same for the Moon's nakshatra and pada; planet sign changes inside the window. window: half-width in minutes (default 120, max 180). Use it to tell users how much a birth-time error matters. Every instant comes as *_local (RFC 3339 with offset) and *_jd (Julian Day, UT); fields that cannot be computed are listed in skipped. */
+  sensitivity<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { window?: number; vargas?: string; topocentricMoon?: boolean }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/sensitivity", q.applyExtras(q.qBirth(input), input, [["window", "window"], ["vargas", "vargas"], ["topocentricMoon", "topocentric_moon"]]), opts);
+  }
+
   /** Shadbala (six-fold strength) for all 7 planets with components. */
   shadbala<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
     return this._c.request<T>("/v1/chart/shadbala", q.qBirth(input), opts);
@@ -117,5 +132,10 @@ export class Chart {
   /** One shadbala component (sthana|dig|kala|chesta|naisargika|drik) for all planets. */
   shadbalaComponent<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { component: string }, opts?: RequestOptions): Promise<T> {
     return this._c.request<T>(q.buildPath("/v1/chart/shadbala/{component}", input, ["component"]), q.qBirth(input), opts);
+  }
+
+  /** Yogas present in a birth chart as data (20 credits), from the same detectors as narrative.yogas: id, kind, category, present, planets, houses, strength, cancelled + cancel_reasons, variant, axes, sub_ids, source, details. Includes neecha_bhanga.<planet> and raja_yoga.kendra_trikona. all=true also lists every absent catalogue id with present:false. Ids only, no text: planets sun..ketu, sign_index 0-based (Aries=0), house 1-based whole-sign from the lagna, nakshatra index 0-based (Ashwini=0). */
+  yogas<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { all?: boolean; gender?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/yogas", q.applyExtras(q.qBirth(input), input, [["all", "all"], ["gender", "gender"]]), opts);
   }
 }

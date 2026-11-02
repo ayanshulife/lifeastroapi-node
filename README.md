@@ -5,7 +5,7 @@ Official **Node.js / TypeScript SDK** for [LifeAstroAPI](https://lifeastroapi.co
 kundli, muhurat and Western charts, with location-aware calculations and pay-per-call billing.
 Free tier: 1,500 credits a month, no card — [get a key](https://lifeastroapi.com/signup/).
 
-- ✅ **All 312 endpoints**, fully typed, across 23 namespaces — panchang, charts, dashas,
+- ✅ **All 321 endpoints**, fully typed, across 23 namespaces — panchang, charts, dashas,
   matchmaking, transits, horoscopes, numerology, tarot, muhurta, reports, narratives,
   and a complete Western (tropical) module.
 - ✅ **Zero runtime dependencies** — uses the platform `fetch` (Node 18+, Bun, Deno,
@@ -114,6 +114,7 @@ exact wire parameters the API expects (`birth.lat`, `boy.date`, `start_date`, �
 | **Rashi** | `horoscope.*` | `{ rashi: "aries", date?, lang? }` |
 | **Date range** | `eclipses.*`, `western.ingresses` | `{ startDate, endDate }` |
 | **Muhurta (search)** | `muhurta.bestTime` | `{ lat, lon, tz, startDate, endDate }` |
+| **Natal + window** | `transit.sadeSatiWindows`, `transit.windows` (`birth` optional) | `{ birth: Birth, from?, tz? }` |
 | **Natal + transit** | `transit.tarabala`, `transit.vedha`, `transit.smallPanoti`, `ashtakavarga.kaksha`, `ashtakavarga.transitScore`, `western.transits.toNatal`, `narrative.transitPhal`, `narrative.dashaPhal`, `narrative.transitDouble`, `narrative.sadeSatiStatus` / `Phase` / `History` | `{ birth: Birth, date, time, tz }` |
 
 **Dates.** The API requires a `date` on every moment endpoint — it has no "today"
@@ -132,6 +133,19 @@ Vedic endpoints also accept optional calculation settings: `ayanamsa`
 await client.chart.planets({ ...birth, ayanamsa: "krishnamurti", houseSystem: "placidus" });
 ```
 
+**Data endpoints** (`chart.kundliFacts`, `chart.yogas`, `chart.doshas`, `chart.sensitivity`,
+`transit.sadeSatiWindows`, `transit.windows`, `remedies.forGraha`, `milan.overlay`,
+`milan.summary`) return ids and numbers, no prose: planet ids `sun` … `ketu`, `sign_index`
+0-based (0 = Aries), `house` 1-based whole-sign from the lagna, nakshatra index 0-based
+(0 = Ashwini), every instant as `*_local` (RFC 3339) plus `*_jd` (Julian Day, UT), and a
+`skipped` object naming anything that could not be computed. Map ids to names in your app.
+
+```ts
+const facts = await client.chart.kundliFacts({ ...birth, include: "all" });
+const sadeSati = await client.transit.sadeSatiWindows({ birth, years: 30 });
+const match = await client.milan.summary({ boy: birth, girl: { date: "1992-03-20", time: "08:15", tz: "Asia/Kolkata", lat: 28.6139, lon: 77.209 } });
+```
+
 ## Namespaces
 
 `client.<namespace>.<method>(input)` — every method returns the response payload.
@@ -139,10 +153,10 @@ await client.chart.planets({ ...birth, ayanamsa: "krishnamurti", houseSystem: "p
 | Namespace | What it covers |
 |-----------|----------------|
 | `panchang` | tithi, nakshatra, yoga, karana, vara, sunrise/sunset, rahu-kaal, choghadiya, hora, muhurtas, monthly calendar, composite `basic`/`advanced` |
-| `chart` | planets, ascendant, houses, divisional (D1–D60), dignity, aspects, shadbala, ashtakvarga, avakhada, KP, astro-details |
+| `chart` | planets, ascendant, houses, divisional (D1–D60), dignity, aspects, shadbala, ashtakvarga, avakhada, KP, astro-details; data bundles `kundliFacts`, `yogas`, `doshas`, birth-time `sensitivity` |
 | `dasha` | full + current Vimshottari (5-level drill-down) and Yogini |
-| `milan` | Ashtakoota (total / full / per-koota), mangal/nadi/shani dosha, navamsa & dasha compatibility |
-| `transit` | positions, sade-sati, ashtakavarga, tarabala, vedha, double-transit, small-panoti |
+| `milan` | Ashtakoota (total / full / per-koota), mangal/nadi/shani dosha, navamsa & dasha compatibility (`dashaSync` with an aligned MD/AD `timeline` and `marriageWindows`), chart `overlay`, one-call `summary` |
+| `transit` | positions, sade-sati, ashtakavarga, tarabala, vedha, double-transit, small-panoti; dated `sadeSatiWindows` and per-planet sign `windows` |
 | `horoscope` | daily / weekly / monthly by rashi |
 | `numerology` | driver, conductor, soul, personality, destiny, full, advanced, challenges, personalPeriods |
 | `muhurta` | vivah, naamkaran, griha-pravesh, vyapar, yatra, best-time, … |
@@ -157,7 +171,7 @@ await client.chart.planets({ ...birth, ayanamsa: "krishnamurti", houseSystem: "p
 | `tarot` | cards, single card, daily, spread, yes/no |
 | `reports` | kundli (lite/detailed/brihad), match-making, mangal-dosha, sade-sati, varshaphal, numerology, horoscopes |
 | `narrative` | authored Vedic interpretations (lagna, planets, yogas, doshas, dasha-phal, transit-phal, prashna, outlooks, …) in `en/hi/mr/bn/kn/ta/te/gu` |
-| `remedies` | remedies by rule id; mantra / pooja / vrat / daan / rudraksha / yantra detail; Lal Kitab remedies |
+| `remedies` | remedies by rule id; `forGraha` (by graha and reason); mantra / pooja / vrat / daan / rudraksha / yantra detail; Lal Kitab remedies |
 | `lalkitab` | Lal Kitab chart and dasha |
 | `meta` | free catalogs: `endpoints` (credit cost of every route), `ayanamsas`, `vedicYogas`, `vedicDoshas`, `vedicLocales`, `version` |
 | `western` | full tropical module (see below) |

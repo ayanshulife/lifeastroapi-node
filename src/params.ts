@@ -227,6 +227,25 @@ export function qNatalTransitPlace(i: AnyInput): QueryParams {
   return q;
 }
 
+/**
+ * Window endpoints (`/v1/transit/windows`, `/v1/transit/sade-sati/windows`):
+ * the natal chart under `birth.*` (when given), the range start `from` and the
+ * output zone `tz`, both unprefixed.
+ */
+export function qNatalWindow(i: AnyInput): QueryParams {
+  const q: QueryParams = {};
+  const b = (i.birth ?? {}) as AnyInput;
+  set(q, "birth.date", b.date);
+  set(q, "birth.time", b.time);
+  set(q, "birth.tz", b.tz);
+  set(q, "birth.lat", b.lat);
+  set(q, "birth.lon", b.lon);
+  set(q, "from", i.from);
+  set(q, "tz", i.tz);
+  set(q, "ayanamsa", i.ayanamsa);
+  return q;
+}
+
 /** A location-less moment: date (default today) + optional time + tz (default UTC) + ayanamsa. */
 export function qInstant(i: AnyInput = {}): QueryParams {
   const q: QueryParams = {};

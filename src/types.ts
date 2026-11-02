@@ -175,6 +175,39 @@ export interface NatalTransitInput {
   tz: string;
 }
 
+/**
+ * Natal chart for the window endpoints. Only date, time and tz are needed for
+ * the natal Moon; lat/lon add the lagna-based fields where an endpoint has them.
+ */
+export interface NatalWindowBirth {
+  /** ISO date, `YYYY-MM-DD`. */
+  date: string;
+  /** 24-hour time, `HH:MM`. */
+  time: string;
+  /** IANA name (`Asia/Kolkata`) or fixed offset (`+05:30`). */
+  tz: string;
+  lat?: number;
+  lon?: number;
+}
+
+/**
+ * Natal chart (sent as `birth.*`) plus a date range: `from` (`YYYY-MM-DD`,
+ * local midnight in `tz`, default now) and `tz`, the zone of every `*_local`
+ * value in the response (default the birth tz).
+ */
+export interface NatalWindowInput {
+  birth: NatalWindowBirth;
+  from?: string;
+  tz?: string;
+}
+
+/** Like {@link NatalWindowInput}, but the natal chart is optional. */
+export interface OptionalNatalWindowInput {
+  birth?: NatalWindowBirth;
+  from?: string;
+  tz?: string;
+}
+
 /** Low-level query value. */
 export type QueryValue = string | number | boolean | null | undefined;
 export type QueryParams = Record<string, QueryValue>;

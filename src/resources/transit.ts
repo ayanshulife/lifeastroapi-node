@@ -29,6 +29,11 @@ export class Transit {
     return this._c.request<T>("/v1/transit/sade-sati", q.qBirthPrefixed(input), opts);
   }
 
+  /** Sade Sati and Dhaiya windows from the natal Moon (20 credits): intervals (one per stay of Saturn in a sign, kind sade_sati with phase rising/peak/setting, dhaiya_4 kantak or dhaiya_8 ashtama, exact ingress times, retro_reentry), cycles (merged passes with phase spans) and at_from (status at from). from defaults to now, years 25 (max 60); includePast starts at birth. Every instant comes as *_local (RFC 3339 with offset) and *_jd (Julian Day, UT); fields that cannot be computed are listed in skipped. */
+  sadeSatiWindows<T = unknown>(input: Types.NatalWindowInput & Types.VedicMomentSettings & { years?: number; includePast?: boolean }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/transit/sade-sati/windows", q.applyExtras(q.qNatalWindow(input), input, [["years", "years"], ["includePast", "include_past"]]), opts);
+  }
+
   /** Check whether a person is currently in Small Panoti (Ashtama Shani) — the 2.5-year Saturn transit through the 8th house from natal Moon, considered challenging. */
   smallPanoti<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
     return this._c.request<T>("/v1/transit/small-panoti", q.qNatalTransit(input), opts);
@@ -47,5 +52,10 @@ export class Transit {
   /** Check Vedha (transit obstruction) for a natal chart — certain house transits are blocked (vedha'd) by another planet transiting a specific opposing house simultaneously. */
   vedha<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
     return this._c.request<T>("/v1/transit/vedha", q.qNatalTransit(input), opts);
+  }
+
+  /** Every stay of one planet (sun..ketu) in a sidereal sign that overlaps [from, from + years] (20 credits), with exact ingress times, retro_reentry and retrograde_at_start. With birth (date, time, tz) each window has house_from_moon; with birth lat/lon also house_from_lagna. years: default 25 / max 60 for jupiter, saturn, rahu, ketu; 5 / 20 for sun, mercury, venus, mars; 1 / 2 for moon. Every instant comes as *_local (RFC 3339 with offset) and *_jd (Julian Day, UT); fields that cannot be computed are listed in skipped. */
+  windows<T = unknown>(input: Types.OptionalNatalWindowInput & Types.VedicMomentSettings & { planet: string; years?: number }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/transit/windows", q.applyExtras(q.qNatalWindow(input), input, [["planet", "planet"], ["years", "years"]]), opts);
   }
 }

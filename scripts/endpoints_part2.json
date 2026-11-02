@@ -2298,8 +2298,44 @@
   "path": "/v1/milan/dasha-sync",
   "shape": "boygirl",
   "pathParams": [],
-  "extras": [],
-  "desc": "Check Dasha synchrony between two partners — are they running compatible mahadasha lords at the same time? Good dasha synchrony indicates the couple will flourish together during major life events."
+  "extras": [
+   {
+    "wire": "timeline",
+    "type": "boolean",
+    "required": false
+   },
+   {
+    "wire": "years",
+    "type": "integer",
+    "required": false
+   },
+   {
+    "wire": "from",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "marriage_windows",
+    "type": "boolean",
+    "required": false
+   },
+   {
+    "wire": "date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "time",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Current Vimshottari Maha Dasha of both partners and whether they overlap (20 credits); date/time/tz set the check moment (default now). timeline=true adds both partners' MD/AD periods on one aligned timeline from from for years (default 10, max 30), each span with md, ad and the running AD's start/end. marriageWindows=true (implies timeline) tags each span favourable, neutral or avoid with reason ids (rule D-MarriageWindows1). Each partner's Moon uses the ayanamsa of their own birth moment, so dates match dasha.vimshottari."
  },
  {
   "path": "/v1/milan/dhan-yog",
@@ -2835,5 +2871,186 @@
   "pathParams": [],
   "extras": [],
   "desc": "The axes narrative text can vary along (locale, regional pack). Free (0 credits)."
+ },
+ {
+  "path": "/v1/chart/kundli-facts",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "vargas",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "include",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "gender",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Whole birth chart as data in one call (50 credits): lagna; planets with sign, degree, house, nakshatra, pada, retrograde, combust, dignity, neecha bhanga, vargottama, houses ruled, shadbala, avastha and varga placements; houses with sign, lord, SAV bindus, bhava bala, occupants and aspecting planets; Jaimini chara karakas; avakhada. vargas: comma list (default D9, max 16, D1 rejected). include: shadbala, bhavabala, ashtakvarga, aspects, avastha, karakas, avakhada, yogas or all (default all but yogas). gender narrows Mahabhagya. Ids only, no text: planets sun..ketu, sign_index 0-based (Aries=0), house 1-based whole-sign from the lagna, nakshatra index 0-based (Ashwini=0). Anything not computable is in skipped."
+ },
+ {
+  "path": "/v1/chart/yogas",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "all",
+    "type": "boolean",
+    "required": false
+   },
+   {
+    "wire": "gender",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Yogas present in a birth chart as data (20 credits), from the same detectors as narrative.yogas: id, kind, category, present, planets, houses, strength, cancelled + cancel_reasons, variant, axes, sub_ids, source, details. Includes neecha_bhanga.<planet> and raja_yoga.kendra_trikona. all=true also lists every absent catalogue id with present:false. Ids only, no text: planets sun..ketu, sign_index 0-based (Aries=0), house 1-based whole-sign from the lagna, nakshatra index 0-based (Ashwini=0)."
+ },
+ {
+  "path": "/v1/chart/doshas",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "all",
+    "type": "boolean",
+    "required": false
+   },
+   {
+    "wire": "gender",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Doshas in a birth chart as data (20 credits): kaalsarp, mangal (from lagna, Moon and Venus with cancellation), pitra, combust, debilitation (with neecha bhanga), retrograde, gandanta, grahan, papakartari, mrityu bhaga, guru chandal, visha kanya, ganda moola. Same item fields as chart.yogas. all=true also lists absent ids. Ids only, no text: planets sun..ketu, sign_index 0-based (Aries=0), house 1-based whole-sign from the lagna, nakshatra index 0-based (Ashwini=0)."
+ },
+ {
+  "path": "/v1/chart/sensitivity",
+  "shape": "birth",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "window",
+    "type": "integer",
+    "required": false
+   },
+   {
+    "wire": "vargas",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "topocentric_moon",
+    "type": "boolean",
+    "required": false
+   }
+  ],
+  "desc": "Birth-time sensitivity (20 credits): for D1 and each varga (default D9,D10,D24) the lagna sign at birth and how many minutes before/after it stays the same, with the neighbouring signs; the same for the Moon's nakshatra and pada; planet sign changes inside the window. window: half-width in minutes (default 120, max 180). Use it to tell users how much a birth-time error matters. Every instant comes as *_local (RFC 3339 with offset) and *_jd (Julian Day, UT); fields that cannot be computed are listed in skipped."
+ },
+ {
+  "path": "/v1/transit/sade-sati/windows",
+  "shape": "natalWindow",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "years",
+    "type": "integer",
+    "required": false
+   },
+   {
+    "wire": "include_past",
+    "type": "boolean",
+    "required": false
+   }
+  ],
+  "desc": "Sade Sati and Dhaiya windows from the natal Moon (20 credits): intervals (one per stay of Saturn in a sign, kind sade_sati with phase rising/peak/setting, dhaiya_4 kantak or dhaiya_8 ashtama, exact ingress times, retro_reentry), cycles (merged passes with phase spans) and at_from (status at from). from defaults to now, years 25 (max 60); includePast starts at birth. Every instant comes as *_local (RFC 3339 with offset) and *_jd (Julian Day, UT); fields that cannot be computed are listed in skipped."
+ },
+ {
+  "path": "/v1/transit/windows",
+  "shape": "natalWindowOptional",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "planet",
+    "type": "string",
+    "required": true
+   },
+   {
+    "wire": "years",
+    "type": "integer",
+    "required": false
+   }
+  ],
+  "desc": "Every stay of one planet (sun..ketu) in a sidereal sign that overlaps [from, from + years] (20 credits), with exact ingress times, retro_reentry and retrograde_at_start. With birth (date, time, tz) each window has house_from_moon; with birth lat/lon also house_from_lagna. years: default 25 / max 60 for jupiter, saturn, rahu, ketu; 5 / 20 for sun, mercury, venus, mars; 1 / 2 for moon. Every instant comes as *_local (RFC 3339 with offset) and *_jd (Julian Day, UT); fields that cannot be computed are listed in skipped."
+ },
+ {
+  "path": "/v1/vedic/remedies/for-graha",
+  "shape": "none",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "graha",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "reason",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "include",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "category",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "lang",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Remedies for one graha by reason (10 credits): a filter over the remedy catalogue (same rows and languages as remedies.vedic). reason: debilitated, combust, dusthana, weak_shadbala, dasha or dosha:<id> (graha is optional with dosha:<id>). Each item adds kind (mantra, daan, vrat, pooja, pilgrimage, yantra, rudraksha), weekday (0 = Sunday, or null) and matched_by. Free kinds by default; include adds pooja, pilgrimage, yantra, rudraksha; category limits to one catalogue category."
+ },
+ {
+  "path": "/v1/milan/overlay",
+  "shape": "boygirl",
+  "pathParams": [],
+  "extras": [],
+  "desc": "Couple chart overlay as data (20 credits): each partner's grahas in the other's whole-sign houses (with conjunct grahas), same-sign and same-nakshatra pairs, Moon sign relation (e.g. \"2/12\"), and each lagna lord's placement in the other's chart (sign, house, dignity, combust, retro). Each partner's chart uses the ayanamsa of their own birth moment. Ids only, no text: planets sun..ketu, sign_index 0-based (Aries=0), house 1-based whole-sign from the lagna, nakshatra index 0-based (Ashwini=0)."
+ },
+ {
+  "path": "/v1/milan/summary",
+  "shape": "boygirl",
+  "pathParams": [],
+  "extras": [
+   {
+    "wire": "from",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "tz",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "include",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Couple matching data in one call (60 credits), numbers identical to the separate routes: ashtakoota (every koota), navamsa_compat, mangal_dosha of both plus pair status, seventh_house facts of both (7th sign, occupants, 7th lord, Venus, Jupiter, D9 7th, D7 5th), and sade_sati windows of both for 10 years from from. include=kundli_facts adds both full charts. Ids only, no text: planets sun..ketu, sign_index 0-based (Aries=0), house 1-based whole-sign from the lagna, nakshatra index 0-based (Ashwini=0)."
  }
 ]

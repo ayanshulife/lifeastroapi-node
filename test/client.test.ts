@@ -544,3 +544,102 @@ describe("natal chart + transit moment are separate (0.5.0)", () => {
     expect(q.get("locale")).toBe("hi");
   });
 });
+
+describe("chart, transit, remedy and milan data endpoints (0.5.0)", () => {
+  const GIRL = { date: "1992-03-20", time: "08:15", tz: "Asia/Kolkata", lat: 28.6139, lon: 77.209 };
+
+  async function query(call: (c: LifeAstro) => Promise<unknown>) {
+    const { fetch, calls } = mockFetch(() => ({ body: {} }));
+    await call(makeClient(fetch));
+    const url = new URL(calls[0]!.url);
+    return { path: url.pathname, q: url.searchParams };
+  }
+
+  it("chart.kundliFacts / yogas / doshas / sensitivity read the birth chart unprefixed", async () => {
+    const cases: [string, (c: LifeAstro) => Promise<unknown>, Record<string, string>][] = [
+      ["/v1/chart/kundli-facts", (c) => c.chart.kundliFacts({ ...BIRTH, vargas: "D9,D10", include: "all", gender: "male" }), { vargas: "D9,D10", include: "all", gender: "male" }],
+      ["/v1/chart/yogas", (c) => c.chart.yogas({ ...BIRTH, all: true }), { all: "true" }],
+      ["/v1/chart/doshas", (c) => c.chart.doshas({ ...BIRTH, gender: "female" }), { gender: "female" }],
+      ["/v1/chart/sensitivity", (c) => c.chart.sensitivity({ ...BIRTH, window: 60, vargas: "D9", topocentricMoon: true }), { window: "60", vargas: "D9", topocentric_moon: "true" }],
+    ];
+    for (const [path, call, extra] of cases) {
+      const { path: got, q } = await query(call);
+      expect(got).toBe(path);
+      expect(q.get("date")).toBe("1990-01-15");
+      expect(q.get("time")).toBe("10:30");
+      expect(q.get("lat")).toBe("19.076");
+      expect(q.get("birth.date")).toBeNull();
+      for (const [k, v] of Object.entries(extra)) expect(q.get(k)).toBe(v);
+    }
+  });
+
+  it("transit.sadeSatiWindows sends birth.* plus unprefixed from/tz", async () => {
+    const { path, q } = await query((c) =>
+      c.transit.sadeSatiWindows({ birth: { date: "1990-01-15", time: "10:30", tz: "Asia/Kolkata" }, from: "2027-01-15", tz: "UTC", years: 30, includePast: true }),
+    );
+    expect(path).toBe("/v1/transit/sade-sati/windows");
+    expect(q.get("birth.date")).toBe("1990-01-15");
+    expect(q.get("birth.time")).toBe("10:30");
+    expect(q.get("birth.tz")).toBe("Asia/Kolkata");
+    expect(q.get("birth.lat")).toBeNull();
+    expect(q.get("date")).toBeNull();
+    expect(q.get("from")).toBe("2027-01-15");
+    expect(q.get("tz")).toBe("UTC");
+    expect(q.get("years")).toBe("30");
+    expect(q.get("include_past")).toBe("true");
+  });
+
+  it("transit.windows: planet required, birth optional", async () => {
+    let r = await query((c) => c.transit.windows({ planet: "jupiter", from: "2027-01-15", years: 12 }));
+    expect(r.path).toBe("/v1/transit/windows");
+    expect(r.q.get("planet")).toBe("jupiter");
+    expect(r.q.get("from")).toBe("2027-01-15");
+    expect(r.q.get("years")).toBe("12");
+    expect([...r.q.keys()].some((k) => k.startsWith("birth."))).toBe(false);
+    r = await query((c) => c.transit.windows({ planet: "saturn", birth: BIRTH }));
+    expect(r.q.get("birth.date")).toBe("1990-01-15");
+    expect(r.q.get("birth.lat")).toBe("19.076");
+    expect(r.q.get("birth.lon")).toBe("72.8777");
+    expect(r.q.get("lat")).toBeNull();
+  });
+
+  it("remedies.forGraha maps graha, reason, include, category and language", async () => {
+    const { path, q } = await query((c) => c.remedies.forGraha({ graha: "saturn", reason: "dosha:sade_sati", include: "pooja,yantra", category: "mantra", lang: "hi" }));
+    expect(path).toBe("/v1/vedic/remedies/for-graha");
+    expect(q.get("graha")).toBe("saturn");
+    expect(q.get("reason")).toBe("dosha:sade_sati");
+    expect(q.get("include")).toBe("pooja,yantra");
+    expect(q.get("category")).toBe("mantra");
+    expect(q.get("locale")).toBe("hi");
+  });
+
+  it("milan.overlay / summary send boy.* and girl.*", async () => {
+    let r = await query((c) => c.milan.overlay({ boy: BIRTH, girl: GIRL }));
+    expect(r.path).toBe("/v1/milan/overlay");
+    expect(r.q.get("boy.date")).toBe("1990-01-15");
+    expect(r.q.get("girl.date")).toBe("1992-03-20");
+    expect(r.q.get("girl.lat")).toBe("28.6139");
+    r = await query((c) => c.milan.summary({ boy: BIRTH, girl: GIRL, from: "2027-01-15", tz: "Asia/Kolkata", include: "kundli_facts" }));
+    expect(r.path).toBe("/v1/milan/summary");
+    expect(r.q.get("boy.time")).toBe("10:30");
+    expect(r.q.get("girl.time")).toBe("08:15");
+    expect(r.q.get("from")).toBe("2027-01-15");
+    expect(r.q.get("tz")).toBe("Asia/Kolkata");
+    expect(r.q.get("include")).toBe("kundli_facts");
+  });
+
+  it("milan.dashaSync maps the timeline options and the check moment", async () => {
+    const { path, q } = await query((c) =>
+      c.milan.dashaSync({ boy: BIRTH, girl: GIRL, timeline: true, years: 5, from: "2027-01-15", marriageWindows: true, date: "2027-02-01", tz: "Asia/Kolkata" }),
+    );
+    expect(path).toBe("/v1/milan/dasha-sync");
+    expect(q.get("boy.lat")).toBe("19.076");
+    expect(q.get("girl.lon")).toBe("77.209");
+    expect(q.get("timeline")).toBe("true");
+    expect(q.get("years")).toBe("5");
+    expect(q.get("from")).toBe("2027-01-15");
+    expect(q.get("marriage_windows")).toBe("true");
+    expect(q.get("date")).toBe("2027-02-01");
+    expect(q.get("tz")).toBe("Asia/Kolkata");
+  });
+});

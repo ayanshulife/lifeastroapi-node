@@ -19,6 +19,11 @@ export class Remedies {
     return this._c.request<T>(q.buildPath("/v1/vedic/remedies/daan/{id}", input, ["id"]), q.applyExtras(q.qNone(input), input, [["locale", "locale"]]), opts);
   }
 
+  /** Remedies for one graha by reason (10 credits): a filter over the remedy catalogue (same rows and languages as remedies.vedic). reason: debilitated, combust, dusthana, weak_shadbala, dasha or dosha:<id> (graha is optional with dosha:<id>). Each item adds kind (mantra, daan, vrat, pooja, pilgrimage, yantra, rudraksha), weekday (0 = Sunday, or null) and matched_by. Free kinds by default; include adds pooja, pilgrimage, yantra, rudraksha; category limits to one catalogue category. */
+  forGraha<T = unknown>(input: { graha?: string; reason?: string; include?: string; category?: string; lang?: string } = {}, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/vedic/remedies/for-graha", q.applyExtras(q.qNone(input), input, [["graha", "graha"], ["reason", "reason"], ["include", "include"], ["category", "category"], ["lang", "lang"], ["lang", "locale"]]), opts);
+  }
+
   /** Lal Kitab remedies for a specific planet-in-house placement (e.g. saturn in house 8). */
   lalkitabForPlacement<T = unknown>(input: { planet: string; house: string; locale?: string }, opts?: RequestOptions): Promise<T> {
     return this._c.request<T>(q.buildPath("/v1/vedic/remedies/lal-kitab/{planet}/{house}", input, ["planet","house"]), q.applyExtras(q.qNone(input), input, [["locale", "locale"]]), opts);

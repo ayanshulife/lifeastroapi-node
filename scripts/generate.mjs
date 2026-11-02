@@ -34,6 +34,8 @@ const SHAPES = {
   muhurta: { ts: "Types.MuhurtaInput", builder: "qMuhurta", required: true },
   natalTransit: { ts: "Types.NatalTransitInput & Types.VedicMomentSettings", builder: "qNatalTransit", required: true },
   natalTransitPlace: { ts: "Types.NatalTransitInput & Types.VedicMomentSettings", builder: "qNatalTransitPlace", required: true },
+  natalWindow: { ts: "Types.NatalWindowInput & Types.VedicMomentSettings", builder: "qNatalWindow", required: true },
+  natalWindowOptional: { ts: "Types.OptionalNatalWindowInput & Types.VedicMomentSettings", builder: "qNatalWindow", required: false },
   instant: { ts: "Types.InstantInput & Types.VedicMomentSettings", builder: "qInstant", required: false },
   none: { ts: "", builder: "qNone", required: false },
   custom: { ts: "", builder: "qNone", required: false },

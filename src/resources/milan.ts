@@ -24,9 +24,9 @@ export class Milan {
     return this._c.request<T>("/v1/milan/ashtakoota/total", q.qBoyGirl(input), opts);
   }
 
-  /** Check Dasha synchrony between two partners — are they running compatible mahadasha lords at the same time? Good dasha synchrony indicates the couple will flourish together during major life events. */
-  dashaSync<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/milan/dasha-sync", q.qBoyGirl(input), opts);
+  /** Current Vimshottari Maha Dasha of both partners and whether they overlap (20 credits); date/time/tz set the check moment (default now). timeline=true adds both partners' MD/AD periods on one aligned timeline from from for years (default 10, max 30), each span with md, ad and the running AD's start/end. marriageWindows=true (implies timeline) tags each span favourable, neutral or avoid with reason ids (rule D-MarriageWindows1). Each partner's Moon uses the ayanamsa of their own birth moment, so dates match dasha.vimshottari. */
+  dashaSync<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings & { timeline?: boolean; years?: number; from?: string; marriageWindows?: boolean; date?: string; time?: string; tz?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/dasha-sync", q.applyExtras(q.qBoyGirl(input), input, [["timeline", "timeline"], ["years", "years"], ["from", "from"], ["marriageWindows", "marriage_windows"], ["date", "date"], ["time", "time"], ["tz", "tz"]]), opts);
   }
 
   /** Check Dhan Yog (wealth yoga) for a single person's chart — assesses 2nd/11th house lord strength and Jupiter placement for prosperity. */
@@ -59,6 +59,11 @@ export class Milan {
     return this._c.request<T>("/v1/milan/navamsa-compat", q.qBoyGirl(input), opts);
   }
 
+  /** Couple chart overlay as data (20 credits): each partner's grahas in the other's whole-sign houses (with conjunct grahas), same-sign and same-nakshatra pairs, Moon sign relation (e.g. "2/12"), and each lagna lord's placement in the other's chart (sign, house, dignity, combust, retro). Each partner's chart uses the ayanamsa of their own birth moment. Ids only, no text: planets sun..ketu, sign_index 0-based (Aries=0), house 1-based whole-sign from the lagna, nakshatra index 0-based (Ashwini=0). */
+  overlay<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/overlay", q.qBoyGirl(input), opts);
+  }
+
   /** Check Santan Yog for a single person's chart — assesses 5th house lord and Jupiter placement to indicate prospects for children. */
   santanYog<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
     return this._c.request<T>("/v1/milan/santan-yog", q.qBirthPrefixed(input), opts);
@@ -72,6 +77,11 @@ export class Milan {
   /** Check Stree Dirgha — the distance from bride's nakshatra to groom's must be more than 9 nakshatras for a beneficial match (indicates the groom will lead a longer, more prosperous life than the bride expected). */
   streeDirgha<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
     return this._c.request<T>("/v1/milan/stree-dirgha", q.qBoyGirl(input), opts);
+  }
+
+  /** Couple matching data in one call (60 credits), numbers identical to the separate routes: ashtakoota (every koota), navamsa_compat, mangal_dosha of both plus pair status, seventh_house facts of both (7th sign, occupants, 7th lord, Venus, Jupiter, D9 7th, D7 5th), and sade_sati windows of both for 10 years from from. include=kundli_facts adds both full charts. Ids only, no text: planets sun..ketu, sign_index 0-based (Aries=0), house 1-based whole-sign from the lagna, nakshatra index 0-based (Ashwini=0). */
+  summary<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings & { from?: string; tz?: string; include?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/summary", q.applyExtras(q.qBoyGirl(input), input, [["from", "from"], ["tz", "tz"], ["include", "include"]]), opts);
   }
 
   /** Vivah Phal (marriage-outcome) assessment for one chart. */

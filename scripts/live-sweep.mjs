@@ -43,6 +43,8 @@ const SHAPE_INPUT = {
   muhurta: () => ({ lat: NOW.lat, lon: NOW.lon, tz: NOW.tz, startDate: "2026-11-01", endDate: "2026-11-30" }),
   natalTransit: () => ({ birth: { ...A }, date: NOW.date, time: NOW.time, tz: NOW.tz }),
   natalTransitPlace: () => ({ birth: { ...A }, date: NOW.date, time: NOW.time, tz: NOW.tz }),
+  natalWindow: () => ({ birth: { ...A }, from: NOW.date, tz: NOW.tz }),
+  natalWindowOptional: () => ({ birth: { ...A }, from: NOW.date, tz: NOW.tz }),
   // Deliberately empty: exercises the SDK's "today" + UTC defaults.
   instant: () => ({}),
   none: () => ({}),
@@ -97,6 +99,9 @@ const PER_PATH = {
   "/v1/vedic/remedies/rudraksha/{id}": { id: "vedic.L1.remedy.rudraksha.jupiter" },
   "/v1/tarot/card/{id}": { id: 5 },
   "/v1/vedic/narrative/prashna": { topic: "career" },
+  "/v1/transit/windows": { planet: "saturn" },
+  "/v1/vedic/remedies/for-graha": { graha: "saturn", reason: "debilitated" },
+  "/v1/milan/dasha-sync": { marriageWindows: true, from: NOW.date, years: 3 },
   "/v1/panchang/monthly": { tzOffsetHours: 5.5 },
   "/v1/horoscope/monthly": { month: "2026-11" },
   "/v1/reports/horoscope/monthly": { month: "2026-11" },
