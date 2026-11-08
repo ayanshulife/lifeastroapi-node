@@ -201,13 +201,14 @@ export function cleanNarrative(text: string, locale = "en"): string {
       .replace(/जातकाचे/g, "तुमचे")
       .replace(/जातकाचा/g, "तुमचा")
       .replace(/जातक/g, "तुम्ही");
-  } else if (locale === "te" || locale === "ta" || locale === "kn") {
+  } else if (locale === "te" || locale === "ta" || locale === "kn" || locale === "ml") {
     // Deliberately no rewrite. te/ta are already second person at the source
     // (మీరు / நீங்கள், gate-clean). Kannada rows still read third person, but
     // in agglutinative Kannada/Telugu/Tamil the person is carried by the verb
     // ending, so swapping the noun (ಜಾತಕ → ನೀವು) would leave broken grammar;
-    // the fix belongs in the corpus. The English rules below must not run on
-    // this prose either.
+    // the fix belongs in the corpus. Malayalam is agglutinative too (ml rows
+    // are written in നിങ്ങൾ at the source). The English rules below must not
+    // run on this prose either.
   } else {
     s = s
       .replace(/\bthe native's\b/g, "your")
@@ -307,8 +308,8 @@ footer {
    typography; spacing splits Indic clusters apart, so drop it.
    :where() keeps the specificity of a plain "body" rule, so a report's own
    body line-height (Brihad sets 1.8) still wins. */
-:where(html:lang(te), html:lang(ta), html:lang(kn)) body { line-height: 1.6; }
-:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn)) * { letter-spacing: normal !important; }
+:where(html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) body { line-height: 1.6; }
+:where(html:lang(hi), html:lang(mr), html:lang(te), html:lang(ta), html:lang(kn), html:lang(ml)) * { letter-spacing: normal !important; }
 `;
 
 function watermarkCss(b: ResolvedBranding): string {

@@ -56,7 +56,7 @@ export function renderGrahaSthiti(
 
 // ── North-Indian chart glue ─────────────────────────────────────────────────
 
-// Sign-name → 0-based index. Includes EN, Hindi/Marathi and te/ta/kn names so
+// Sign-name → 0-based index. Includes EN, Hindi/Marathi and te/ta/kn/ml names so
 // charts resolve regardless of the report locale (HI JSON emits "धनु", TE
 // JSON "ధనుస్సు", not "Sagittarius"). Devanagari names are shared by hi/mr.
 const SIGN_INDEX: Record<string, number> = {
@@ -66,7 +66,10 @@ const SIGN_INDEX: Record<string, number> = {
   "मेष": 0, "वृषभ": 1, "मिथुन": 2, "कर्क": 3, "सिंह": 4, "कन्या": 5,
   "तुला": 6, "वृश्चिक": 7, "धनु": 8, "मकर": 9, "कुम्भ": 10, "कुंभ": 10, "मीन": 11,
   "तूळ": 6,
-  // Telugu / Tamil / Kannada (= Go vedic.RashiTE / RashiTA / RashiKN)
+  // Malayalam (= Go vedic.RashiML): the Malayalam month-style names.
+  "മേടം": 0, "ഇടവം": 1, "മിഥുനം": 2, "കർക്കടകം": 3, "ചിങ്ങം": 4, "കന്നി": 5,
+  "തുലാം": 6, "വൃശ്ചികം": 7, "ധനു": 8, "മകരം": 9, "കുംഭം": 10, "മീനം": 11,
+  // Telugu / Tamil / Kannada / Malayalam (= Go vedic.RashiTE / RashiTA / RashiKN / RashiML)
   ...SOUTH_SIGN_INDEX,
 };
 
@@ -84,7 +87,7 @@ function chartPlanets(rows: { name?: string; house?: number; retro?: boolean }[]
   const out: ChartPlanet[] = [];
   for (const r of rows) {
     const raw = r.name ?? "";
-    // Normalise to the English key whether the JSON gave EN, Devanagari or te/ta/kn.
+    // Normalise to the English key whether the JSON gave EN, Devanagari or te/ta/kn/ml.
     const key = PLANET_LABELS_EN[raw] ? raw : PLANET_NAME_TO_EN[raw] ?? (southPlanetToEn(raw) || raw);
     const lbl = labels[key];
     if (!lbl || !r.house) continue;

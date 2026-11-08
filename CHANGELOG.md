@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.0 — 2026-11-08
+
+- PDF reports now render fully in Malayalam (`ml`): all templates have native labels, chart sign and planet names, dasha and Yogini lord names, weekday names and the `Noto Sans Malayalam` font. `Locale` now includes `"ml"`.
+- Tamil weekday names are the full day forms (`ஞாயிற்றுக்கிழமை` … `சனிக்கிழமை`), so a weekday never reads as a planet name.
+- Mangal dosha, Sade Sati, Varshaphal and Match-making PDFs no longer tell the reader to consult an astrologer or priest; remedies are written as steps the reader can do at home, with traditional rituals such as Kumbh Vivah only named.
+
 ## 0.5.0 — 2026-11-02
 
 - New `narrative.prashna({ lat, lon, tz, date, time, topic?, questionHouse?, lang? })`: Prashna (horary) narrative for the moment and place of the question (20 credits). `topic` is `career`, `financial`, `health`, `litigation`, `marriage`, `missing_person`, `property` or `travel`; `questionHouse` (1–12) picks the topic when `topic` is not given. Returns the Prashna lagna and Moon sections plus the topic reading for the Prashna lagna.

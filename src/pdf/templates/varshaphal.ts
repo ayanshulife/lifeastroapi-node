@@ -221,6 +221,27 @@ export const LABELS: Record<string, Record<string, string>> = {
     sign: "ರಾಶಿ",
     degree: "ಅಂಶ",
   },
+  ml: {
+    title_varsha: "വർഷഫലം: വാർഷിക ഫലങ്ങൾ",
+    born: "ജനനം",
+    at: "സമയം",
+    generated: "തയ്യാറാക്കിയ തീയതി",
+    section_solar_return: "സൗര പുനരാഗമന നിമിഷം",
+    section_planets_sr: "സൗര പുനരാഗമന സമയത്തെ ഗ്രഹസ്ഥിതി",
+    section_outlook: "വർഷത്തെക്കുറിച്ചുള്ള കാഴ്ചപ്പാട്",
+    solar_return_at: "സൗര പുനരാഗമന സമയം",
+    ascendant: "ലഗ്നം",
+    nakshatra: "നക്ഷത്രം",
+    pada: "പാദം",
+    muntha: "മുന്ഥ",
+    varsha_lord: "വർഷാധിപൻ",
+    house: "ഭാവം",
+    from_natal_lagna: "ജന്മലഗ്നത്തിൽ നിന്ന്",
+    hora_number: "ഹോര",
+    planet: "ഗ്രഹം",
+    sign: "രാശി",
+    degree: "ഡിഗ്രി",
+  },
 };
 
 /** Report-specific CSS: the prominent year badge on the cover, plus the
@@ -301,7 +322,7 @@ function outlookText(
     if (band === "challenging") {
       return `मुन्था का ${house} वें भाव में होना ${year} वर्ष को चुनौतीपूर्ण बना सकता है। स्वास्थ्य, खर्च, या ऋण-सम्बन्धी मामलों में सावधानी रखिए।`;
     }
-    return `मुन्था ${house} वें भाव में स्थित है — ${year} वर्ष में मिश्रित परिणाम संभव। प्रमुख निर्णयों के लिए ज्योतिषी से परामर्श लीजिए।`;
+    return `मुन्था ${house} वें भाव में स्थित है — ${year} वर्ष में मिश्रित परिणाम संभव। प्रमुख निर्णयों से पूर्व अपनी कुंडली को गहराई से जाँच लीजिए।`;
   }
   if (locale === "mr") {
     if (band === "favorable") {
@@ -310,11 +331,11 @@ function outlookText(
     if (band === "challenging") {
       return `मुन्था ${house} व्या स्थानात असल्याने ${year} वर्ष आव्हानात्मक राहू शकते. आरोग्य, खर्च किंवा कर्ज-संबंधी बाबींमध्ये सावधगिरी बाळगा.`;
     }
-    return `मुन्था ${house} व्या स्थानात आहे — ${year} वर्षात मिश्र परिणाम संभाव्य. महत्त्वाच्या निर्णयांसाठी ज्योतिषाचा सल्ला घ्या.`;
+    return `मुन्था ${house} व्या स्थानात आहे — ${year} वर्षात मिश्र परिणाम संभाव्य. महत्त्वाच्या निर्णयांपूर्वी आपली कुंडली सखोल तपासून घ्या.`;
   }
-  // te / ta / kn are written from the Hindi; the "consult an astrologer" line
-  // of the mixed band becomes "study your chart first" (te/ta style guides
-  // ban the referral phrase).
+  // te / ta / kn / ml are written from the Hindi; the "consult an astrologer" line
+  // of the mixed band became "study your chart first" in every locale
+  // (2026-11-07: no astrologer referral anywhere).
   if (locale === "te") {
     if (band === "favorable") {
       return `ముంథా ${house}వ భావంలో ఉండటం వల్ల ${year} సంవత్సరం సాధారణంగా అనుకూలంగా ఉంటుంది; లక్ష్య సాధన, స్థిరత్వం లేదా ఆధ్యాత్మిక పురోగతికి అవకాశాలు పెరుగుతాయి.`;
@@ -342,13 +363,22 @@ function outlookText(
     }
     return `ಮುಂಥಾ ${house}ನೇ ಭಾವದಲ್ಲಿದೆ; ${year} ವರ್ಷದಲ್ಲಿ ಮಿಶ್ರ ಫಲಿತಾಂಶಗಳು ಸಾಧ್ಯ. ಮುಖ್ಯ ನಿರ್ಧಾರಗಳ ಮೊದಲು ನಿಮ್ಮ ಜಾತಕವನ್ನು ಆಳವಾಗಿ ಪರಿಶೀಲಿಸಿಕೊಳ್ಳಿ.`;
   }
+  if (locale === "ml") {
+    if (band === "favorable") {
+      return `മുന്ഥ ${house}-ാം ഭാവത്തിലായതിനാൽ ${year} വർഷം പൊതുവെ അനുകൂലമായിരിക്കും; ലക്ഷ്യപ്രാപ്തി, സ്ഥിരത, ആത്മീയ പുരോഗതി എന്നിവയ്ക്കുള്ള സാധ്യതകൾ വർധിക്കും.`;
+    }
+    if (band === "challenging") {
+      return `മുന്ഥ ${house}-ാം ഭാവത്തിലായതിനാൽ ${year} വർഷം വെല്ലുവിളി നിറഞ്ഞതാകാം. ആരോഗ്യം, ചെലവ്, കടം എന്നിവയുമായി ബന്ധപ്പെട്ട കാര്യങ്ങളിൽ ശ്രദ്ധ പുലർത്തുക.`;
+    }
+    return `മുന്ഥ ${house}-ാം ഭാവത്തിലാണ്; ${year} വർഷത്തിൽ സമ്മിശ്ര ഫലങ്ങൾ ഉണ്ടാകാം. പ്രധാന തീരുമാനങ്ങൾക്കു മുമ്പ് നിങ്ങളുടെ ജാതകം ആഴത്തിൽ പരിശോധിക്കുക.`;
+  }
   if (band === "favorable") {
     return `Muntha in house ${house} makes ${year} broadly favorable — increased likelihood of goal attainment, stability, or spiritual progress.`;
   }
   if (band === "challenging") {
     return `Muntha in house ${house} may make ${year} challenging. Exercise care around health, expenditure, or debt-related matters.`;
   }
-  return `Muntha sits in house ${house} — ${year} likely brings mixed results. Consult an astrologer before major decisions.`;
+  return `Muntha sits in house ${house} — ${year} likely brings mixed results. Study your chart closely before major decisions.`;
 }
 
 /**
@@ -365,7 +395,7 @@ export function renderVarshaphalHtml(
 ): string {
   const resolved = resolveBranding(data.Branding, branding);
   const t = makeLabeler(LABELS, data.Locale);
-  // Narrow the locale to one the outlook prose is authored for (en/hi/mr/te/ta/kn),
+  // Narrow the locale to one the outlook prose is authored for (en/hi/mr/te/ta/kn/ml),
   // matching Go's pickVarshaphalLocale fallback to "en".
   const loc = data.Locale && LABELS[data.Locale] ? data.Locale : "en";
 

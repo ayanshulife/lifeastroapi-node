@@ -141,7 +141,7 @@ ${planetsSvg}
 </div>`;
 }
 
-/** Short planet labels for chart cells: EN, Devanagari (hi/mr), te, ta, kn. */
+/** Short planet labels for chart cells: EN, Devanagari (hi/mr), te, ta, kn, ml. */
 export const PLANET_LABELS_EN: Record<string, string> = {
   Sun: "Su", Moon: "Mo", Mars: "Ma", Mercury: "Me", Jupiter: "Ju",
   Venus: "Ve", Saturn: "Sa", Rahu: "Ra", Ketu: "Ke",
@@ -169,6 +169,17 @@ export const PLANET_LABELS_KN: Record<string, string> = {
   Venus: "ಶು", Saturn: "ಶ", Rahu: "ರಾ", Ketu: "ಕೇ",
   Uranus: "ಯು", Neptune: "ನೆ", Pluto: "ಪ್ಲು",
 };
+// Malayalam: cut from the engine's names (vedic.PlanetML) like te/ta/kn, so a
+// chart cell matches the planet tables: സൂ(ര്യൻ) ച(ന്ദ്രൻ) ചൊ(വ്വ) ബു(ധൻ)
+// വ്യാ(ഴം) ശു(ക്രൻ) ശ(നി) രാ(ഹു) കേ(തു). The older Kerala chart letters
+// (ര രവി, കു കുജൻ, ഗു ഗുരു, മ മന്ദൻ, സ സർപ്പൻ, ശി ശിഖി) are not used because the
+// rest of the report names the planets ചൊവ്വ / വ്യാഴം / ശനി / രാഹു / കേതു.
+// All nine labels are distinct (ച vs ചൊ, ശ vs ശു).
+export const PLANET_LABELS_ML: Record<string, string> = {
+  Sun: "സൂ", Moon: "ച", Mars: "ചൊ", Mercury: "ബു", Jupiter: "വ്യാ",
+  Venus: "ശു", Saturn: "ശ", Rahu: "രാ", Ketu: "കേ",
+  Uranus: "യു", Neptune: "നെ", Pluto: "പ്ലൂ",
+};
 
 /** The chart-cell label table for a locale (English abbreviations by default). */
 export function planetLabelsFor(locale: string | undefined): Record<string, string> {
@@ -182,6 +193,8 @@ export function planetLabelsFor(locale: string | undefined): Record<string, stri
       return PLANET_LABELS_TA;
     case "kn":
       return PLANET_LABELS_KN;
+    case "ml":
+      return PLANET_LABELS_ML;
     default:
       return PLANET_LABELS_EN;
   }

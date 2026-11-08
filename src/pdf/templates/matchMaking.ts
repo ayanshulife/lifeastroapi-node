@@ -226,6 +226,23 @@ export const LABELS: Record<string, Record<string, string>> = {
     mangal_dosha: "ಮಂಗಳ ದೋಷ",
     nadi_dosha: "ನಾಡಿ ದೋಷ",
   },
+  ml: {
+    title_match: "ജാതകപ്പൊരുത്തം: വിവാഹയോഗ്യത",
+    born: "ജനനം",
+    generated: "തയ്യാറാക്കിയ തീയതി",
+    section_ashtakoota: "അഷ്ടകൂടം: 8 കൂടങ്ങളുടെ പൊരുത്തം",
+    section_doshas: "ദോഷങ്ങൾ",
+    section_final: "അന്തിമ നിഗമനം",
+    koota: "കൂടം",
+    max: "പരമാവധി",
+    score: "ഗുണം",
+    details: "വിശദാംശം",
+    total: "ആകെ",
+    nakshatra: "നക്ഷത്രം",
+    ashtakoota_verdict: "അഷ്ടകൂട നിഗമനം",
+    mangal_dosha: "ചൊവ്വാദോഷം",
+    nadi_dosha: "നാഡീദോഷം",
+  },
 };
 
 /**
@@ -239,9 +256,10 @@ export const VERDICT_LABELS: Record<string, Record<string, string>> = {
   te: { poor: "తక్కువ", fair: "సాధారణం", good: "మంచిది", excellent: "ఉత్తమం" },
   ta: { poor: "குறைவு", fair: "சுமார்", good: "நல்லது", excellent: "உத்தமம்" },
   kn: { poor: "ಕಡಿಮೆ", fair: "ಸಾಧಾರಣ", good: "ಉತ್ತಮ", excellent: "ಅತ್ಯುತ್ತಮ" },
+  ml: { poor: "കുറവ്", fair: "സാധാരണം", good: "നല്ലത്", excellent: "ഉത്തമം" },
 };
 
-/** Verdict, dosha and nadi prose for te / ta / kn (written from the Hindi). */
+/** Verdict, dosha and nadi prose for te / ta / kn / ml (written from the Hindi). */
 interface SouthMatchProse {
   verdict: { excellent: string; good: string; fair: string; poor: string };
   mangalNotComputed: string;
@@ -314,6 +332,25 @@ const SOUTH_MATCH: Record<string, SouthMatchProse> = {
     nadiNone: (boy, girl) => `ನಾಡಿ ದೋಷ ಇಲ್ಲ. (ವರ: ${boy}, ವಧು: ${girl})`,
     nadiExempted: (exc) => `ನಾಡಿ ದೋಷ ಇದೆ, ಆದರೆ ಶಾಸ್ತ್ರೀಯ ವಿನಾಯಿತಿಯಿಂದ ರದ್ದಾಗಿದೆ (${exc})`,
     nadiHigh: (boy) => `ನಾಡಿ ದೋಷ: ಇಬ್ಬರದೂ ಒಂದೇ ನಾಡಿ (${boy}). ಶಾಸ್ತ್ರದ ಪ್ರಕಾರ ಪ್ರತಿಕೂಲ.`,
+  },
+  ml: {
+    verdict: {
+      excellent: "ഉത്തമ പൊരുത്തം: എല്ലാ മേഖലകളിലും ഐക്യത്തിനുള്ള സാധ്യത കൂടുതലാണ്.",
+      good: "നല്ല പൊരുത്തം: വിവാഹത്തിന് അനുകൂലമായ സൂചനകളുണ്ട്.",
+      fair: "സാധാരണ പൊരുത്തം: ചില കൂടങ്ങളിൽ കുറവുണ്ട്, എങ്കിലും മുന്നോട്ട് പോകാം.",
+      poor: "കുറഞ്ഞ പൊരുത്തം: പല കൂടങ്ങളിലും കുറവുണ്ട്, ശ്രദ്ധാപൂർവം ആലോചിക്കേണ്ടതുണ്ട്.",
+    },
+    mangalNotComputed: "ചൊവ്വാദോഷം പരിശോധിച്ചിട്ടില്ല: ജനനസ്ഥലം (അക്ഷാംശം/രേഖാംശം) നൽകിയിട്ടില്ല.",
+    mangalNone: "ചൊവ്വാദോഷം ഇല്ല.",
+    typePurn: "പൂർണ",
+    typeMild: "അൽപ",
+    fromLagna: (hs) => `ലഗ്നത്തിൽ നിന്ന് ${hs}`,
+    fromMoon: (hs) => `ചന്ദ്രനിൽ നിന്ന് ${hs}`,
+    mangal: (type, houses) => `ചൊവ്വാദോഷം (${type}), ഭാവം: ${houses}.`,
+    cancelled: " പരിഹാരം: ",
+    nadiNone: (boy, girl) => `നാഡീദോഷം ഇല്ല. (വരൻ: ${boy}, വധു: ${girl})`,
+    nadiExempted: (exc) => `നാഡീദോഷം ഉണ്ട്, എന്നാൽ ശാസ്ത്രീയ ഇളവിനാൽ റദ്ദാകുന്നു (${exc})`,
+    nadiHigh: (boy) => `നാഡീദോഷം: ഇരുവർക്കും ഒരേ നാഡി (${boy}). ശാസ്ത്രപ്രകാരം പ്രതികൂലം.`,
   },
 };
 
@@ -496,9 +533,9 @@ function matchVerdict(data: MatchMakingData): string {
   if (data.FinalVerdict) return data.FinalVerdict;
   const total = data.Ashtakoota?.Total ?? 0;
   if (total >= 24) {
-    return "Marriage indications are favorable. Consult a qualified astrologer for timing.";
+    return "Marriage indications are favorable. Study both charts for the timing.";
   }
-  return "Score is below conventional threshold (24/36). Consider remedies and detailed consultation.";
+  return "Score is below conventional threshold (24/36). Consider remedies and a detailed study of both charts.";
 }
 
 /**

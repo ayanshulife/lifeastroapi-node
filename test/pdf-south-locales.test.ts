@@ -29,26 +29,28 @@ import { LABELS as HOROSCOPE_LABELS } from "../src/pdf/templates/horoscope.js";
 import { LABELS as MATCH_LABELS, VERDICT_LABELS } from "../src/pdf/templates/matchMaking.js";
 import { LABELS as VARSHA_LABELS } from "../src/pdf/templates/varshaphal.js";
 import { BASE_CSS } from "../src/pdf/shared.js";
-import { PLANET_NAMES, RASHI_NAMES } from "../src/pdf/locales.js";
+import { PLANET_NAMES, RASHI_NAMES, WEEKDAY_NAMES, localizeWeekday } from "../src/pdf/locales.js";
 
-type Loc = "te" | "ta" | "kn";
-const LOCALES: Loc[] = ["te", "ta", "kn"];
+type Loc = "te" | "ta" | "kn" | "ml";
+const LOCALES: Loc[] = ["te", "ta", "kn", "ml"];
 
 const SCRIPT: Record<Loc, RegExp> = {
   te: /[ఀ-౿]/g,
   ta: /[஀-௿]/g,
   kn: /[ಀ-೿]/g,
+  ml: /[ഀ-ൿ]/g,
 };
 const DEVANAGARI = /[ऀ-ॿ]/;
 
 /** A short native word used as stand-in body text from the API. */
-const WORD: Record<Loc, string> = { te: "నమూనా వాక్యం.", ta: "மாதிரி வாக்கியம்.", kn: "ಮಾದರಿ ವಾಕ್ಯ." };
+const WORD: Record<Loc, string> = { te: "నమూనా వాక్యం.", ta: "மாதிரி வாக்கியம்.", kn: "ಮಾದರಿ ವಾಕ್ಯ.", ml: "മാതൃകാ വാക്യം." };
 /** Yoga / dosha names as the API's NameLocal field sends them. */
-const YOGA: Record<Loc, string> = { te: "గజకేసరి యోగం", ta: "கஜகேசரி யோகம்", kn: "ಗಜಕೇಸರಿ ಯೋಗ" };
+const YOGA: Record<Loc, string> = { te: "గజకేసరి యోగం", ta: "கஜகேசரி யோகம்", kn: "ಗಜಕೇಸರಿ ಯೋಗ", ml: "ഗജകേസരി യോഗം" };
 const NAK: Record<Loc, [string, string]> = {
   te: ["మఖ", "అశ్విని"],
   ta: ["மகம்", "அசுவினி"],
   kn: ["ಮಖ", "ಅಶ್ವಿನಿ"],
+  ml: ["മകം", "അശ്വതി"],
 };
 
 /** Tokens that are data or branding, not template labels, and may stay Latin. */
@@ -321,7 +323,7 @@ const RENDERERS: Array<{ name: string; render: (loc: Loc) => string }> = [
   },
 ];
 
-describe("PDF templates render fully in te / ta / kn", () => {
+describe("PDF templates render fully in te / ta / kn / ml", () => {
   for (const { name, render } of RENDERERS) {
     for (const loc of LOCALES) {
       it(`${name} [${loc}]: no English labels, ${loc} script, no Devanagari`, () => {
@@ -391,7 +393,31 @@ describe("south-locale specifics", () => {
     expect(kn).toContain("ಶುಕ್ರವಾರ");
   });
 
-  it("font stacks cover Telugu, Tamil and Kannada everywhere a font is set", () => {
+  it("weekday names never equal a planet name (ta புதன் / ml ബുധൻ are planets)", () => {
+    for (const loc of LOCALES) {
+      const days = WEEKDAY_NAMES[loc]!;
+      expect(days).toHaveLength(7);
+      expect(new Set(days).size).toBe(7);
+      const planets = new Set(Object.values(PLANET_NAMES[loc]!));
+      for (const d of days) expect(planets.has(d), `${loc} weekday ${d}`).toBe(false);
+    }
+    expect(localizeWeekday("ta", "Wednesday")).toBe("புதன்கிழமை");
+  });
+
+  it("Malayalam: Kerala sign names, full weekday names, native chart labels and Part banner", () => {
+    const num = RENDERERS.find((r) => r.name === "numerology")!.render("ml");
+    expect(num).toContain("ശുക്രൻ");
+    expect(num).toContain("വെള്ളിയാഴ്ച");
+    const brihad = RENDERERS.find((r) => r.name === "kundliBrihad")!.render("ml");
+    expect((brihad.match(/class="north-chart"/g) ?? []).length).toBeGreaterThanOrEqual(2);
+    expect(brihad).toContain(">സൂ<");
+    expect(brihad).toContain("ഭാഗം 1:");
+    const dasha = RENDERERS.find((r) => r.name === "dashaAnalysis")!.render("ml");
+    expect(dasha).toContain("ശനി");
+    expect(dasha).toContain("മംഗള");
+  });
+
+  it("font stacks cover Telugu, Tamil, Kannada and Malayalam everywhere a font is set", () => {
     const html = RENDERERS.find((r) => r.name === "kundliDetailed")!.render("kn");
     const stacks = [...html.matchAll(/font-family:\s*([^;}"]+)/g)].map((m) => m[1]!);
     expect(stacks.length).toBeGreaterThan(1);
@@ -400,8 +426,9 @@ describe("south-locale specifics", () => {
       expect(s).toContain("Noto Sans Telugu");
       expect(s).toContain("Noto Sans Tamil");
       expect(s).toContain("Noto Sans Kannada");
+      expect(s).toContain("Noto Sans Malayalam");
     }
-    expect(BASE_CSS).toMatch(/:where\(html:lang\(te\), html:lang\(ta\), html:lang\(kn\)\) body/);
+    expect(BASE_CSS).toMatch(/:where\(html:lang\(te\), html:lang\(ta\), html:lang\(kn\), html:lang\(ml\)\) body/);
   });
 
   it("cleanNarrative leaves te/ta/kn prose untouched (no English 'native' rewrite)", () => {

@@ -67,7 +67,7 @@ const HI_TO_EN: Record<string, string> = {
   "राहु": "Rahu", "केतु": "Ketu", "अरुण": "Uranus", "वरुण": "Neptune", "यम": "Pluto",
 };
 
-/** Return the glyph SVG for a planet name (EN, Devanagari, te/ta/kn), or "". */
+/** Return the glyph SVG for a planet name (EN, Devanagari, te/ta/kn/ml), or "". */
 export function planetGlyph(name: string | undefined): string {
   if (!name) return "";
   const key = PLANET_GLYPHS[name] ? name : HI_TO_EN[name] ?? (southPlanetToEn(name) || name);

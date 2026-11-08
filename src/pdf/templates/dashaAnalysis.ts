@@ -308,6 +308,42 @@ const LABELS: Record<string, Record<string, string>> = {
     th_duration: "ಅವಧಿ",
     years: "ವರ್ಷಗಳು",
   },
+  // Malayalam keeps the Hindi level names and adds the Kerala names
+  // (അപഹാരം, ഛിദ്രം) that Malayalam readers use for antar / pratyantar.
+  ml: {
+    title_dasha: "ദശാ വിശകലനം",
+    subtitle_dasha: "വിംശോത്തരി വിശദ വിവരണം: കഴിഞ്ഞ, ഇപ്പോഴത്തെ, വരാനിരിക്കുന്ന ദശകൾ",
+    born: "ജനനം",
+    at: "സമയം",
+    generated: "തയ്യാറാക്കിയ തീയതി",
+    section_active: "ഇപ്പോൾ നടക്കുന്ന ദശാതലങ്ങൾ",
+    section_predictions: "നടക്കുന്ന ഉപദശകളുടെ ഫലങ്ങൾ",
+    section_all_md: "എല്ലാ 9 മഹാദശകളും (120 വർഷ ചക്രം)",
+    section_past: "കഴിഞ്ഞ 20 വർഷങ്ങളുടെ അവലോകനം",
+    section_future: "അടുത്ത 10 വർഷങ്ങളുടെ മുന്നോട്ടുള്ള കാഴ്ച",
+    section_yogini: "യോഗിനി ദശ (രണ്ടാം പദ്ധതി)",
+    active_intro:
+      "ഈ അഞ്ച് ദശാതലങ്ങളും ഇപ്പോൾ ഒരേ സമയം നടക്കുന്നു. പുറമേയുള്ള മഹാദശ പൊതുവായ ഭാവം നിശ്ചയിക്കുന്നു; ഉള്ളിലെ ഓരോ തലവും കൂടുതൽ സൂക്ഷ്മമായ സമയസൂചന നൽകുന്നു.",
+    active_unavailable: "ഈ ജാതകത്തിന് നടക്കുന്ന ദശാതലങ്ങൾ ലഭ്യമല്ല.",
+    past_intro: "കഴിഞ്ഞ 20 വർഷങ്ങളിൽ കടന്നുപോയ മഹാദശകൾ; തിരിഞ്ഞുനോക്കി മനസ്സിലാക്കാൻ ഉപകാരപ്പെടും.",
+    past_none: "ഈ ജാതകത്തിന് കഴിഞ്ഞ 20 വർഷങ്ങളിലെ മഹാദശകളൊന്നും ലഭ്യമല്ല.",
+    future_intro:
+      "അടുത്ത 10 വർഷങ്ങളിലെ അന്തർദശകൾ; അടുത്ത കാലത്തേക്കുള്ള ആസൂത്രണത്തിന് മഹാദശയെക്കാൾ സൂക്ഷ്മമായ കാഴ്ച.",
+    future_none: "അടുത്ത 10 വർഷങ്ങളിലേക്ക് ദശകളൊന്നും ലഭ്യമല്ല.",
+    yogini_intro:
+      "യോഗിനി ദശ എട്ട് കാലങ്ങളുള്ള രണ്ടാം പദ്ധതിയാണ്; സമയനിർണയം ഉറപ്പിക്കാൻ വിംശോത്തരിയോടൊപ്പം ഇത് ഉപയോഗിക്കുന്നു.",
+    md_unavailable: "ഈ ജാതകത്തിന് മഹാദശകളുടെ ക്രമം ലഭ്യമല്ല.",
+    lvl_maha: "മഹാദശ",
+    lvl_antar: "അന്തർദശ (അപഹാരം)",
+    lvl_pratyantar: "പ്രത്യന്തർദശ (ഛിദ്രം)",
+    lvl_sookshma: "സൂക്ഷ്മദശ",
+    lvl_prana: "പ്രാണദശ",
+    th_lord: "അധിപൻ",
+    th_start: "ആരംഭം",
+    th_end: "അവസാനം",
+    th_duration: "കാലയളവ്",
+    years: "വർഷം",
+  },
 };
 
 /** Report-specific CSS, ported from the Go template's <style> block. */
@@ -350,7 +386,7 @@ const EXTRA_CSS = `
 /**
  * Resolve a period's lord name for the locale: the API's LordLocal when present
  * (any non-en locale), else LordHI for hi/mr, the engine's native planet /
- * Yogini name for te/ta/kn (older API builds sent only Lord + LordHI).
+ * Yogini name for te/ta/kn/ml (older API builds sent only Lord + LordHI).
  */
 function periodLord(period: DashaPeriodView | undefined, locale: string): string {
   if (!period) return "";

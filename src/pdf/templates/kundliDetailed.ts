@@ -243,6 +243,28 @@ export const LABELS: Record<string, Record<string, string>> = {
     karana: "ಕರಣ",
     sources: "ಆಧಾರಗಳು",
   },
+  ml: {
+    title_kundli: "വിശദ ജാതകം",
+    born: "ജനനം",
+    at: "സമയം",
+    generated: "തയ്യാറാക്കിയ തീയതി",
+    section_ascendant: "ലഗ്നം",
+    section_planets: "ഗ്രഹസ്ഥിതി",
+    section_panchang: "ജന്മ പഞ്ചാംഗം",
+    section_interpretation: "വ്യാഖ്യാനം",
+    ascendant: "ലഗ്നം",
+    planet: "ഗ്രഹം",
+    sign: "രാശി",
+    degree: "അംശം",
+    house: "ഭാവം",
+    nakshatra: "നക്ഷത്രം",
+    pada: "പാദം",
+    lord: "അധിപൻ",
+    tithi: "തിഥി",
+    yoga: "യോഗം",
+    karana: "കരണം",
+    sources: "ആധാരങ്ങൾ",
+  },
 };
 
 /**

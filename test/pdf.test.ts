@@ -333,7 +333,7 @@ describe("horoscope periods & locale fallback", () => {
         ...base,
         period: "daily",
         period_key: "2026-06-17",
-        language: "ml", // no PDF label table yet (ta/te/kn now have one)
+        language: "pa", // no PDF label table (te/ta/kn/ml have one)
         slow_movers: [{ planet: "Jupiter", current_sign: "Cancer", heading: "x", body: "y" }],
       });
     }).not.toThrow();

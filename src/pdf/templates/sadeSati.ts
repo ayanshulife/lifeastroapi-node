@@ -111,7 +111,7 @@ const LABELS: Record<string, Record<string, string>> = {
     no_past: "No past Sade Sati windows recorded in the searched range.",
     no_future: "No upcoming Sade Sati windows in the searched range.",
     remedies_intro:
-      "These traditional remedies are commonly recommended during Sade Sati phases. Consult a qualified astrologer before adopting any:",
+      "These traditional remedies are commonly recommended during Sade Sati phases. Check your full chart before adopting any:",
   },
   hi: {
     title_sade: "साढ़े साती रिपोर्ट",
@@ -132,7 +132,7 @@ const LABELS: Record<string, Record<string, string>> = {
     no_past: "खोज सीमा में कोई पूर्व साढ़े साती चरण नहीं मिला।",
     no_future: "खोज सीमा में कोई आगामी साढ़े साती चरण नहीं है।",
     remedies_intro:
-      "साढ़े साती के दौरान प्रचलित पारंपरिक उपाय निम्नलिखित हैं। किसी भी उपाय को अपनाने से पूर्व योग्य ज्योतिषी से परामर्श लीजिए:",
+      "साढ़े साती के दौरान प्रचलित पारंपरिक उपाय निम्नलिखित हैं। किसी भी उपाय को अपनाने से पूर्व अपनी कुंडली को पूरी तरह जाँच लीजिए:",
   },
   mr: {
     title_sade: "साडेसाती अहवाल",
@@ -153,12 +153,12 @@ const LABELS: Record<string, Record<string, string>> = {
     no_past: "शोध मर्यादेत कोणताही मागील साडेसाती कालखंड आढळला नाही.",
     no_future: "शोध मर्यादेत कोणताही आगामी साडेसाती कालखंड नाही.",
     remedies_intro:
-      "साडेसाती कालखंडात सामान्यतः शिफारस केले जाणारे पारंपरिक उपाय खालील आहेत. कोणताही उपाय अंगीकारण्यापूर्वी पात्र ज्योतिषाचा सल्ला घ्या:",
+      "साडेसाती कालखंडात सामान्यतः शिफारस केले जाणारे पारंपरिक उपाय खालील आहेत. कोणताही उपाय अंगीकारण्यापूर्वी आपली कुंडली पूर्णपणे तपासून घ्या:",
   },
   // te / ta / kn are written from the Hindi; Sade Sati is ఏలినాటి శని in
   // Telugu and ஏழரைச் சனி in Tamil. The Hindi "consult a qualified
-  // astrologer" becomes "check your chart fully first" (te/ta style guides
-  // ban the referral phrase).
+  // astrologer" became "check your chart fully first" in every locale
+  // (2026-11-07: no astrologer referral anywhere).
   te: {
     title_sade: "ఏలినాటి శని నివేదిక",
     born: "జననం",
@@ -222,6 +222,28 @@ const LABELS: Record<string, Record<string, string>> = {
     remedies_intro:
       "ಸಾಡೇಸಾತಿಯ ಸಮಯದಲ್ಲಿ ಸಾಮಾನ್ಯವಾಗಿ ಪಾಲಿಸುವ ಸಾಂಪ್ರದಾಯಿಕ ಪರಿಹಾರಗಳು ಇವು. ಯಾವುದೇ ಪರಿಹಾರವನ್ನು ಆರಂಭಿಸುವ ಮೊದಲು ನಿಮ್ಮ ಜಾತಕವನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ಪರಿಶೀಲಿಸಿಕೊಳ್ಳಿ:",
   },
+  // ml: Sade Sati is ഏഴരശ്ശനി; same "check the chart fully" wording as te/ta/kn.
+  ml: {
+    title_sade: "ഏഴരശ്ശനി റിപ്പോർട്ട്",
+    born: "ജനനം",
+    at: "സമയം",
+    generated: "തയ്യാറാക്കിയ തീയതി",
+    moon_sign: "ചന്ദ്രരാശി",
+    section_current: "നിലവിലെ സ്ഥിതി",
+    section_past: "മുൻ ഏഴരശ്ശനി കാലങ്ങൾ",
+    section_active_window: "നിലവിലെ കാലം",
+    section_future: "വരാനിരിക്കുന്ന കാലങ്ങൾ",
+    section_remedies: "നിർദ്ദേശിക്കുന്ന പരിഹാരങ്ങൾ",
+    current_phase: "നിലവിലെ ഘട്ടം",
+    from: "ആരംഭം",
+    to: "അവസാനം",
+    duration: "കാലയളവ്",
+    signs_traversed: "ഗോചാര രാശികൾ",
+    no_past: "പരിശോധിച്ച കാലപരിധിയിൽ മുൻ ഏഴരശ്ശനി കാലങ്ങളൊന്നും കണ്ടെത്തിയില്ല.",
+    no_future: "പരിശോധിച്ച കാലപരിധിയിൽ വരാനിരിക്കുന്ന ഏഴരശ്ശനി കാലങ്ങളൊന്നുമില്ല.",
+    remedies_intro:
+      "ഏഴരശ്ശനിക്കാലത്ത് സാധാരണയായി അനുഷ്ഠിക്കുന്ന പരമ്പരാഗത പരിഹാരങ്ങൾ ഇവയാണ്. ഏതു പരിഹാരവും തുടങ്ങുന്നതിനു മുമ്പ് നിങ്ങളുടെ ജാതകം പൂർണമായി പരിശോധിക്കുക:",
+  },
 };
 
 /** The four phase labels, per locale. */
@@ -238,6 +260,7 @@ const STATUS_LABELS: Record<string, Record<string, string>> = {
     clear: "விடுபட்டது (ஏழரைச் சனி இல்லை)",
   },
   kn: { rising: "ಆರಂಭ ಹಂತ", peak: "ಶಿಖರ ಹಂತ", setting: "ಅಂತಿಮ ಹಂತ", clear: "ಮುಕ್ತ (ಸಾಡೇಸಾತಿ ಇಲ್ಲ)" },
+  ml: { rising: "ആരംഭഘട്ടം", peak: "പാരമ്യഘട്ടം", setting: "അന്തിമഘട്ടം", clear: "മുക്തം (ഏഴരശ്ശനി ഇല്ല)" },
 };
 
 /**
@@ -249,21 +272,21 @@ const REMEDIES: Record<string, string[]> = {
     "Recite Hanuman Chalisa daily, especially on Tuesdays and Saturdays.",
     "Donate black sesame seeds, mustard oil, or iron items on Saturdays.",
     "Worship Lord Shani with til oil and blue flowers.",
-    "Wear a blue sapphire only after astrological verification — Saturn's gemstone is not for everyone.",
+    "Wear a blue sapphire only after checking the chart — Saturn's gemstone is not for everyone.",
     "Maintain disciplined routine, ethical conduct, and minimize unnecessary expenditure.",
   ],
   hi: [
     "प्रतिदिन हनुमान चालीसा का पाठ कीजिए, विशेषकर मंगलवार एवं शनिवार को।",
     "शनिवार को काले तिल, सरसों का तेल अथवा लोहे की वस्तुओं का दान कीजिए।",
     "शनि देव की पूजा तिल के तेल एवं नीले पुष्पों से कीजिए।",
-    "नीलम धारण ज्योतिषीय परीक्षण के पश्चात ही कीजिए — शनि का रत्न सभी के लिए उपयुक्त नहीं होता।",
+    "नीलम कुंडली की जाँच के पश्चात ही धारण कीजिए — शनि का रत्न सभी के लिए उपयुक्त नहीं होता।",
     "अनुशासित दिनचर्या रखिए, नैतिक आचरण कीजिए एवं अनावश्यक व्यय से बचिए।",
   ],
   mr: [
     "दररोज हनुमान चालीसाचे पठण करा, विशेषतः मंगळवार आणि शनिवारी.",
     "शनिवारी काळे तीळ, मोहरीचे तेल किंवा लोखंडी वस्तूंचे दान करा.",
     "शनिदेवाची तिळाच्या तेलाने आणि निळ्या फुलांनी पूजा करा.",
-    "नीलम धारण ज्योतिषीय तपासणीनंतरच करा — शनीचे रत्न सर्वांसाठी योग्य नसते.",
+    "नीलम कुंडलीची तपासणी केल्यानंतरच धारण करा — शनीचे रत्न सर्वांसाठी योग्य नसते.",
     "शिस्तबद्ध दिनचर्या ठेवा, नैतिक आचरण करा आणि अनावश्यक खर्च टाळा.",
   ],
   te: [
@@ -286,6 +309,14 @@ const REMEDIES: Record<string, string[]> = {
     "ಎಳ್ಳೆಣ್ಣೆ ಮತ್ತು ನೀಲಿ ಹೂವುಗಳಿಂದ ಶನಿದೇವರನ್ನು ಪೂಜಿಸಿ.",
     "ನೀಲಮಣಿಯನ್ನು ಜಾತಕ ಪರಿಶೀಲನೆಯ ನಂತರವೇ ಧರಿಸಿ; ಶನಿಯ ರತ್ನ ಎಲ್ಲರಿಗೂ ಹೊಂದುವುದಿಲ್ಲ.",
     "ಶಿಸ್ತಿನ ದಿನಚರಿ ಪಾಲಿಸಿ, ನೈತಿಕವಾಗಿ ನಡೆದುಕೊಳ್ಳಿ ಮತ್ತು ಅನಗತ್ಯ ಖರ್ಚನ್ನು ತಪ್ಪಿಸಿ.",
+  ],
+  // ml: the Hindi mustard oil is എള്ളെണ്ണ (sesame oil), the Kerala Saturn offering.
+  ml: [
+    "ദിവസവും ഹനുമാൻ ചാലീസ ജപിക്കുക, പ്രത്യേകിച്ച് ചൊവ്വാഴ്ചയും ശനിയാഴ്ചയും.",
+    "ശനിയാഴ്ച കറുത്ത എള്ള്, എള്ളെണ്ണ അല്ലെങ്കിൽ ഇരുമ്പുസാധനങ്ങൾ ദാനം ചെയ്യുക.",
+    "എള്ളെണ്ണയും നീലപ്പൂക്കളും കൊണ്ട് ശനിദേവനെ ആരാധിക്കുക.",
+    "ഇന്ദ്രനീലം ജാതകപരിശോധനയ്ക്കു ശേഷം മാത്രം ധരിക്കുക; ശനിയുടെ രത്നം എല്ലാവർക്കും യോജിക്കില്ല.",
+    "ചിട്ടയായ ദിനചര്യ പാലിക്കുക, ധാർമികമായി പെരുമാറുക, അനാവശ്യ ചെലവുകൾ ഒഴിവാക്കുക.",
   ],
 };
 
@@ -332,6 +363,8 @@ function durationLabel(loc: string, years: number | undefined): string {
       return `சுமார் ${y} ஆண்டுகள்`;
     case "kn":
       return `ಸುಮಾರು ${y} ವರ್ಷಗಳು`;
+    case "ml":
+      return `ഏകദേശം ${y} വർഷം`;
     default:
       return `approx ${y} years`;
   }
@@ -397,6 +430,16 @@ function statusDescription(loc: string, st: SadeSatiStatus): string {
           return `ಶನಿ ಪ್ರಸ್ತುತ ನಿಮ್ಮ ಚಂದ್ರ ರಾಶಿಯ (${moon}) ಮುಂದಿನ ರಾಶಿಯಲ್ಲಿದ್ದಾನೆ. ಇದು ಸಾಡೇಸಾತಿಯ ಅಂತಿಮ ಹಂತ.`;
       }
       return `ಪ್ರಸ್ತುತ ನೀವು ಸಾಡೇಸಾತಿಯಿಂದ ಮುಕ್ತರಾಗಿದ್ದೀರಿ. ಶನಿ (${saturn}) ನಿಮ್ಮ ಚಂದ್ರ ರಾಶಿಯಿಂದ (${moon}) ದೂರದಲ್ಲಿದ್ದಾನೆ.`;
+    case "ml":
+      switch (status) {
+        case "rising":
+          return `ശനി ഇപ്പോൾ നിങ്ങളുടെ ചന്ദ്രരാശിക്ക് (${moon}) തൊട്ടുമുമ്പുള്ള രാശിയിലൂടെ സഞ്ചരിക്കുന്നു. ഇത് ഏഴരശ്ശനിയുടെ ആരംഭഘട്ടമാണ്.`;
+        case "peak":
+          return `ശനി ഇപ്പോൾ നിങ്ങളുടെ ചന്ദ്രരാശിയിൽത്തന്നെ (${moon}) സഞ്ചരിക്കുന്നു. ഇത് ഏഴരശ്ശനിയുടെ പാരമ്യഘട്ടമാണ്.`;
+        case "setting":
+          return `ശനി ഇപ്പോൾ നിങ്ങളുടെ ചന്ദ്രരാശിയുടെ (${moon}) തൊട്ടടുത്ത രാശിയിലാണ്. ഇത് ഏഴരശ്ശനിയുടെ അന്തിമഘട്ടമാണ്.`;
+      }
+      return `നിലവിൽ നിങ്ങൾ ഏഴരശ്ശനിയിൽ നിന്ന് മുക്തരാണ്. ശനി (${saturn}) നിങ്ങളുടെ ചന്ദ്രരാശിയിൽ (${moon}) നിന്ന് അകലെയാണ്.`;
     default:
       switch (status) {
         case "rising":

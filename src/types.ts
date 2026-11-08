@@ -45,7 +45,7 @@ export type HouseSystem =
   | "regiomontanus";
 
 /** Narrative / horoscope response languages. */
-export type Locale = "en" | "hi" | "mr" | "bn" | "kn" | "ta" | "te" | "gu";
+export type Locale = "en" | "hi" | "mr" | "bn" | "kn" | "ta" | "te" | "gu" | "ml";
 
 /**
  * A birth (or event) moment with a fixed location. `date`/`time`/`tz` describe
