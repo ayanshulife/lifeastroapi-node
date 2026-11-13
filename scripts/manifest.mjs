@@ -62,6 +62,60 @@ for (const [path, ov] of Object.entries(OVERRIDES)) {
 export const entries = [...byPath.values()];
 
 // ---------------------------------------------------------------------------
+// Response language. Every Vedic endpoint that answers in the request language
+// gets an optional `lang` input (the generator sends it as both `lang` and
+// `locale`; the API reads either). Not added to:
+//   - English-only products (Western, Tarot, geo, meta);
+//   - NO_LANG: Vedic endpoints whose response has nothing to localize (times,
+//     numbers and ids only). Checked against the API handlers and a sweep of
+//     every endpoint in each locale. Move a path out of this list when its
+//     response gains reader text.
+// ---------------------------------------------------------------------------
+const ENGLISH_ONLY_PREFIXES = ["/v1/western/", "/v1/tarot/", "/v1/geo/", "/v1/meta/"];
+const NO_LANG = new Set([
+  // time windows only
+  "/v1/panchang/sunrise-sunset",
+  "/v1/panchang/moonrise-moonset",
+  "/v1/panchang/rahu-kaal",
+  "/v1/panchang/yamaganda",
+  "/v1/panchang/gulika",
+  "/v1/panchang/abhijit",
+  "/v1/panchang/brahma-muhurat",
+  "/v1/panchang/pradosh-kaal",
+  "/v1/panchang/durmuhurta",
+  // numbers only
+  "/v1/chart/bhavabala",
+  "/v1/ashtakavarga/sarva",
+  "/v1/milan/ashtakoota/total",
+  "/v1/muhurta/chandra-bala",
+  "/v1/muhurta/tara-bala",
+  "/v1/varshaphal/muntha",
+  "/v1/varshaphal/solar-return-jd",
+  // data endpoints: ids and instants by design
+  "/v1/chart/yogas",
+  "/v1/chart/doshas",
+  "/v1/chart/sensitivity",
+  "/v1/milan/overlay",
+  "/v1/transit/sade-sati",
+  "/v1/transit/sade-sati/windows",
+  "/v1/transit/small-panoti",
+  "/v1/transit/small-panoti/history",
+  "/v1/transit/windows",
+]);
+/** Shapes whose own input type and builder already carry `lang`. */
+const SHAPES_WITH_LANG = new Set(["rashi", "numerology"]);
+
+for (const path of NO_LANG) {
+  if (!byPath.has(path)) throw new Error(`NO_LANG lists ${path}, which is not in the manifest.`);
+}
+for (const e of entries) {
+  if (ENGLISH_ONLY_PREFIXES.some((p) => e.path.startsWith(p)) || NO_LANG.has(e.path)) continue;
+  const extras = e.extras ?? [];
+  if (SHAPES_WITH_LANG.has(e.shape) || extras.some((x) => (x.name ?? camel(x.wire)) === "lang")) continue;
+  e.extras = [...extras, { wire: "lang", type: "locale", required: false }];
+}
+
+// ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 export function camel(s) {

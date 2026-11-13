@@ -2404,7 +2404,7 @@
   "shape": "moment",
   "pathParams": [],
   "extras": [],
-  "desc": "Find auspicious Griha Pravesh (housewarming) muhurta windows in a date range — checks tithi, nakshatra, vara, Sun position, and lagna for the ceremony."
+  "desc": "Find auspicious Griha Pravesh (housewarming) muhurta windows in a date range — checks tithi, nakshatra, vara, Sun position, and lagna for the ceremony. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`."
  },
  {
   "path": "/v1/muhurta/panchaka-rahita",
@@ -2445,14 +2445,14 @@
   "shape": "moment",
   "pathParams": [],
   "extras": [],
-  "desc": "Find auspicious Vyapar (business/trade) muhurta windows — suitable for starting a business, signing contracts, launching a product, or opening a shop."
+  "desc": "Find auspicious Vyapar (business/trade) muhurta windows — suitable for starting a business, signing contracts, launching a product, or opening a shop. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`."
  },
  {
   "path": "/v1/muhurta/yatra",
   "shape": "moment",
   "pathParams": [],
   "extras": [],
-  "desc": "Find auspicious Yatra (travel/journey) muhurta windows — avoids Disha Shool (directional inauspiciousness), Rahu Kaal, Nak Shool, and favours Pushya/Hasta/Ashwini/Anuradha nakshatras for journeys."
+  "desc": "Find auspicious Yatra (travel/journey) muhurta windows — avoids Disha Shool (directional inauspiciousness), Rahu Kaal, Nak Shool, and favours Pushya/Hasta/Ashwini/Anuradha nakshatras for journeys. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`."
  },
  {
   "path": "/v1/numerology/driver",

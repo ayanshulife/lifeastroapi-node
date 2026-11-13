@@ -242,6 +242,27 @@ export const LABELS: Record<string, Record<string, string>> = {
     sign: "രാശി",
     degree: "ഡിഗ്രി",
   },
+  gu: {
+    title_varsha: "વર્ષફળ: વાર્ષિક ભવિષ્યફળ",
+    born: "જન્મ",
+    at: "સમય",
+    generated: "તૈયાર",
+    section_solar_return: "સૂર્ય પ્રત્યાગમનની ક્ષણ",
+    section_planets_sr: "સૂર્ય પ્રત્યાગમન સમયે ગ્રહ સ્થિતિ",
+    section_outlook: "વાર્ષિક દૃષ્ટિકોણ",
+    solar_return_at: "સૂર્ય પ્રત્યાગમન સમય",
+    ascendant: "લગ્ન",
+    nakshatra: "નક્ષત્ર",
+    pada: "પાદ",
+    muntha: "મુંથા",
+    varsha_lord: "વર્ષ સ્વામી",
+    house: "ભાવ",
+    from_natal_lagna: "જન્મ લગ્નથી",
+    hora_number: "હોરા",
+    planet: "ગ્રહ",
+    sign: "રાશિ",
+    degree: "અંશ",
+  },
 };
 
 /** Report-specific CSS: the prominent year badge on the cover, plus the
@@ -333,7 +354,7 @@ function outlookText(
     }
     return `मुन्था ${house} व्या स्थानात आहे — ${year} वर्षात मिश्र परिणाम संभाव्य. महत्त्वाच्या निर्णयांपूर्वी आपली कुंडली सखोल तपासून घ्या.`;
   }
-  // te / ta / kn / ml are written from the Hindi; the "consult an astrologer" line
+  // te / ta / kn / ml / gu are written from the Hindi; the "consult an astrologer" line
   // of the mixed band became "study your chart first" in every locale
   // (2026-11-07: no astrologer referral anywhere).
   if (locale === "te") {
@@ -372,6 +393,15 @@ function outlookText(
     }
     return `മുന്ഥ ${house}-ാം ഭാവത്തിലാണ്; ${year} വർഷത്തിൽ സമ്മിശ്ര ഫലങ്ങൾ ഉണ്ടാകാം. പ്രധാന തീരുമാനങ്ങൾക്കു മുമ്പ് നിങ്ങളുടെ ജാതകം ആഴത്തിൽ പരിശോധിക്കുക.`;
   }
+  if (locale === "gu") {
+    if (band === "favorable") {
+      return `મુંથા ભાવ ${house}માં હોવાથી વર્ષ ${year} સામાન્ય રીતે અનુકૂળ રહે છે; લક્ષ્યપ્રાપ્તિ, સ્થિરતા અથવા આધ્યાત્મિક પ્રગતિની સંભાવનાઓ વધે છે.`;
+    }
+    if (band === "challenging") {
+      return `મુંથા ભાવ ${house}માં હોવાથી વર્ષ ${year} પડકારરૂપ બની શકે છે. સ્વાસ્થ્ય, ખર્ચ અથવા ઋણ સંબંધિત બાબતોમાં સાવધાની રાખજો.`;
+    }
+    return `મુંથા ભાવ ${house}માં સ્થિત છે; વર્ષ ${year}માં મિશ્ર પરિણામ સંભવ છે. મહત્ત્વના નિર્ણયો પહેલાં આપની કુંડળીને ઊંડાણથી તપાસી લેજો.`;
+  }
   if (band === "favorable") {
     return `Muntha in house ${house} makes ${year} broadly favorable — increased likelihood of goal attainment, stability, or spiritual progress.`;
   }
@@ -395,7 +425,7 @@ export function renderVarshaphalHtml(
 ): string {
   const resolved = resolveBranding(data.Branding, branding);
   const t = makeLabeler(LABELS, data.Locale);
-  // Narrow the locale to one the outlook prose is authored for (en/hi/mr/te/ta/kn/ml),
+  // Narrow the locale to one the outlook prose is authored for (en/hi/mr/te/ta/kn/ml/gu),
   // matching Go's pickVarshaphalLocale fallback to "en".
   const loc = data.Locale && LABELS[data.Locale] ? data.Locale : "en";
 

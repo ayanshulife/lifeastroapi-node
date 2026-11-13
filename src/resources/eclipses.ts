@@ -10,17 +10,17 @@ export class Eclipses {
   constructor(private readonly _c: ClientCore) {}
 
   /** All eclipses (solar + lunar) in a date range. With lat/lon (and tz) each event carries a `local` block: contact times sparsha…moksha in local time, visibility at that place, and the sutak kaal (12 h before a solar, 9 h before a lunar eclipse, until moksha). */
-  all<T = unknown>(input: Types.DateRangeInput & { lat?: number; lon?: number; alt?: number; tz?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/eclipses/all", q.applyExtras(q.qDateRange(input), input, [["lat", "lat"], ["lon", "lon"], ["alt", "alt"], ["tz", "tz"]]), opts);
+  all<T = unknown>(input: Types.DateRangeInput & { lat?: number; lon?: number; alt?: number; tz?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/eclipses/all", q.applyExtras(q.qDateRange(input), input, [["lat", "lat"], ["lon", "lon"], ["alt", "alt"], ["tz", "tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Lunar eclipses in a date range. With lat/lon (and tz) each event carries a `local` block: contact times sparsha…moksha in local time, visibility at that place, and the sutak kaal (12 h before a solar, 9 h before a lunar eclipse, until moksha). */
-  lunar<T = unknown>(input: Types.DateRangeInput & { lat?: number; lon?: number; alt?: number; tz?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/eclipses/lunar", q.applyExtras(q.qDateRange(input), input, [["lat", "lat"], ["lon", "lon"], ["alt", "alt"], ["tz", "tz"]]), opts);
+  lunar<T = unknown>(input: Types.DateRangeInput & { lat?: number; lon?: number; alt?: number; tz?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/eclipses/lunar", q.applyExtras(q.qDateRange(input), input, [["lat", "lat"], ["lon", "lon"], ["alt", "alt"], ["tz", "tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Solar eclipses in a date range. With lat/lon (and tz) each event carries a `local` block: contact times sparsha…moksha in local time, visibility at that place, and the sutak kaal (12 h before a solar, 9 h before a lunar eclipse, until moksha). */
-  solar<T = unknown>(input: Types.DateRangeInput & { lat?: number; lon?: number; alt?: number; tz?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/eclipses/solar", q.applyExtras(q.qDateRange(input), input, [["lat", "lat"], ["lon", "lon"], ["alt", "alt"], ["tz", "tz"]]), opts);
+  solar<T = unknown>(input: Types.DateRangeInput & { lat?: number; lon?: number; alt?: number; tz?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/eclipses/solar", q.applyExtras(q.qDateRange(input), input, [["lat", "lat"], ["lon", "lon"], ["alt", "alt"], ["tz", "tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 }

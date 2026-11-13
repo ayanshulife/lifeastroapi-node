@@ -15,8 +15,8 @@ export class Remedies {
   }
 
   /** Full details of a daan (charity/donation) remedy by id — what to donate, to whom, and when. */
-  daan<T = unknown>(input: { id: string; locale?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/vedic/remedies/daan/{id}", input, ["id"]), q.applyExtras(q.qNone(input), input, [["locale", "locale"]]), opts);
+  daan<T = unknown>(input: { id: string; locale?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/vedic/remedies/daan/{id}", input, ["id"]), q.applyExtras(q.qNone(input), input, [["locale", "locale"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Remedies for one graha by reason (10 credits): a filter over the remedy catalogue (same rows and languages as remedies.vedic). reason: debilitated, combust, dusthana, weak_shadbala, dasha or dosha:<id> (graha is optional with dosha:<id>). Each item adds kind (mantra, daan, vrat, pooja, pilgrimage, yantra, rudraksha), weekday (0 = Sunday, or null) and matched_by. Free kinds by default; include adds pooja, pilgrimage, yantra, rudraksha; category limits to one catalogue category. */
@@ -25,13 +25,13 @@ export class Remedies {
   }
 
   /** Lal Kitab remedies for a specific planet-in-house placement (e.g. saturn in house 8). */
-  lalkitabForPlacement<T = unknown>(input: { planet: string; house: string; locale?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/vedic/remedies/lal-kitab/{planet}/{house}", input, ["planet","house"]), q.applyExtras(q.qNone(input), input, [["locale", "locale"]]), opts);
+  lalkitabForPlacement<T = unknown>(input: { planet: string; house: string; locale?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/vedic/remedies/lal-kitab/{planet}/{house}", input, ["planet","house"]), q.applyExtras(q.qNone(input), input, [["locale", "locale"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** List Lal Kitab remedies (upay), optionally filtered by planet. */
-  lalkitabList<T = unknown>(input: { planet?: string; locale?: string } = {}, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/vedic/remedies/lal-kitab", q.applyExtras(q.qNone(input), input, [["planet", "planet"], ["locale", "locale"]]), opts);
+  lalkitabList<T = unknown>(input: { planet?: string; locale?: string; lang?: Types.Locale } = {}, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/vedic/remedies/lal-kitab", q.applyExtras(q.qNone(input), input, [["planet", "planet"], ["locale", "locale"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Full details of a mantra remedy by id. */
@@ -45,8 +45,8 @@ export class Remedies {
   }
 
   /** Full details of a rudraksha remedy by id — mukhi count, ruling planet, wearing procedure. */
-  rudraksha<T = unknown>(input: { id: string; locale?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/vedic/remedies/rudraksha/{id}", input, ["id"]), q.applyExtras(q.qNone(input), input, [["locale", "locale"]]), opts);
+  rudraksha<T = unknown>(input: { id: string; locale?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/vedic/remedies/rudraksha/{id}", input, ["id"]), q.applyExtras(q.qNone(input), input, [["locale", "locale"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get Vedic astrological remedies for a birth chart — personalised remedies based on weak planets, doshas, and challenging dashas. */
@@ -60,7 +60,7 @@ export class Remedies {
   }
 
   /** Full details of a yantra remedy by id — purpose, installation procedure, direction, day, and mantra. */
-  yantra<T = unknown>(input: { id: string; locale?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/vedic/remedies/yantra/{id}", input, ["id"]), q.applyExtras(q.qNone(input), input, [["locale", "locale"]]), opts);
+  yantra<T = unknown>(input: { id: string; locale?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/vedic/remedies/yantra/{id}", input, ["id"]), q.applyExtras(q.qNone(input), input, [["locale", "locale"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 }

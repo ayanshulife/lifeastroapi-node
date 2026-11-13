@@ -9,9 +9,9 @@ import type { RequestOptions } from "../http.js";
 export class Muhurta {
   constructor(private readonly _c: ClientCore) {}
 
-  /** Best-scoring general muhurta window in a date range. */
-  bestTime<T = unknown>(input: Types.MuhurtaInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/muhurta/best-time", q.qMuhurta(input), opts);
+  /** Best-scoring general muhurta window in a date range. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`. */
+  bestTime<T = unknown>(input: Types.MuhurtaInput & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/muhurta/best-time", q.applyExtras(q.qMuhurta(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Compute Chandra Bala — the Moon's strength relative to a person's natal Moon sign on a given date. */
@@ -19,29 +19,29 @@ export class Muhurta {
     return this._c.request<T>("/v1/muhurta/chandra-bala", q.applyExtras(q.qBirth(input), input, [["birthMoonSign", "birth_moon_sign"]]), opts);
   }
 
-  /** Find auspicious Griha Pravesh (housewarming) muhurta windows in a date range — checks tithi, nakshatra, vara, Sun position, and lagna for the ceremony. */
-  grahaPravesh<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/muhurta/graha-pravesh", q.qMoment(input), opts);
+  /** Find auspicious Griha Pravesh (housewarming) muhurta windows in a date range — checks tithi, nakshatra, vara, Sun position, and lagna for the ceremony. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`. */
+  grahaPravesh<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/muhurta/graha-pravesh", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
-  /** Naamkaran (naming ceremony) muhurta windows. */
-  naamkaran<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { birthDate: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/muhurta/naamkaran", q.applyExtras(q.qMoment(input), input, [["birthDate", "birth_date"]]), opts);
+  /** Naamkaran (naming ceremony) muhurta windows. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`. */
+  naamkaran<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { birthDate: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/muhurta/naamkaran", q.applyExtras(q.qMoment(input), input, [["birthDate", "birth_date"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Find Panchaka-free (Panchaka Rahita) windows in a date range — Panchaka occurs when Moon is in Aquarius or Pisces and creates obstacles for travel, construction, funerals, and certain ceremonies. */
-  panchakaRahita<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/muhurta/panchaka-rahita", q.qMoment(input), opts);
+  panchakaRahita<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/muhurta/panchaka-rahita", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Find Sarvartha Siddhi Yoga windows — one of the most auspicious panchang yogas formed by specific vara+nakshatra combinations. */
-  sarvarthaSiddhi<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/muhurta/sarvartha-siddhi", q.qMoment(input), opts);
+  sarvarthaSiddhi<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/muhurta/sarvartha-siddhi", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Find Shubha Yoga (auspicious panchang yoga) windows in a date range — checks for Amrit Siddhi, Sarvartha Siddhi, Ravi Yoga, and other classical panchang yogas in combination. */
-  shubhaYoga<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/muhurta/shubha-yoga", q.qMoment(input), opts);
+  shubhaYoga<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/muhurta/shubha-yoga", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Compute Tara Bala score for a given date relative to a person's birth nakshatra — rates the day's Moon nakshatra as Janma/Sampat/Vipat/Kshema/Pratyak/Sadhana/Vadha/Mitra/Param-Mitra. */
@@ -49,18 +49,18 @@ export class Muhurta {
     return this._c.request<T>("/v1/muhurta/tara-bala", q.applyExtras(q.qBirth(input), input, [["birthNak", "birth_nak"]]), opts);
   }
 
-  /** Auspicious wedding (vivah) muhurta windows in a date range. */
-  vivah<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/muhurta/vivah", q.qMoment(input), opts);
+  /** Auspicious wedding (vivah) muhurta windows in a date range. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`. */
+  vivah<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/muhurta/vivah", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
-  /** Find auspicious Vyapar (business/trade) muhurta windows — suitable for starting a business, signing contracts, launching a product, or opening a shop. */
-  vyapar<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/muhurta/vyapar", q.qMoment(input), opts);
+  /** Find auspicious Vyapar (business/trade) muhurta windows — suitable for starting a business, signing contracts, launching a product, or opening a shop. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`. */
+  vyapar<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/muhurta/vyapar", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
-  /** Find auspicious Yatra (travel/journey) muhurta windows — avoids Disha Shool (directional inauspiciousness), Rahu Kaal, Nak Shool, and favours Pushya/Hasta/Ashwini/Anuradha nakshatras for journeys. */
-  yatra<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/muhurta/yatra", q.qMoment(input), opts);
+  /** Find auspicious Yatra (travel/journey) muhurta windows — avoids Disha Shool (directional inauspiciousness), Rahu Kaal, Nak Shool, and favours Pushya/Hasta/Ashwini/Anuradha nakshatras for journeys. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`. */
+  yatra<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/muhurta/yatra", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 }

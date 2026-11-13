@@ -10,18 +10,18 @@ export class Transit {
   constructor(private readonly _c: ClientCore) {}
 
   /** Score current planetary transits against a natal chart using Ashtakavarga — shows which houses transiting planets are moving through and how many benefic points those signs have in the natal chart. */
-  ashtakavarga<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/transit/ashtakavarga", q.qNatalTransit(input), opts);
+  ashtakavarga<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/transit/ashtakavarga", q.applyExtras(q.qNatalTransit(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** List the pairs of planets occupying the same sidereal sign at a moment (planetary conjunctions by sign). Takes a date, not a birth chart; defaults to today. */
-  doubleTransit<T = unknown>(input: Types.InstantInput & Types.VedicMomentSettings = {}, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/transit/double-transit", q.qInstant(input), opts);
+  doubleTransit<T = unknown>(input: Types.InstantInput & Types.VedicMomentSettings & { lang?: Types.Locale } = {}, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/transit/double-transit", q.applyExtras(q.qInstant(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Current sidereal positions of all 9 grahas (defaults to now). */
-  positions<T = unknown>(input: Types.InstantInput & Types.VedicMomentSettings = {}, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/transit/positions", q.qInstant(input), opts);
+  positions<T = unknown>(input: Types.InstantInput & Types.VedicMomentSettings & { lang?: Types.Locale } = {}, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/transit/positions", q.applyExtras(q.qInstant(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Saturn Sade Sati status (rising/peak/setting) relative to the birth Moon. */
@@ -45,13 +45,13 @@ export class Transit {
   }
 
   /** Compute Tara Bala for today's transiting Moon relative to a natal chart — rates the day as Janma/Sampat/Vipat/Kshema/Pratyak/Sadhana/Vadha/Mitra/Param-Mitra tara. */
-  tarabala<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/transit/tarabala", q.qNatalTransit(input), opts);
+  tarabala<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/transit/tarabala", q.applyExtras(q.qNatalTransit(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Check Vedha (transit obstruction) for a natal chart — certain house transits are blocked (vedha'd) by another planet transiting a specific opposing house simultaneously. */
-  vedha<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/transit/vedha", q.qNatalTransit(input), opts);
+  vedha<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/transit/vedha", q.applyExtras(q.qNatalTransit(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Every stay of one planet (sun..ketu) in a sidereal sign that overlaps [from, from + years] (20 credits), with exact ingress times, retro_reentry and retrograde_at_start. With birth (date, time, tz) each window has house_from_moon; with birth lat/lon also house_from_lagna. years: default 25 / max 60 for jupiter, saturn, rahu, ketu; 5 / 20 for sun, mercury, venus, mars; 1 / 2 for moon. Every instant comes as *_local (RFC 3339 with offset) and *_jd (Julian Day, UT); fields that cannot be computed are listed in skipped. */

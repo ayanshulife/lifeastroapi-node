@@ -10,17 +10,17 @@ export class Lalkitab {
   constructor(private readonly _c: ClientCore) {}
 
   /** Lal Kitab chart — planets mapped into Lal Kitab's fixed Aries-based houses. */
-  chart<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/lalkitab/chart", q.qBirth(input), opts);
+  chart<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/lalkitab/chart", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Full 35-year Lal Kitab dasha schedule — planet-ruled periods with start/end dates. */
-  dasha<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/lalkitab/dasha", q.qBirth(input), opts);
+  dasha<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/lalkitab/dasha", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Currently active Lal Kitab dasha planet and period window. */
-  dashaCurrent<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/lalkitab/dasha/current", q.qBirth(input), opts);
+  dashaCurrent<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/lalkitab/dasha/current", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 }

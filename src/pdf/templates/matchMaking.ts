@@ -243,6 +243,23 @@ export const LABELS: Record<string, Record<string, string>> = {
     mangal_dosha: "ചൊവ്വാദോഷം",
     nadi_dosha: "നാഡീദോഷം",
   },
+  gu: {
+    title_match: "કુંડળી મેળાપ: વિવાહ પાત્રતા",
+    born: "જન્મ",
+    generated: "તૈયાર",
+    section_ashtakoota: "અષ્ટકૂટ: 8 ગુણ મેળાપ",
+    section_doshas: "દોષ",
+    section_final: "અંતિમ નિષ્કર્ષ",
+    koota: "કૂટ",
+    max: "મહત્તમ",
+    score: "ગુણ",
+    details: "વિગત",
+    total: "કુલ",
+    nakshatra: "નક્ષત્ર",
+    ashtakoota_verdict: "અષ્ટકૂટ નિષ્કર્ષ",
+    mangal_dosha: "મંગળ દોષ",
+    nadi_dosha: "નાડી દોષ",
+  },
 };
 
 /**
@@ -257,9 +274,10 @@ export const VERDICT_LABELS: Record<string, Record<string, string>> = {
   ta: { poor: "குறைவு", fair: "சுமார்", good: "நல்லது", excellent: "உத்தமம்" },
   kn: { poor: "ಕಡಿಮೆ", fair: "ಸಾಧಾರಣ", good: "ಉತ್ತಮ", excellent: "ಅತ್ಯುತ್ತಮ" },
   ml: { poor: "കുറവ്", fair: "സാധാരണം", good: "നല്ലത്", excellent: "ഉത്തമം" },
+  gu: { poor: "અલ્પ", fair: "સામાન્ય", good: "સારું", excellent: "ઉત્તમ" },
 };
 
-/** Verdict, dosha and nadi prose for te / ta / kn / ml (written from the Hindi). */
+/** Verdict, dosha and nadi prose for te / ta / kn / ml / gu (written from the Hindi). */
 interface SouthMatchProse {
   verdict: { excellent: string; good: string; fair: string; poor: string };
   mangalNotComputed: string;
@@ -351,6 +369,25 @@ const SOUTH_MATCH: Record<string, SouthMatchProse> = {
     nadiNone: (boy, girl) => `നാഡീദോഷം ഇല്ല. (വരൻ: ${boy}, വധു: ${girl})`,
     nadiExempted: (exc) => `നാഡീദോഷം ഉണ്ട്, എന്നാൽ ശാസ്ത്രീയ ഇളവിനാൽ റദ്ദാകുന്നു (${exc})`,
     nadiHigh: (boy) => `നാഡീദോഷം: ഇരുവർക്കും ഒരേ നാഡി (${boy}). ശാസ്ത്രപ്രകാരം പ്രതികൂലം.`,
+  },
+  gu: {
+    verdict: {
+      excellent: "ઉત્તમ મેળાપ: તમામ ક્ષેત્રોમાં સામંજસ્યની સંભાવના વધુ છે.",
+      good: "સારો મેળાપ: વિવાહ માટે અનુકૂળ યોગ છે.",
+      fair: "સામાન્ય મેળાપ: કેટલાક કૂટોમાં ઊણપ છે, છતાં આગળ વધી શકાય છે.",
+      poor: "અલ્પ મેળાપ: ઘણા કૂટોમાં ઊણપ છે, કાળજીપૂર્વક વિચાર કરવો આવશ્યક છે.",
+    },
+    mangalNotComputed: "મંગળ દોષની તપાસ થઈ નથી: જન્મસ્થળ (અક્ષાંશ/રેખાંશ) આપવામાં આવ્યું નથી.",
+    mangalNone: "મંગળ દોષ નથી.",
+    typePurn: "પૂર્ણ",
+    typeMild: "અલ્પ",
+    fromLagna: (hs) => `લગ્નથી ${hs}`,
+    fromMoon: (hs) => `ચંદ્રથી ${hs}`,
+    mangal: (type, houses) => `મંગળ દોષ (${type}), ભાવ: ${houses}.`,
+    cancelled: " નિવારણ: ",
+    nadiNone: (boy, girl) => `નાડી દોષ નથી. (વર: ${boy}, વધૂ: ${girl})`,
+    nadiExempted: (exc) => `નાડી દોષ છે, પરંતુ શાસ્ત્રીય અપવાદને કારણે રદ થાય છે (${exc})`,
+    nadiHigh: (boy) => `નાડી દોષ: બંનેની નાડી એક જ છે (${boy}). શાસ્ત્રીય રીતે પ્રતિકૂળ.`,
   },
 };
 

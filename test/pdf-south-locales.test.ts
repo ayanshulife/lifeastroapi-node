@@ -1,5 +1,5 @@
 /**
- * Telugu / Tamil / Kannada PDF templates.
+ * Telugu / Tamil / Kannada / Malayalam / Gujarati (own-script) PDF templates.
  *
  * Every template is rendered from a fixture whose data fields are already in
  * the target locale (as the API sends them), then the visible text is checked:
@@ -31,26 +31,28 @@ import { LABELS as VARSHA_LABELS } from "../src/pdf/templates/varshaphal.js";
 import { BASE_CSS } from "../src/pdf/shared.js";
 import { PLANET_NAMES, RASHI_NAMES, WEEKDAY_NAMES, localizeWeekday } from "../src/pdf/locales.js";
 
-type Loc = "te" | "ta" | "kn" | "ml";
-const LOCALES: Loc[] = ["te", "ta", "kn", "ml"];
+type Loc = "te" | "ta" | "kn" | "ml" | "gu";
+const LOCALES: Loc[] = ["te", "ta", "kn", "ml", "gu"];
 
 const SCRIPT: Record<Loc, RegExp> = {
   te: /[ఀ-౿]/g,
   ta: /[஀-௿]/g,
   kn: /[ಀ-೿]/g,
   ml: /[ഀ-ൿ]/g,
+  gu: /[઀-૿]/g,
 };
 const DEVANAGARI = /[ऀ-ॿ]/;
 
 /** A short native word used as stand-in body text from the API. */
-const WORD: Record<Loc, string> = { te: "నమూనా వాక్యం.", ta: "மாதிரி வாக்கியம்.", kn: "ಮಾದರಿ ವಾಕ್ಯ.", ml: "മാതൃകാ വാക്യം." };
+const WORD: Record<Loc, string> = { te: "నమూనా వాక్యం.", ta: "மாதிரி வாக்கியம்.", kn: "ಮಾದರಿ ವಾಕ್ಯ.", ml: "മാതൃകാ വാക്യം.", gu: "નમૂનાનું વાક્ય." };
 /** Yoga / dosha names as the API's NameLocal field sends them. */
-const YOGA: Record<Loc, string> = { te: "గజకేసరి యోగం", ta: "கஜகேசரி யோகம்", kn: "ಗಜಕೇಸರಿ ಯೋಗ", ml: "ഗജകേസരി യോഗം" };
+const YOGA: Record<Loc, string> = { te: "గజకేసరి యోగం", ta: "கஜகேசரி யோகம்", kn: "ಗಜಕೇಸರಿ ಯೋಗ", ml: "ഗജകേസരി യോഗം", gu: "ગજકેસરી યોગ" };
 const NAK: Record<Loc, [string, string]> = {
   te: ["మఖ", "అశ్విని"],
   ta: ["மகம்", "அசுவினி"],
   kn: ["ಮಖ", "ಅಶ್ವಿನಿ"],
   ml: ["മകം", "അശ്വതി"],
+  gu: ["મઘા", "અશ્વિની"],
 };
 
 /** Tokens that are data or branding, not template labels, and may stay Latin. */
@@ -323,7 +325,7 @@ const RENDERERS: Array<{ name: string; render: (loc: Loc) => string }> = [
   },
 ];
 
-describe("PDF templates render fully in te / ta / kn / ml", () => {
+describe("PDF templates render fully in te / ta / kn / ml / gu", () => {
   for (const { name, render } of RENDERERS) {
     for (const loc of LOCALES) {
       it(`${name} [${loc}]: no English labels, ${loc} script, no Devanagari`, () => {
@@ -417,6 +419,26 @@ describe("south-locale specifics", () => {
     expect(dasha).toContain("മംഗള");
   });
 
+  it("Gujarati: engine sign/planet names, full weekday names, native chart labels and Part banner", () => {
+    const num = RENDERERS.find((r) => r.name === "numerology")!.render("gu");
+    expect(num).toContain("શુક્ર");
+    expect(num).toContain("શુક્રવાર");
+    const brihad = RENDERERS.find((r) => r.name === "kundliBrihad")!.render("gu");
+    expect((brihad.match(/class="north-chart"/g) ?? []).length).toBeGreaterThanOrEqual(2);
+    expect(brihad).toContain(">સૂ<");
+    expect(brihad).toContain("ભાગ 1:");
+    expect(brihad).not.toContain("ज्योतिषी");
+    const dasha = RENDERERS.find((r) => r.name === "dashaAnalysis")!.render("gu");
+    expect(dasha).toContain("શનિ");
+    expect(dasha).toContain("મંગલા");
+    // Gujarati reader register is આપ; never તમે / તું.
+    for (const { render } of RENDERERS) {
+      const text = visibleText(render("gu"));
+      // Explicit Gujarati-letter boundaries: \b is ASCII-only, and તું is inside હોતું.
+      expect(text).not.toMatch(/(?<![઀-૿])(તમે|તમારું|તમારી|તમારા|તમને|તું|તારું|તારી|તને)(?![઀-૿])/);
+    }
+  });
+
   it("font stacks cover Telugu, Tamil, Kannada and Malayalam everywhere a font is set", () => {
     const html = RENDERERS.find((r) => r.name === "kundliDetailed")!.render("kn");
     const stacks = [...html.matchAll(/font-family:\s*([^;}"]+)/g)].map((m) => m[1]!);
@@ -427,6 +449,7 @@ describe("south-locale specifics", () => {
       expect(s).toContain("Noto Sans Tamil");
       expect(s).toContain("Noto Sans Kannada");
       expect(s).toContain("Noto Sans Malayalam");
+      expect(s).toContain("Noto Sans Gujarati");
     }
     expect(BASE_CSS).toMatch(/:where\(html:lang\(te\), html:lang\(ta\), html:lang\(kn\), html:lang\(ml\)\) body/);
   });

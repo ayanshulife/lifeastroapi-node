@@ -211,6 +211,25 @@ const LABELS: Record<string, Record<string, string>> = {
     section_compatibility: "അനുയോജ്യ സംഖ്യകൾ",
     compat_intro: "നിങ്ങളുടെ മൂലാങ്കവുമായി യോജിക്കുന്ന സംഖ്യകൾ",
   },
+  gu: {
+    title: "અંકશાસ્ત્ર રિપોર્ટ",
+    born: "જન્મ",
+    generated: "તૈયાર",
+    driver: "મૂળાંક",
+    driver_alt: "જન્મ તારીખ અંક",
+    conductor: "ભાગ્યાંક",
+    conductor_alt: "જીવન પથ",
+    soul: "અંતરાત્મા અંક",
+    personality: "વ્યક્તિત્વ અંક",
+    destiny: "નામ અંક",
+    section_driver: "મૂળાંક",
+    section_conductor: "ભાગ્યાંક",
+    section_soul: "અંતરાત્મા અંક",
+    section_personality: "વ્યક્તિત્વ અંક",
+    section_destiny: "નામ અંક",
+    section_compatibility: "સુસંગત અંક",
+    compat_intro: "આપના મૂળાંક સાથે અનુકૂળ અંક",
+  },
 };
 
 /**
@@ -248,6 +267,7 @@ const FACTOR_LABELS: Record<string, Record<string, string>> = {
   ta: { planet: "கிரகம்", day: "கிழமை", color: "நிறம்", gemstone: "ரத்தினம்", deity: "தெய்வம்", direction: "திசை" },
   kn: { planet: "ಗ್ರಹ", day: "ವಾರ", color: "ಬಣ್ಣ", gemstone: "ರತ್ನ", deity: "ದೇವತೆ", direction: "ದಿಕ್ಕು" },
   ml: { planet: "ഗ്രഹം", day: "ദിവസം", color: "നിറം", gemstone: "രത്നം", deity: "ദേവത", direction: "ദിക്ക്" },
+  gu: { planet: "ગ્રહ", day: "વાર", color: "રંગ", gemstone: "રત્ન", deity: "દેવતા", direction: "દિશા" },
 };
 
 /**
@@ -353,6 +373,20 @@ const NUMBER_MEANINGS: Record<string, Record<string, string>> = {
     "22": "മാസ്റ്റർ നിർമാതാവ്: വലിയ ദർശനങ്ങൾ യാഥാർഥ്യമാക്കാനുള്ള കഴിവ്. സംഖ്യ 4-ന്റെ ഊർജത്തിന്റെ വർധിതരൂപം; ആദർശങ്ങളെ മൂർത്തമായ പൈതൃകമാക്കി മാറ്റും.",
     "33": "മാസ്റ്റർ ഗുരു: കഴിവിനൊപ്പം സമർപ്പണം. സംഖ്യ 6-ന്റെ ഊർജത്തിന്റെ വർധിതരൂപം; കരുണാപൂർണമായ സേവനത്തിന്റെ മാതൃകയായി ജീവിക്കും.",
   },
+  gu: {
+    "1": "નેતૃત્વ, સ્વતંત્રતા, મૌલિકતા. દૃઢ ઇચ્છાશક્તિ અને પહેલ કરવાની ક્ષમતા. આપ જાતે શરૂ કરેલાં કાર્યોમાં શ્રેષ્ઠ રહો છો; બીજાના નિયંત્રણમાં રહેવું આપને ગમતું નથી.",
+    "2": "સંવેદનશીલતા, સહયોગ, ભાગીદારી. આપ ભાવનાઓના પ્રવાહને સારી રીતે પારખો છો; સહયોગભર્યા વાતાવરણમાં આપ ખીલી ઊઠો છો.",
+    "3": "અભિવ્યક્તિ, સર્જનાત્મકતા, આશાવાદ. સંવાદ અને અભ્યાસ આપની સ્વાભાવિક શક્તિઓ છે; શિક્ષણ, લેખન અને કલા અનુકૂળ છે.",
+    "4": "વ્યવહારુતા, વ્યવસ્થા, પરિશ્રમ. આપ પદ્ધતિસર અને અનુશાસિત છો; ધીરજથી સ્થાયી પાયો રચો છો.",
+    "5": "સ્વતંત્રતા, પરિવર્તન, બહુમુખી પ્રતિભા. જિજ્ઞાસુ, સાહસિક અને ઝડપથી શીખનારા; રસ જાળવી રાખવા આપને વિવિધતા જોઈએ છે.",
+    "6": "જવાબદારી, સામંજસ્ય, પરિવાર. પોષણ કરનારો સ્વભાવ; બીજાની સંભાળ અને સૌંદર્યની રચનામાં આપને જીવનનો હેતુ મળે છે.",
+    "7": "આધ્યાત્મિકતા, આત્મનિરીક્ષણ, વિશ્લેષણ. આપ ઊંડા સત્યના શોધક છો; સંશોધન, દર્શન અને સાધનામાં આપ ખીલો છો.",
+    "8": "શક્તિ, મહત્ત્વાકાંક્ષા, ભૌતિક કુશળતા. સિદ્ધિની પ્રબળ ઇચ્છા; સંપત્તિ અને ઉદ્યોગ ઊભા કરવાની ક્ષમતા.",
+    "9": "કરુણા, વૈશ્વિકતા, પૂર્ણતા. માનવતાવાદી વૃત્તિ; આપ ઉદારતાથી આપો છો અને પોતાના ઉદાહરણથી પ્રેરણા આપો છો.",
+    "11": "માસ્ટર અંતર્દર્શી: ઉચ્ચ આધ્યાત્મિક સંવેદનશીલતા. અંક 2ની ઊર્જાનું વિસ્તૃત રૂપ; દૂરદર્શી ક્ષમતા સાથે જ્ઞાનતંતુઓની તીવ્રતા.",
+    "22": "માસ્ટર નિર્માતા: વિશાળ દૃષ્ટિને સાકાર કરવાની ક્ષમતા. અંક 4ની ઊર્જાનું વિસ્તૃત રૂપ; આપ આદર્શોને મૂર્ત વારસામાં બદલો છો.",
+    "33": "માસ્ટર શિક્ષક: કૌશલ્ય સાથે સમર્પણ. અંક 6ની ઊર્જાનું વિસ્તૃત રૂપ; આપ કરુણાભરી સેવાનું ઉદાહરણ બનીને જીવો છો.",
+  },
 };
 
 /** Mirror of Go `pickNumerologyLocale` — fall back to "en". */
@@ -455,9 +489,9 @@ function factorsHtml(
   locale: string,
 ): string {
   if (!factors) return "";
-  // The API sends these factor values in English for te/ta/kn/ml; planet and
-  // weekday names are mapped to the engine's native names (unknown values
-  // pass through). Colour/gemstone/deity/direction stay as sent.
+  // The API sends every factor value in the request language. Older API builds
+  // sent English for te/ta/kn/ml/gu, so planet and weekday names are still
+  // mapped to the engine's native names (already-native values pass through).
   return `<dl class="factors-grid">
   <dt>${esc(fl("planet"))}</dt><dd>${esc(localizeLord(locale, factors.planet))}</dd>
   <dt>${esc(fl("day"))}</dt><dd>${esc(localizeWeekday(locale, factors.day))}</dd>

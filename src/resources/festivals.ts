@@ -10,17 +10,17 @@ export class Festivals {
   constructor(private readonly _c: ClientCore) {}
 
   /** Full Hindu festival calendar for a month at a location: every Ekadashi (smarta + Vaishnava/Gauna with parana window), Pradosh, Sankashti/Vinayaka Chaturthi, Purnima/Amavasya, Chandra Darshana, Sankrantis, major and regional festivals, jayantis, national days and eclipses. Location-aware (defaults to New Delhi / Asia/Kolkata); verified entry for entry against printed panchang calendars of 14 cities. */
-  month<T = unknown>(input: { year: number; month: number; lat?: number; lon?: number; tz?: string; locale?: string; monthSystem?: string; ayanamsa?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/festivals/month", q.applyExtras(q.qNone(input), input, [["year", "year"], ["month", "month"], ["lat", "lat"], ["lon", "lon"], ["tz", "tz"], ["locale", "locale"], ["monthSystem", "month_system"], ["ayanamsa", "ayanamsa"]]), opts);
+  month<T = unknown>(input: { year: number; month: number; lat?: number; lon?: number; tz?: string; locale?: string; monthSystem?: string; ayanamsa?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/festivals/month", q.applyExtras(q.qNone(input), input, [["year", "year"], ["month", "month"], ["lat", "lat"], ["lon", "lon"], ["tz", "tz"], ["locale", "locale"], ["monthSystem", "month_system"], ["ayanamsa", "ayanamsa"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** All festivals, vrats and observances on one civil date at a location (same engine and fields as festivals.month): Ekadashi smarta/Vaishnava, Pradosh, Purnima, Amavasya, Sankranti, jayantis, eclipses, each with the windows a panchang prints (moonrise, pradosh kaal, parana). Defaults to New Delhi / Asia/Kolkata. */
-  onDate<T = unknown>(input: { date: string; lat?: number; lon?: number; tz?: string; locale?: string; monthSystem?: string; ayanamsa?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/festivals/on-date", q.applyExtras(q.qNone(input), input, [["date", "date"], ["lat", "lat"], ["lon", "lon"], ["tz", "tz"], ["locale", "locale"], ["monthSystem", "month_system"], ["ayanamsa", "ayanamsa"]]), opts);
+  onDate<T = unknown>(input: { date: string; lat?: number; lon?: number; tz?: string; locale?: string; monthSystem?: string; ayanamsa?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/festivals/on-date", q.applyExtras(q.qNone(input), input, [["date", "date"], ["lat", "lat"], ["lon", "lon"], ["tz", "tz"], ["locale", "locale"], ["monthSystem", "month_system"], ["ayanamsa", "ayanamsa"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Year-wise Vrat & Upavas dates of one family at a location — type: ekadashi | parana | pradosh | sankashti | vinayaka | purnima | amavasya | chandra_darshana | masik_shivaratri | durgashtami | kalashtami | skanda_shashthi | karthigai | shraddha | janmashtami | sankranti | satyanarayana | bhanu_saptami | eclipse (comma-separated for several). Same occurrence objects as festivals.month. */
-  vrat<T = unknown>(input: { year: number; type: string; lat?: number; lon?: number; tz?: string; locale?: string; monthSystem?: string; ayanamsa?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/festivals/vrat", q.applyExtras(q.qNone(input), input, [["year", "year"], ["type", "type"], ["lat", "lat"], ["lon", "lon"], ["tz", "tz"], ["locale", "locale"], ["monthSystem", "month_system"], ["ayanamsa", "ayanamsa"]]), opts);
+  vrat<T = unknown>(input: { year: number; type: string; lat?: number; lon?: number; tz?: string; locale?: string; monthSystem?: string; ayanamsa?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/festivals/vrat", q.applyExtras(q.qNone(input), input, [["year", "year"], ["type", "type"], ["lat", "lat"], ["lon", "lon"], ["tz", "tz"], ["locale", "locale"], ["monthSystem", "month_system"], ["ayanamsa", "ayanamsa"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 }

@@ -55,8 +55,8 @@ export class Narrative {
   }
 
   /** Get a daily horoscope in Tamil astrology style — uses the Tamil rashi system and traditional Tamil Panchangam for the day's reading. The input is the birth chart; pass `onDate` (YYYY-MM-DD) to read a day other than today. */
-  horoscopeDailyTamil<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { onDate?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/vedic/narrative/horoscope/daily-tamil", q.applyExtras(q.qBirth(input), input, [["onDate", "transit_date"]]), opts);
+  horoscopeDailyTamil<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { onDate?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/vedic/narrative/horoscope/daily-tamil", q.applyExtras(q.qBirth(input), input, [["onDate", "transit_date"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get a personalised weekly horoscope narrative computed from the birth chart's rising sign (lagna) — personalised 7-day outlook with major transit themes. The input is the birth chart; pass `onDate` (YYYY-MM-DD) to read a day other than today. */
@@ -190,8 +190,8 @@ export class Narrative {
   }
 
   /** Personalised yearly Bhavishyafal (annual horoscope) for a target year. */
-  yearlyBhavishyafal<T = unknown>(input: { date: string; time: string; tz: string; lat: number; lon: number; year: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/vedic/narrative/yearly-bhavishyafal", q.applyExtras(q.qNone(input), input, [["date", "birth.date"], ["time", "birth.time"], ["tz", "birth.tz"], ["lat", "lat"], ["lon", "lon"], ["year", "year"]]), opts);
+  yearlyBhavishyafal<T = unknown>(input: { date: string; time: string; tz: string; lat: number; lon: number; year: number; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/vedic/narrative/yearly-bhavishyafal", q.applyExtras(q.qNone(input), input, [["date", "birth.date"], ["time", "birth.time"], ["tz", "birth.tz"], ["lat", "lat"], ["lon", "lon"], ["year", "year"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Narrative interpretation of a specific yoga in the chart. */

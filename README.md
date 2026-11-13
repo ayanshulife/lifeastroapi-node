@@ -138,13 +138,63 @@ await client.chart.planets({ ...birth, ayanamsa: "krishnamurti", houseSystem: "p
 `milan.summary`) return ids and numbers, no prose: planet ids `sun` … `ketu`, `sign_index`
 0-based (0 = Aries), `house` 1-based whole-sign from the lagna, nakshatra index 0-based
 (0 = Ashwini), every instant as `*_local` (RFC 3339) plus `*_jd` (Julian Day, UT), and a
-`skipped` object naming anything that could not be computed. Map ids to names in your app.
+`skipped` object naming anything that could not be computed. Map ids to names in your app
+(`chart.kundliFacts` and `milan.summary` also take `lang`: term fields such as avastha
+names and koota details follow it).
 
 ```ts
 const facts = await client.chart.kundliFacts({ ...birth, include: "all" });
 const sadeSati = await client.transit.sadeSatiWindows({ birth, years: 30 });
 const match = await client.milan.summary({ boy: birth, girl: { date: "1992-03-20", time: "08:15", tz: "Asia/Kolkata", lat: 28.6139, lon: 77.209 } });
 ```
+
+## Languages
+
+Every Vedic method whose response carries names or text takes an optional `lang`.
+The same fields come back in that language; ids, dates, numbers and explicit
+`*_en` / `*_hi` fields do not change.
+
+```ts
+const day = await client.panchang.basic({
+  lat: 19.076, lon: 72.8777, tz: "Asia/Kolkata", date: "2027-01-15",
+  lang: "gu",
+});
+// tithi, nakshatra, yoga, karana and vara names are in Gujarati
+
+const chart = await client.chart.planets({
+  date: "1990-01-15", time: "10:30", tz: "Asia/Kolkata", lat: 19.076, lon: 72.8777,
+  lang: "ta",
+});
+```
+
+| `lang` | Language | Coverage |
+|--------|----------|----------|
+| `en` | English (default) | complete |
+| `hi` | Hindi | complete |
+| `mr` | Marathi | complete |
+| `te` | Telugu | complete |
+| `ta` | Tamil | complete |
+| `kn` | Kannada | complete |
+| `ml` | Malayalam | complete |
+| `gu` | Gujarati | complete |
+| `bn` | Bengali | names and terms; longer prose is still English |
+| `pa` | Punjabi | names and terms; longer prose is still English |
+
+- **Where it works:** `panchang`, `calendar`, `festivals`, `eclipses`, `planetMoments`,
+  `transit`, `milan`, `muhurta`, `chart`, `prashna`, `numerology`, `dasha`, `varshaphal`,
+  `ashtakavarga`, `lalkitab`, `horoscope`, `reports`, `narrative` and `remedies`.
+  The `Locale` type lists the values. `festivals.*`, `panchang.monthly` and some
+  `remedies.*` methods also still accept the older `locale` input; `lang` wins when
+  both are given.
+- **Methods without `lang`:** those that return only times, numbers or ids, such as
+  `panchang.rahuKaal`, `panchang.sunriseSunset`, `chart.yogas`, `chart.doshas`,
+  `transit.windows` and `milan.overlay`. There is nothing in them to translate.
+- **English only:** `western.*`, `tarot.*`, `geo.*` and `meta.*`. The
+  `western.narrative.*` methods take `lang` for `en`, `hi` and `mr`.
+- **Stable keys under a language.** Muhurta `factors[]` items carry an English `id`
+  (`Tithi`, `RahuKaal`, …) next to the localized `name`, so match on `id`.
+  `panchang.panchaka` returns `avoidance` (ids, comma-separated) and `avoidance_text`
+  (the same list as reader text in `lang`).
 
 ## Namespaces
 
@@ -164,13 +214,13 @@ const match = await client.milan.summary({ boy: birth, girl: { date: "1992-03-20
 | `prashna` | horary answer, chart, arudha, significators |
 | `eclipses` | solar / lunar / all (date range, optional visibility) |
 | `calendar` | Hindu month, ritu, samvatsara, adhik-maas |
-| `festivals` | full Hindu festival calendar by month / on a date — location-aware, `locale`, `monthSystem` (amanta/purnimanta); `panchang.monthly({ include: "sheet" })` returns a complete printable calendar page |
+| `festivals` | full Hindu festival calendar by month / on a date — location-aware, `lang`, `monthSystem` (amanta/purnimanta); `panchang.monthly({ include: "sheet" })` returns a complete printable calendar page |
 | `planetMoments` | retrograde windows, ingress, combustion window, speed |
 | `ashtakavarga` | sarva, bhinna (per planet), kaksha, transit-score |
 | `geo` | place search, reverse geocode, timezone, place by id |
 | `tarot` | cards, single card, daily, spread, yes/no |
 | `reports` | kundli (lite/detailed/brihad), match-making, mangal-dosha, sade-sati, varshaphal, numerology, horoscopes |
-| `narrative` | authored Vedic interpretations (lagna, planets, yogas, doshas, dasha-phal, transit-phal, prashna, outlooks, …) in `en/hi/mr/bn/kn/ta/te/gu` |
+| `narrative` | authored Vedic interpretations (lagna, planets, yogas, doshas, dasha-phal, transit-phal, prashna, outlooks, …) in `en/hi/mr/te/ta/kn/ml/gu` (see [Languages](#languages)) |
 | `remedies` | remedies by rule id; `forGraha` (by graha and reason); mantra / pooja / vrat / daan / rudraksha / yantra detail; Lal Kitab remedies |
 | `lalkitab` | Lal Kitab chart and dasha |
 | `meta` | free catalogs: `endpoints` (credit cost of every route), `ayanamsas`, `vedicYogas`, `vedicDoshas`, `vedicLocales`, `version` |
@@ -344,8 +394,9 @@ Each report has a `render*Html` and a `*Pdf` form:
 | Varshaphal | `reports.varshaphal` | `renderVarshaphalHtml` | `varshaphalPdf` |
 | Horoscope (daily / weekly / monthly) | `reports.horoscopeDaily` … | `renderHoroscopeHtml` | `horoscopePdf` |
 
-All render in `en`, `hi` and `mr` (and other locales where the report data carries
-them) — pass `lang` when you request the report.
+All render in `en`, `hi`, `mr`, `te`, `ta`, `kn`, `ml` and `gu` — pass `lang` when you
+request the report. Each script needs its Noto font on the machine that renders the
+PDF (see [Fonts](#fonts)).
 
 **Brihad Kundli** is the large one (well over 100 pages). `kundliBrihadPdf` renders
 it twice so the table of contents shows real page numbers, adds a running header

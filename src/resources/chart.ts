@@ -10,33 +10,33 @@ export class Chart {
   constructor(private readonly _c: ClientCore) {}
 
   /** Ascendant (Lagna): sign, degree, nakshatra, pada and lord. */
-  ascendant<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/ascendant", q.qBirth(input), opts);
+  ascendant<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/ascendant", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Sarvashtakavarga (SAV) grid; grand total is always 337. */
-  ashtakvarga<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/ashtakvarga", q.qBirth(input), opts);
+  ashtakvarga<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/ashtakvarga", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** One planet's Bhinnashtakavarga row: its benefic points (bindus) in each of the 12 signs. `planet` is Sun, Moon, Mars, Mercury, Jupiter, Venus or Saturn. */
-  ashtakvargaPlanet<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { planet: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/chart/ashtakvarga/{planet}", input, ["planet"]), q.qBirth(input), opts);
+  ashtakvargaPlanet<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { planet: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/chart/ashtakvarga/{planet}", input, ["planet"]), q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Vedic graha drishti (planetary aspects) table. */
-  aspects<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/aspects", q.qBirth(input), opts);
+  aspects<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/aspects", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Full birth-chart snapshot: avakhada, ascendant, all planets, sun/moon sign and birth panchang. */
-  astroDetails<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/astro-details", q.qBirth(input), opts);
+  astroDetails<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/astro-details", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Avakhada Chakra: varna, vashya, yoni, gana, nadi and lucky factors. */
-  avakhada<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/avakhada", q.qBirth(input), opts);
+  avakhada<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/avakhada", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Compute Bhava Bala — the six-component strength of each of the 12 houses: Bhavadhipati Bala (lord strength), Bhava Digbala, Bhava Drishti Bala, and more. */
@@ -45,18 +45,18 @@ export class Chart {
   }
 
   /** Check which planets are combust (too close to the Sun) in a birth chart — returns each planet's angular distance from Sun, whether it is combust by classical limits, and combust severity. */
-  combustion<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/combustion", q.qBirth(input), opts);
+  combustion<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/combustion", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Every planet's dignity (exalted/debilitated/own/friend/enemy/neutral). */
-  dignity<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/dignity", q.qBirth(input), opts);
+  dignity<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/dignity", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Any divisional (varga) chart, e.g. D1, D9, D10, D60. */
-  divisional<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { varga: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/chart/divisional/{varga}", input, ["varga"]), q.qBirth(input), opts);
+  divisional<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { varga: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/chart/divisional/{varga}", input, ["varga"]), q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Doshas in a birth chart as data (20 credits): kaalsarp, mangal (from lagna, Moon and Venus with cancellation), pitra, combust, debilitation (with neecha bhanga), retrograde, gandanta, grahan, papakartari, mrityu bhaga, guru chandal, visha kanya, ganda moola. Same item fields as chart.yogas. all=true also lists absent ids. Ids only, no text: planets sun..ketu, sign_index 0-based (Aries=0), house 1-based whole-sign from the lagna, nakshatra index 0-based (Ashwini=0). */
@@ -65,58 +65,58 @@ export class Chart {
   }
 
   /** Ghatak Chakra (inauspicious indicators) for the chart. */
-  ghatak<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/ghatak", q.qBirth(input), opts);
+  ghatak<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/ghatak", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Identify Graha Yuddha (planetary war) in a birth chart — occurs when two visible planets are within 1° of each other. */
-  grahaYuddha<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/graha-yuddha", q.qBirth(input), opts);
+  grahaYuddha<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/graha-yuddha", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** List all planets occupying each of the 12 houses in a birth chart — a house-indexed view of the chart (vs planet-indexed from chart_planets). */
-  houseOccupants<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/house-occupants", q.qBirth(input), opts);
+  houseOccupants<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/house-occupants", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** 12 house cusps / occupants for the chosen house system. */
-  houses<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/houses", q.qBirth(input), opts);
+  houses<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/houses", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get KP (Krishnamurti Paddhati) house significators for a given cusp — lists planets that significate the house through occupancy, lordship, and sub-lord chain. */
-  kpHouseSignificator<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { cusp: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/kp-house-significator", q.applyExtras(q.qBirth(input), input, [["cusp", "cusp"]]), opts);
+  kpHouseSignificator<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { cusp: number; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/kp-house-significator", q.applyExtras(q.qBirth(input), input, [["cusp", "cusp"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get the KP sublord of a planet — the sub-lord of the nakshatra sub-division the planet occupies (KP star lord → sub lord → sub-sub lord chain). */
-  kpSublord<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { planet: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/kp-sublord", q.applyExtras(q.qBirth(input), input, [["planet", "planet"]]), opts);
+  kpSublord<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { planet: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/kp-sublord", q.applyExtras(q.qBirth(input), input, [["planet", "planet"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Whole birth chart as data in one call (50 credits): lagna; planets with sign, degree, house, nakshatra, pada, retrograde, combust, dignity, neecha bhanga, vargottama, houses ruled, shadbala, avastha and varga placements; houses with sign, lord, SAV bindus, bhava bala, occupants and aspecting planets; Jaimini chara karakas; avakhada. vargas: comma list (default D9, max 16, D1 rejected). include: shadbala, bhavabala, ashtakvarga, aspects, avastha, karakas, avakhada, yogas or all (default all but yogas). gender narrows Mahabhagya. Ids only, no text: planets sun..ketu, sign_index 0-based (Aries=0), house 1-based whole-sign from the lagna, nakshatra index 0-based (Ashwini=0). Anything not computable is in skipped. */
-  kundliFacts<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { vargas?: string; include?: string; gender?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/kundli-facts", q.applyExtras(q.qBirth(input), input, [["vargas", "vargas"], ["include", "include"], ["gender", "gender"]]), opts);
+  kundliFacts<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { vargas?: string; include?: string; gender?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/kundli-facts", q.applyExtras(q.qBirth(input), input, [["vargas", "vargas"], ["include", "include"], ["gender", "gender"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Birth (Janma) nakshatra and pada. */
-  nakshatra<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/nakshatra", q.qBirth(input), opts);
+  nakshatra<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/nakshatra", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Navamsa (D9) divisional chart — convenience alias for divisional('D9'). */
-  navamsa<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/divisional/D9", q.qBirth(input), opts);
+  navamsa<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/divisional/D9", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Detail for a single planet (sun|moon|mars|mercury|jupiter|venus|saturn|rahu|ketu). */
-  planet<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { name: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/chart/planet/{name}", input, ["name"]), q.qBirth(input), opts);
+  planet<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { name: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/chart/planet/{name}", input, ["name"]), q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** All 9 grahas with sign, degree, nakshatra, house, retrograde, dignity, combustion and speed. */
-  planets<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/planets", q.qBirth(input), opts);
+  planets<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/planets", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Birth-time sensitivity (20 credits): for D1 and each varga (default D9,D10,D24) the lagna sign at birth and how many minutes before/after it stays the same, with the neighbouring signs; the same for the Moon's nakshatra and pada; planet sign changes inside the window. window: half-width in minutes (default 120, max 180). Use it to tell users how much a birth-time error matters. Every instant comes as *_local (RFC 3339 with offset) and *_jd (Julian Day, UT); fields that cannot be computed are listed in skipped. */
@@ -125,13 +125,13 @@ export class Chart {
   }
 
   /** Shadbala (six-fold strength) for all 7 planets with components. */
-  shadbala<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/chart/shadbala", q.qBirth(input), opts);
+  shadbala<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/chart/shadbala", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** One shadbala component (sthana|dig|kala|chesta|naisargika|drik) for all planets. */
-  shadbalaComponent<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { component: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/chart/shadbala/{component}", input, ["component"]), q.qBirth(input), opts);
+  shadbalaComponent<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { component: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/chart/shadbala/{component}", input, ["component"]), q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Yogas present in a birth chart as data (20 credits), from the same detectors as narrative.yogas: id, kind, category, present, planets, houses, strength, cancelled + cancel_reasons, variant, axes, sub_ids, source, details. Includes neecha_bhanga.<planet> and raja_yoga.kendra_trikona. all=true also lists every absent catalogue id with present:false. Ids only, no text: planets sun..ketu, sign_index 0-based (Aries=0), house 1-based whole-sign from the lagna, nakshatra index 0-based (Ashwini=0). */

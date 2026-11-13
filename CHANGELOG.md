@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.7.0 — 2026-11-13
+
+- PDF reports now render fully in Gujarati (`gu`): all templates have native labels, chart sign and planet names (North Indian chart labels સૂ ચં મં બુ ગુ શુ શ રા કે), dasha and Yogini lord names, weekday names and the `Noto Sans Gujarati` font. `Locale` now includes `"gu"`.
+- Gujarati text addresses the reader as આપ, uses the nakshatra spellings of printed Gujarati panchangs, and keeps remedies to steps the reader can do at home.
+- Every Vedic method whose response carries names or text now takes an optional `lang` (122 more methods): `panchang.*`, `calendar.*`, `festivals.*`, `eclipses.*`, `planetMoments.*`, `transit.*`, `milan.*`, `muhurta.*`, `chart.*`, `prashna.*`, `dasha.*`, `varshaphal.*`, `ashtakavarga.*`, `lalkitab.*`, plus `narrative.horoscopeDailyTamil`, `narrative.yearlyBhavishyafal` and the five `remedies` methods that had only `locale`. Example: `client.panchang.basic({ lat, lon, tz, lang: "gu" })`. The existing `locale` input of `festivals.*`, `panchang.monthly` and `remedies.*` still works; `lang` wins when both are given. Methods that return only times, numbers or ids (for example `panchang.rahuKaal`, `chart.yogas`, `transit.windows`) and the Western, Tarot, geo and meta methods have no `lang`.
+- Numerology methods (`numerology.*`, `reports.numerology`) now answer in the `lang` you pass; before, the API returned English for every language.
+- Complete languages: `en`, `hi`, `mr`, `te`, `ta`, `kn`, `ml`, `gu`. `Locale` gains `"pa"` (Punjabi); `bn` and `pa` return names and terms in the language, longer prose is still English.
+- New response fields, documented on the methods: muhurta `factors[].id` (stable English key such as `Tithi` or `RahuKaal`; `name` and `value` follow `lang`, so match on `id`) and `panchang.panchaka` `avoidance_text` (reader text in `lang`; `avoidance` stays the id list).
+- README: new "Languages" section; PDF reports are listed for all eight complete languages.
+
 ## 0.6.0 — 2026-11-08
 
 - PDF reports now render fully in Malayalam (`ml`): all templates have native labels, chart sign and planet names, dasha and Yogini lord names, weekday names and the `Noto Sans Malayalam` font. `Locale` now includes `"ml"`.

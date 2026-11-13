@@ -45,6 +45,7 @@ const SHAPES = {
 // Helpers
 // ---------------------------------------------------------------------------
 function tsType(t) {
+  if (t === "locale") return "Types.Locale";
   return t === "number" || t === "integer" ? "number" : t === "boolean" ? "boolean" : "string";
 }
 function jsdoc(text) {
@@ -85,9 +86,9 @@ function buildMethod(e) {
     for (const x of extras) {
       const field = x.name ?? camel(x.wire);
       map.push(`[${JSON.stringify(field)}, ${JSON.stringify(x.wire)}]`);
-      // The server's localization param is inconsistent: vedic-narrative and
-      // report endpoints read `locale`, while horoscope/numerology/western read
-      // `lang`. Emit BOTH from the same input so the language option always works.
+      // The API documents `locale` and also accepts `lang`; some older routes
+      // read only one of the two. Emit BOTH from the same input so the language
+      // option always works. Which methods get `lang` is decided in manifest.mjs.
       if (x.wire === "lang") map.push(`[${JSON.stringify(field)}, "locale"]`);
     }
     qExpr = `q.applyExtras(${qExpr}, input, [${map.join(", ")}])`;

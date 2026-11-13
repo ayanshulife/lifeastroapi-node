@@ -265,6 +265,28 @@ export const LABELS: Record<string, Record<string, string>> = {
     karana: "കരണം",
     sources: "ആധാരങ്ങൾ",
   },
+  gu: {
+    title_kundli: "વિસ્તૃત કુંડળી",
+    born: "જન્મ",
+    at: "સમય",
+    generated: "તૈયાર",
+    section_ascendant: "લગ્ન",
+    section_planets: "ગ્રહ સ્થિતિ",
+    section_panchang: "જન્મ પંચાંગ",
+    section_interpretation: "વ્યાખ્યા",
+    ascendant: "લગ્ન",
+    planet: "ગ્રહ",
+    sign: "રાશિ",
+    degree: "અંશ",
+    house: "ભાવ",
+    nakshatra: "નક્ષત્ર",
+    pada: "પાદ",
+    lord: "સ્વામી",
+    tithi: "તિથિ",
+    yoga: "યોગ",
+    karana: "કરણ",
+    sources: "સ્રોત",
+  },
 };
 
 /**

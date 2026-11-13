@@ -10,72 +10,72 @@ export class Dasha {
   constructor(private readonly _c: ClientCore) {}
 
   /** Full Char Dasha (Jaimini sign-based dasha) schedule — every mahadasha sign period with start/end dates. */
-  char<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/dasha/char", q.qBirth(input), opts);
+  char<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/dasha/char", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Sub-periods inside a Char Dasha mahadasha+antardasha sign pair. */
-  charAntar<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { md: string; ad: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/dasha/char/{md}/{ad}", input, ["md","ad"]), q.qBirth(input), opts);
+  charAntar<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { md: string; ad: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/dasha/char/{md}/{ad}", input, ["md","ad"]), q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Currently running Char Dasha (Jaimini) period stack — active mahadasha and antardasha signs with date windows. */
-  charCurrent<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/dasha/char/current", q.qBirth(input), opts);
+  charCurrent<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/dasha/char/current", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Antardashas inside one Char Dasha mahadasha sign (md = sign name, e.g. 'leo'). */
-  charMaha<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { md: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/dasha/char/{md}", input, ["md"]), q.qBirth(input), opts);
+  charMaha<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { md: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/dasha/char/{md}", input, ["md"]), q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Char Dasha mahadasha-level periods only — one row per sign period. */
-  charMajor<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/dasha/char/major", q.qBirth(input), opts);
+  charMajor<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/dasha/char/major", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Full Vimshottari dasha tree (depth 1-5). */
-  vimshottari<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { depth?: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/dasha/vimshottari", q.applyExtras(q.qBirth(input), input, [["depth", "depth"]]), opts);
+  vimshottari<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { depth?: number; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/dasha/vimshottari", q.applyExtras(q.qBirth(input), input, [["depth", "depth"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Pratyantardashas within a Maha+Antar pair. */
-  vimshottariAntar<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { md: string; ad: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/dasha/vimshottari/{md}/{ad}", input, ["md","ad"]), q.qBirth(input), opts);
+  vimshottariAntar<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { md: string; ad: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/dasha/vimshottari/{md}/{ad}", input, ["md","ad"]), q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Currently running 5-level Vimshottari dasha stack (optionally at a custom moment). */
-  vimshottariCurrent<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { at?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/dasha/vimshottari/current", q.applyExtras(q.qBirth(input), input, [["at", "at"]]), opts);
+  vimshottariCurrent<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { at?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/dasha/vimshottari/current", q.applyExtras(q.qBirth(input), input, [["at", "at"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Antardashas within one Mahadasha lord. */
-  vimshottariMaha<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { md: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/dasha/vimshottari/{md}", input, ["md"]), q.qBirth(input), opts);
+  vimshottariMaha<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { md: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/dasha/vimshottari/{md}", input, ["md"]), q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Sookshma periods within a 3-level Vimshottari combination. */
-  vimshottariPratyantar<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { md: string; ad: string; pd: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/dasha/vimshottari/{md}/{ad}/{pd}", input, ["md","ad","pd"]), q.qBirth(input), opts);
+  vimshottariPratyantar<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { md: string; ad: string; pd: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/dasha/vimshottari/{md}/{ad}/{pd}", input, ["md","ad","pd"]), q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Prana periods within a 4-level Vimshottari combination. */
-  vimshottariSookshma<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { md: string; ad: string; pd: string; sd: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/dasha/vimshottari/{md}/{ad}/{pd}/{sd}", input, ["md","ad","pd","sd"]), q.qBirth(input), opts);
+  vimshottariSookshma<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { md: string; ad: string; pd: string; sd: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/dasha/vimshottari/{md}/{ad}/{pd}/{sd}", input, ["md","ad","pd","sd"]), q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Full Yogini dasha tree (36-year cycle, 8 lords). */
-  yogini<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { depth?: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/dasha/yogini", q.applyExtras(q.qBirth(input), input, [["depth", "depth"]]), opts);
+  yogini<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { depth?: number; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/dasha/yogini", q.applyExtras(q.qBirth(input), input, [["depth", "depth"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Yogini dasha sub-periods for a named Yogini lord. */
-  yoginiByName<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { name: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/dasha/yogini/{name}", input, ["name"]), q.qBirth(input), opts);
+  yoginiByName<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { name: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/dasha/yogini/{name}", input, ["name"]), q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Currently running Yogini dasha. */
-  yoginiCurrent<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { at?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/dasha/yogini/current", q.applyExtras(q.qBirth(input), input, [["at", "at"]]), opts);
+  yoginiCurrent<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { at?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/dasha/yogini/current", q.applyExtras(q.qBirth(input), input, [["at", "at"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 }

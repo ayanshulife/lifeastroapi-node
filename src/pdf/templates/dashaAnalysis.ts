@@ -344,6 +344,40 @@ const LABELS: Record<string, Record<string, string>> = {
     th_duration: "കാലയളവ്",
     years: "വർഷം",
   },
+  gu: {
+    title_dasha: "દશા વિશ્લેષણ",
+    subtitle_dasha: "વિંશોત્તરીનું વિસ્તૃત વિવરણ: ભૂત, વર્તમાન અને ભવિષ્યની દશાઓ",
+    born: "જન્મ",
+    at: "સમય",
+    generated: "તૈયાર",
+    section_active: "હાલ સક્રિય દશા-સ્તર",
+    section_predictions: "સક્રિય ઉપદશાઓ માટે ભવિષ્યકથન",
+    section_all_md: "તમામ 9 મહાદશાઓ (120 વર્ષનું ચક્ર)",
+    section_past: "છેલ્લાં 20 વર્ષની સમીક્ષા",
+    section_future: "આગામી 10 વર્ષનું પૂર્વાવલોકન",
+    section_yogini: "યોગિની દશા (દ્વિતીયક પદ્ધતિ)",
+    active_intro:
+      "આ સમયે આ પાંચ દશા-સ્તર એકસાથે ચાલી રહ્યાં છે. બાહ્ય મહાદશા વ્યાપક ભાવ નક્કી કરે છે; દરેક આંતરિક સ્તર વધુ સૂક્ષ્મ સમય-નિર્ધારણ આપે છે.",
+    active_unavailable: "આ કુંડળી માટે સક્રિય દશા-સ્તર ઉપલબ્ધ નથી.",
+    past_intro: "છેલ્લાં 20 વર્ષમાં આવી ગયેલી મહાદશાઓ; પાછળ વળીને સમજવા માટે ઉપયોગી.",
+    past_none: "આ કુંડળી માટે છેલ્લાં 20 વર્ષની કોઈ મહાદશા ઉપલબ્ધ નથી.",
+    future_intro:
+      "આગામી 10 વર્ષની અંતર્દશાઓ; નજીકના સમયના આયોજન માટે મહાદશા કરતાં વધુ સૂક્ષ્મ દૃષ્ટિ.",
+    future_none: "આગામી 10 વર્ષની કોઈ દશા ઉપલબ્ધ નથી.",
+    yogini_intro:
+      "યોગિની દશા આઠ કાળવાળી દ્વિતીયક પદ્ધતિ છે, જેનો ઉપયોગ વિંશોત્તરી સાથે સમય-નિર્ધારણની પુષ્ટિ માટે થાય છે.",
+    md_unavailable: "આ કુંડળી માટે મહાદશાનો ક્રમ ઉપલબ્ધ નથી.",
+    lvl_maha: "મહાદશા",
+    lvl_antar: "અંતર્દશા",
+    lvl_pratyantar: "પ્રત્યંતર દશા",
+    lvl_sookshma: "સૂક્ષ્મ દશા",
+    lvl_prana: "પ્રાણ દશા",
+    th_lord: "સ્વામી",
+    th_start: "આરંભ",
+    th_end: "સમાપ્તિ",
+    th_duration: "અવધિ",
+    years: "વર્ષ",
+  },
 };
 
 /** Report-specific CSS, ported from the Go template's <style> block. */
@@ -386,7 +420,7 @@ const EXTRA_CSS = `
 /**
  * Resolve a period's lord name for the locale: the API's LordLocal when present
  * (any non-en locale), else LordHI for hi/mr, the engine's native planet /
- * Yogini name for te/ta/kn/ml (older API builds sent only Lord + LordHI).
+ * Yogini name for te/ta/kn/ml/gu (older API builds sent only Lord + LordHI).
  */
 function periodLord(period: DashaPeriodView | undefined, locale: string): string {
   if (!period) return "";

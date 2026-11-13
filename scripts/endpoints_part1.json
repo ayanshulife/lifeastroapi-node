@@ -114,7 +114,7 @@
  {
   "path": "/v1/panchang/panchaka",
   "shape": "moment",
-  "desc": "Panchaka classification at the moment."
+  "desc": "Panchaka classification at the moment. `avoidance` is the id list (comma-separated); `avoidance_text` is the same list as reader text in `lang`."
  },
  {
   "path": "/v1/panchang/varjyam",
@@ -585,14 +585,14 @@
   "shape": "moment",
   "ns": "muhurta",
   "method": "vivah",
-  "desc": "Auspicious wedding (vivah) muhurta windows in a date range.",
+  "desc": "Auspicious wedding (vivah) muhurta windows in a date range. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
   "extras": []
  },
  {
   "path": "/v1/muhurta/naamkaran",
   "shape": "moment",
   "method": "naamkaran",
-  "desc": "Naamkaran (naming ceremony) muhurta windows.",
+  "desc": "Naamkaran (naming ceremony) muhurta windows. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`.",
   "extras": [
    {
     "wire": "birth_date",
@@ -605,7 +605,7 @@
   "path": "/v1/muhurta/best-time",
   "shape": "muhurta",
   "method": "bestTime",
-  "desc": "Best-scoring general muhurta window in a date range."
+  "desc": "Best-scoring general muhurta window in a date range. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`."
  },
  {
   "path": "/v1/eclipses/solar",

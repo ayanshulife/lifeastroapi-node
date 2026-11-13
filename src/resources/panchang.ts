@@ -15,18 +15,18 @@ export class Panchang {
   }
 
   /** Full advanced panchang: everything in basic plus all muhurta windows, Choghadiya, Hindu month, samvat and more. */
-  advanced<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/advanced", q.qMoment(input), opts);
+  advanced<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/advanced", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Amrit Kalam auspicious window. */
-  amritKalam<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/amrit-kalam", q.qMoment(input), opts);
+  amritKalam<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/amrit-kalam", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Composite basic panchang in one call: tithi, nakshatra, yoga, karana, vara, sun/moon rise & set. */
-  basic<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/basic", q.qMoment(input), opts);
+  basic<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/basic", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Brahma Muhurat window before sunrise. */
@@ -35,8 +35,8 @@ export class Panchang {
   }
 
   /** Choghadiya periods (day + night). */
-  choghadiya<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/choghadiya", q.qMoment(input), opts);
+  choghadiya<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/choghadiya", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Durmuhurta inauspicious periods for the day. */
@@ -50,33 +50,33 @@ export class Panchang {
   }
 
   /** Hindu lunar month, paksha, samvat and adhik/kshaya detection. */
-  hinduMonth<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/hindu-month", q.qMoment(input), opts);
+  hinduMonth<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/hindu-month", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Planetary hours (horas) for the day, or the hora at a given time. */
-  hora<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/hora", q.qMoment(input), opts);
+  hora<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/hora", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get the Dinman (day length) and Ratriman (night length) for a date — the exact duration of daytime from sunrise to sunset and nighttime from sunset to next sunrise, in ghatis (1 ghati = 24 minutes). */
-  horaDinman<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/hora-dinman", q.qMoment(input), opts);
+  horaDinman<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/hora-dinman", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Current karana (half-tithi). */
-  karana<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/karana", q.qMoment(input), opts);
+  karana<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/karana", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Lagna (rising sign) table for the day with start/end times for each sign. */
-  lagnaTable<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/lagna-table", q.qMoment(input), opts);
+  lagnaTable<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/lagna-table", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Full-month panchang calendar (one entry per day). tz accepts an IANA name ("Asia/Kolkata"), a fixed offset ("+05:30") or decimal hours ("5.5"). Pass include: "sheet" for a complete printable Hindu calendar page: per-day tithi/nakshatra/moon-sign end-times ("27:07+" notation), kshaya days, moonrise/moonset, Hindu month, Vikram/Shaka samvat, moon phase and every festival of the day, plus the page header. */
-  monthly<T = unknown>(input: { lat: number; lon: number; alt?: number; tz?: string; year: number; month: number; include?: string; locale?: string; monthSystem?: string; ayanamsa?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/monthly", q.applyExtras(q.qNone(input), input, [["lat", "lat"], ["lon", "lon"], ["alt", "alt"], ["tz", "tz"], ["year", "year"], ["month", "month"], ["include", "include"], ["locale", "locale"], ["monthSystem", "month_system"], ["ayanamsa", "ayanamsa"]]), opts);
+  monthly<T = unknown>(input: { lat: number; lon: number; alt?: number; tz?: string; year: number; month: number; include?: string; locale?: string; monthSystem?: string; ayanamsa?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/monthly", q.applyExtras(q.qNone(input), input, [["lat", "lat"], ["lon", "lon"], ["alt", "alt"], ["tz", "tz"], ["year", "year"], ["month", "month"], ["include", "include"], ["locale", "locale"], ["monthSystem", "month_system"], ["ayanamsa", "ayanamsa"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Moonrise and moonset times. */
@@ -85,18 +85,18 @@ export class Panchang {
   }
 
   /** Moon's nakshatra with pada, lord and start/end at the moment. */
-  nakshatra<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/nakshatra", q.qMoment(input), opts);
+  nakshatra<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/nakshatra", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Personalised daily Tara Bala prediction relative to a birth nakshatra (index 0-26). */
-  nakshatraPrediction<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { birthNak: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/nakshatra-prediction", q.applyExtras(q.qMoment(input), input, [["birthNak", "birth_nak"]]), opts);
+  nakshatraPrediction<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { birthNak: number; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/nakshatra-prediction", q.applyExtras(q.qMoment(input), input, [["birthNak", "birth_nak"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
-  /** Panchaka classification at the moment. */
-  panchaka<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/panchaka", q.qMoment(input), opts);
+  /** Panchaka classification at the moment. `avoidance` is the id list (comma-separated); `avoidance_text` is the same list as reader text in `lang`. */
+  panchaka<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/panchaka", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Pradosh Kaal twilight window after sunset. */
@@ -110,18 +110,18 @@ export class Panchang {
   }
 
   /** Get solar Sankranti (Sun's sign ingress) dates for a year — the exact moment the Sun enters each of the 12 sidereal signs, including Makar Sankranti (Capricorn), Mesh Sankranti (Aries/New Year), and all others. */
-  sankranti<T = unknown>(input: { date: string; tz: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/sankranti", q.applyExtras(q.qNone(input), input, [["date", "date"], ["tz", "tz"]]), opts);
+  sankranti<T = unknown>(input: { date: string; tz: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/sankranti", q.applyExtras(q.qNone(input), input, [["date", "date"], ["tz", "tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Siddha Yoga vara+nakshatra auspicious combination check. */
-  siddhaYoga<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/siddha-yoga", q.qMoment(input), opts);
+  siddhaYoga<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/siddha-yoga", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Quick 5-element panchang strip (tithi, nakshatra, yoga, karana, vara) plus sunrise/sunset. */
-  summary<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/summary", q.qMoment(input), opts);
+  summary<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/summary", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Sunrise and sunset times plus day length. */
@@ -130,18 +130,18 @@ export class Panchang {
   }
 
   /** Current tithi (lunar day) with paksha, lord and transition timing. */
-  tithi<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/tithi", q.qMoment(input), opts);
+  tithi<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/tithi", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Hindu weekday (vara) and its ruling planet. */
-  vara<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/vara", q.qMoment(input), opts);
+  vara<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/vara", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Varjyam forbidden window based on the Moon's nakshatra. */
-  varjyam<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/varjyam", q.qMoment(input), opts);
+  varjyam<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/varjyam", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Yamaganda inauspicious window. */
@@ -150,7 +150,7 @@ export class Panchang {
   }
 
   /** Current panchang yoga (one of 27). */
-  yoga<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/panchang/yoga", q.qMoment(input), opts);
+  yoga<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/panchang/yoga", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 }

@@ -10,6 +10,7 @@ import {
   ServerError,
   LifeAstroConnectionError,
   type FetchLike,
+  type Locale,
 } from "../src/index.js";
 import { todayIn } from "../src/params.js";
 
@@ -237,6 +238,106 @@ describe("localization", () => {
     // Server is inconsistent (narrative reads `locale`); the SDK emits both.
     expect(url.searchParams.get("lang")).toBe("hi");
     expect(url.searchParams.get("locale")).toBe("hi");
+  });
+
+  const NOW = { lat: 19.076, lon: 72.8777, tz: "Asia/Kolkata", date: "2027-01-15" };
+  const GIRL = { date: "1992-03-20", time: "08:15", tz: "Asia/Kolkata", lat: 28.6139, lon: 77.209 };
+  type Api = InstanceType<typeof LifeAstro>;
+
+  // One method per Vedic group; `both` is false where the shape's own builder sends `lang` only.
+  const vedic: [string, string, (c: Api) => Promise<unknown>, boolean][] = [
+    ["panchang.basic", "/v1/panchang/basic", (c) => c.panchang.basic({ ...NOW, lang: "gu" }), true],
+    ["panchang.panchaka", "/v1/panchang/panchaka", (c) => c.panchang.panchaka({ ...NOW, lang: "gu" }), true],
+    ["calendar.ritu", "/v1/calendar/ritu", (c) => c.calendar.ritu({ date: NOW.date, tz: NOW.tz, lang: "gu" }), true],
+    ["festivals.month", "/v1/festivals/month", (c) => c.festivals.month({ year: 2027, month: 1, lang: "gu" }), true],
+    ["eclipses.all", "/v1/eclipses/all", (c) => c.eclipses.all({ startDate: "2027-01-01", endDate: "2027-12-31", lang: "gu" }), true],
+    ["planetMoments.ingress", "/v1/planet-moments/ingress", (c) => c.planetMoments.ingress({ planet: "Jupiter", date: NOW.date, tz: NOW.tz, lang: "gu" }), true],
+    ["transit.positions", "/v1/transit/positions", (c) => c.transit.positions({ lang: "gu" }), true],
+    ["transit.tarabala", "/v1/transit/tarabala", (c) => c.transit.tarabala({ birth: BIRTH, date: NOW.date, time: "06:00", tz: NOW.tz, lang: "gu" }), true],
+    ["milan.ashtakoota", "/v1/milan/ashtakoota", (c) => c.milan.ashtakoota({ boy: BIRTH, girl: GIRL, lang: "gu" }), true],
+    ["muhurta.vivah", "/v1/muhurta/vivah", (c) => c.muhurta.vivah({ ...NOW, lang: "gu" }), true],
+    ["muhurta.bestTime", "/v1/muhurta/best-time", (c) => c.muhurta.bestTime({ lat: NOW.lat, lon: NOW.lon, tz: NOW.tz, startDate: "2027-01-15", endDate: "2027-01-17", lang: "gu" }), true],
+    ["chart.planets", "/v1/chart/planets", (c) => c.chart.planets({ ...BIRTH, lang: "gu" }), true],
+    ["chart.kundliFacts", "/v1/chart/kundli-facts", (c) => c.chart.kundliFacts({ ...BIRTH, lang: "gu" }), true],
+    ["prashna.chart", "/v1/prashna/chart", (c) => c.prashna.chart({ ...NOW, time: "12:00", lang: "gu" }), true],
+    ["numerology.driver", "/v1/numerology/driver", (c) => c.numerology.driver({ dob: "1990-01-15", lang: "gu" }), true],
+    ["numerology.full", "/v1/numerology/full", (c) => c.numerology.full({ name: "Arjun Mehta", dob: "1990-01-15", lang: "gu" }), false],
+    ["dasha.vimshottari", "/v1/dasha/vimshottari", (c) => c.dasha.vimshottari({ ...BIRTH, lang: "gu" }), true],
+    ["varshaphal.chart", "/v1/varshaphal/chart", (c) => c.varshaphal.chart({ ...BIRTH, year: 2026, lang: "gu" }), true],
+    ["ashtakavarga.bhinna", "/v1/ashtakavarga/bhinna/Jupiter", (c) => c.ashtakavarga.bhinna({ ...BIRTH, planet: "Jupiter", lang: "gu" }), true],
+    ["lalkitab.chart", "/v1/lalkitab/chart", (c) => c.lalkitab.chart({ ...BIRTH, lang: "gu" }), true],
+    ["horoscope.daily", "/v1/horoscope/daily", (c) => c.horoscope.daily({ rashi: "aries", lang: "gu" }), false],
+    ["reports.kundliLite", "/v1/reports/kundli/lite", (c) => c.reports.kundliLite({ ...BIRTH, lang: "gu" }), true],
+    ["narrative.yearlyBhavishyafal", "/v1/vedic/narrative/yearly-bhavishyafal", (c) => c.narrative.yearlyBhavishyafal({ ...BIRTH, year: 2027, lang: "gu" }), true],
+    ["remedies.forGraha", "/v1/vedic/remedies/for-graha", (c) => c.remedies.forGraha({ graha: "saturn", lang: "gu" }), true],
+  ];
+  for (const [name, path, call, both] of vedic) {
+    it(`${name} sends the language`, async () => {
+      const { fetch, calls } = mockFetch(() => ({ body: {} }));
+      await call(makeClient(fetch));
+      const url = new URL(calls[0]!.url);
+      expect(url.pathname).toBe(path);
+      expect(url.searchParams.get("lang")).toBe("gu");
+      if (both) expect(url.searchParams.get("locale")).toBe("gu");
+    });
+  }
+
+  it("accepts every Locale value, including pa", async () => {
+    const { fetch, calls } = mockFetch(() => ({ body: {} }));
+    const client = makeClient(fetch);
+    const all: Locale[] = ["en", "hi", "mr", "te", "ta", "kn", "ml", "gu", "bn", "pa"];
+    for (const lang of all) await client.panchang.tithi({ ...NOW, lang });
+    expect(calls.map((c) => new URL(c.url).searchParams.get("locale"))).toEqual(all);
+  });
+
+  it("sends no language param when lang is omitted", async () => {
+    const { fetch, calls } = mockFetch(() => ({ body: {} }));
+    await makeClient(fetch).panchang.basic(NOW);
+    const url = new URL(calls[0]!.url);
+    expect(url.searchParams.has("lang")).toBe(false);
+    expect(url.searchParams.has("locale")).toBe(false);
+  });
+
+  it("keeps the existing `locale` input working, and `lang` wins when both are given", async () => {
+    const { fetch, calls } = mockFetch(() => ({ body: {} }));
+    const client = makeClient(fetch);
+    await client.festivals.month({ year: 2027, month: 1, locale: "hi" });
+    await client.panchang.monthly({ lat: NOW.lat, lon: NOW.lon, year: 2027, month: 1, locale: "hi", lang: "gu" });
+    const a = new URL(calls[0]!.url);
+    expect(a.searchParams.get("locale")).toBe("hi");
+    expect(a.searchParams.has("lang")).toBe(false);
+    const b = new URL(calls[1]!.url);
+    expect(b.searchParams.get("locale")).toBe("gu");
+    expect(b.searchParams.get("lang")).toBe("gu");
+  });
+
+  // English-only products and Vedic endpoints with nothing to localize take no
+  // `lang` (a type error in TypeScript); from untyped JavaScript it is dropped.
+  const noLang: [string, (c: any) => Promise<unknown>][] = [
+    ["western.natal.planets", (c) => c.western.natal.planets({ ...BIRTH, lang: "gu" })],
+    ["western.synastry.aspects", (c) => c.western.synastry.aspects({ personA: BIRTH, personB: GIRL, lang: "gu" })],
+    ["western.transits.positions", (c) => c.western.transits.positions({ date: NOW.date, time: "12:00", tz: NOW.tz, lang: "gu" })],
+    ["tarot.daily", (c) => c.tarot.daily({ lang: "gu" })],
+    ["geo.search", (c) => c.geo.search({ q: "Mumbai", lang: "gu" })],
+    ["meta.version", (c) => c.meta.version({ lang: "gu" })],
+    ["panchang.rahuKaal", (c) => c.panchang.rahuKaal({ ...NOW, lang: "gu" })],
+    ["chart.yogas", (c) => c.chart.yogas({ ...BIRTH, lang: "gu" })],
+    ["transit.windows", (c) => c.transit.windows({ planet: "saturn", lang: "gu" })],
+  ];
+  for (const [name, call] of noLang) {
+    it(`${name} does not send a language`, async () => {
+      const { fetch, calls } = mockFetch(() => ({ body: {} }));
+      await call(makeClient(fetch));
+      const url = new URL(calls[0]!.url);
+      expect(url.searchParams.has("lang")).toBe(false);
+      expect(url.searchParams.has("locale")).toBe(false);
+    });
+  }
+
+  it("Western narrative keeps its own lang (en / hi / mr)", async () => {
+    const { fetch, calls } = mockFetch(() => ({ body: {} }));
+    await makeClient(fetch).western.narrative.sabian({ degree: 100, lang: "hi" });
+    expect(new URL(calls[0]!.url).searchParams.get("lang")).toBe("hi");
   });
 });
 

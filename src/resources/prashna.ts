@@ -10,27 +10,27 @@ export class Prashna {
   constructor(private readonly _c: ClientCore) {}
 
   /** Cast a Prashna (horary) chart and compute the classical yes/no answer. */
-  answer<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { house: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/prashna/answer", q.applyExtras(q.qMoment(input), input, [["house", "house"]]), opts);
+  answer<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { house: number; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/prashna/answer", q.applyExtras(q.qMoment(input), input, [["house", "house"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Compute the Arudha Lagna of a Prashna chart — the perceived image/manifestation of the question's subject. */
-  arudha<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/prashna/arudha", q.qMoment(input), opts);
+  arudha<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/prashna/arudha", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Cast the full Prashna (horary) chart for the moment a question is asked — returns lagna, all planet placements, houses, and panchang at the moment of the question. */
-  chart<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/prashna/chart", q.qMoment(input), opts);
+  chart<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/prashna/chart", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get the lagna lord analysis for a Prashna chart — where the lagna lord is placed, its strength, and what it indicates about the querent's situation and chances of success. */
-  lagnaLord<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/prashna/lagna-lord", q.qMoment(input), opts);
+  lagnaLord<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/prashna/lagna-lord", q.applyExtras(q.qMoment(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get the KP significators for a Prashna chart — lists planets significating the houses relevant to the question (e.g. */
-  significators<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { house: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/prashna/significators", q.applyExtras(q.qMoment(input), input, [["house", "house"]]), opts);
+  significators<T = unknown>(input: Types.MomentInput & Types.VedicMomentSettings & { house: number; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/prashna/significators", q.applyExtras(q.qMoment(input), input, [["house", "house"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 }

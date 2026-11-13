@@ -10,13 +10,13 @@ export class Milan {
   constructor(private readonly _c: ClientCore) {}
 
   /** Full 36-point Ashtakoota breakdown across all 8 kootas. */
-  ashtakoota<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/milan/ashtakoota", q.qBoyGirl(input), opts);
+  ashtakoota<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/ashtakoota", q.applyExtras(q.qBoyGirl(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** One koota (varna|vashya|tara|yoni|graha_maitri|gana|bhakoot|nadi). */
-  ashtakootaKoota<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings & { koota: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/milan/ashtakoota/{koota}", input, ["koota"]), q.qBoyGirl(input), opts);
+  ashtakootaKoota<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings & { koota: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/milan/ashtakoota/{koota}", input, ["koota"]), q.applyExtras(q.qBoyGirl(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Just the Ashtakoota (Guna Milan) total score and verdict. */
@@ -25,38 +25,38 @@ export class Milan {
   }
 
   /** Current Vimshottari Maha Dasha of both partners and whether they overlap (20 credits); date/time/tz set the check moment (default now). timeline=true adds both partners' MD/AD periods on one aligned timeline from from for years (default 10, max 30), each span with md, ad and the running AD's start/end. marriageWindows=true (implies timeline) tags each span favourable, neutral or avoid with reason ids (rule D-MarriageWindows1). Each partner's Moon uses the ayanamsa of their own birth moment, so dates match dasha.vimshottari. */
-  dashaSync<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings & { timeline?: boolean; years?: number; from?: string; marriageWindows?: boolean; date?: string; time?: string; tz?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/milan/dasha-sync", q.applyExtras(q.qBoyGirl(input), input, [["timeline", "timeline"], ["years", "years"], ["from", "from"], ["marriageWindows", "marriage_windows"], ["date", "date"], ["time", "time"], ["tz", "tz"]]), opts);
+  dashaSync<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings & { timeline?: boolean; years?: number; from?: string; marriageWindows?: boolean; date?: string; time?: string; tz?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/dasha-sync", q.applyExtras(q.qBoyGirl(input), input, [["timeline", "timeline"], ["years", "years"], ["from", "from"], ["marriageWindows", "marriage_windows"], ["date", "date"], ["time", "time"], ["tz", "tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Check Dhan Yog (wealth yoga) for a single person's chart — assesses 2nd/11th house lord strength and Jupiter placement for prosperity. */
-  dhanYog<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/milan/dhan-yog", q.qBirthPrefixed(input), opts);
+  dhanYog<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/dhan-yog", q.applyExtras(q.qBirthPrefixed(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Assess longevity for a single person's chart — classical analysis of lagna, 8th house, and Moon sign longevity indicators. */
-  longevity<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/milan/longevity", q.qBirthPrefixed(input), opts);
+  longevity<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/longevity", q.applyExtras(q.qBirthPrefixed(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Check Mahendra Koota — the 4th additional compatibility factor beyond Ashtakoota. */
-  mahendra<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/milan/mahendra", q.qBoyGirl(input), opts);
+  mahendra<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/mahendra", q.applyExtras(q.qBoyGirl(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Mangal Dosha (Manglik) detection for one chart. */
-  mangalDosha<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/milan/mangal-dosha", q.qBirthPrefixed(input), opts);
+  mangalDosha<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/mangal-dosha", q.applyExtras(q.qBirthPrefixed(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Nadi dosha detection plus exceptions. */
-  nadiDosha<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/milan/nadi-dosha", q.qBoyGirl(input), opts);
+  nadiDosha<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/nadi-dosha", q.applyExtras(q.qBoyGirl(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Check Navamsa compatibility — compares the D9 (Navamsa) chart placements of both partners for deeper marriage harmony beyond the D1 chart. */
-  navamsaCompat<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/milan/navamsa-compat", q.qBoyGirl(input), opts);
+  navamsaCompat<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/navamsa-compat", q.applyExtras(q.qBoyGirl(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Couple chart overlay as data (20 credits): each partner's grahas in the other's whole-sign houses (with conjunct grahas), same-sign and same-nakshatra pairs, Moon sign relation (e.g. "2/12"), and each lagna lord's placement in the other's chart (sign, house, dignity, combust, retro). Each partner's chart uses the ayanamsa of their own birth moment. Ids only, no text: planets sun..ketu, sign_index 0-based (Aries=0), house 1-based whole-sign from the lagna, nakshatra index 0-based (Ashwini=0). */
@@ -65,27 +65,27 @@ export class Milan {
   }
 
   /** Check Santan Yog for a single person's chart — assesses 5th house lord and Jupiter placement to indicate prospects for children. */
-  santanYog<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/milan/santan-yog", q.qBirthPrefixed(input), opts);
+  santanYog<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/santan-yog", q.applyExtras(q.qBirthPrefixed(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Check Shani Dosha for a single person's chart — Saturn in 1st, 4th, 7th, 10th, or 12th house from lagna. */
-  shaniDosha<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/milan/shani-dosha", q.qBirthPrefixed(input), opts);
+  shaniDosha<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/shani-dosha", q.applyExtras(q.qBirthPrefixed(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Check Stree Dirgha — the distance from bride's nakshatra to groom's must be more than 9 nakshatras for a beneficial match (indicates the groom will lead a longer, more prosperous life than the bride expected). */
-  streeDirgha<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/milan/stree-dirgha", q.qBoyGirl(input), opts);
+  streeDirgha<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/stree-dirgha", q.applyExtras(q.qBoyGirl(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Couple matching data in one call (60 credits), numbers identical to the separate routes: ashtakoota (every koota), navamsa_compat, mangal_dosha of both plus pair status, seventh_house facts of both (7th sign, occupants, 7th lord, Venus, Jupiter, D9 7th, D7 5th), and sade_sati windows of both for 10 years from from. include=kundli_facts adds both full charts. Ids only, no text: planets sun..ketu, sign_index 0-based (Aries=0), house 1-based whole-sign from the lagna, nakshatra index 0-based (Ashwini=0). */
-  summary<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings & { from?: string; tz?: string; include?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/milan/summary", q.applyExtras(q.qBoyGirl(input), input, [["from", "from"], ["tz", "tz"], ["include", "include"]]), opts);
+  summary<T = unknown>(input: Types.BoyGirlInput & Types.VedicMomentSettings & { from?: string; tz?: string; include?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/summary", q.applyExtras(q.qBoyGirl(input), input, [["from", "from"], ["tz", "tz"], ["include", "include"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Vivah Phal (marriage-outcome) assessment for one chart. */
-  vivahPhal<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/milan/vivah-phal", q.qBirthPrefixed(input), opts);
+  vivahPhal<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/milan/vivah-phal", q.applyExtras(q.qBirthPrefixed(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 }

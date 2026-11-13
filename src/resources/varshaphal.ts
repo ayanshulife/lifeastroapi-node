@@ -10,23 +10,23 @@ export class Varshaphal {
   constructor(private readonly _c: ClientCore) {}
 
   /** Varshaphal (annual solar-return) chart for a year. */
-  chart<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { year: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/varshaphal/chart", q.applyExtras(q.qBirth(input), input, [["year", "year"]]), opts);
+  chart<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { year: number; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/varshaphal/chart", q.applyExtras(q.qBirth(input), input, [["year", "year"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Tajika Harsha Bala for the annual chart. */
-  harshaBala<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { year: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/varshaphal/harsha-bala", q.applyExtras(q.qBirth(input), input, [["year", "year"]]), opts);
+  harshaBala<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { year: number; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/varshaphal/harsha-bala", q.applyExtras(q.qBirth(input), input, [["year", "year"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get the Varsha Lord (Varshesha, year ruler) for an annual chart, chosen by the Tajika Panchadhikari rule from the five office-bearers (Munthesh, Janmesh, Varsha Lagnesh, Trirashipati, Dina/Ratripati); the response also lists the candidates and the hora lord of the return. */
-  lord<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { year: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/varshaphal/lord", q.applyExtras(q.qBirth(input), input, [["year", "year"]]), opts);
+  lord<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { year: number; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/varshaphal/lord", q.applyExtras(q.qBirth(input), input, [["year", "year"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Varshaphal Mudda Dasha periods for the solar-return year. */
-  muddaDasha<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { year: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/varshaphal/mudda-dasha", q.applyExtras(q.qBirth(input), input, [["year", "year"]]), opts);
+  muddaDasha<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { year: number; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/varshaphal/mudda-dasha", q.applyExtras(q.qBirth(input), input, [["year", "year"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get Muntha placement for a Varshaphal year — Muntha moves one sign per year from birth lagna and its house position in the annual chart is a key indicator of the year's themes. */
@@ -40,7 +40,7 @@ export class Varshaphal {
   }
 
   /** Get Tajika Yogas in the Varshaphal annual chart — Ikkaval, Induvara, Ithasala, Ishrafa, Nakta, Yamaya, Manau, Khallasara, Duphali-Kuttha, and other Tajika aspect-based yogas that indicate the tone of the solar-return year. */
-  yoga<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { year: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/varshaphal/yoga", q.applyExtras(q.qBirth(input), input, [["year", "year"]]), opts);
+  yoga<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { year: number; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/varshaphal/yoga", q.applyExtras(q.qBirth(input), input, [["year", "year"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 }

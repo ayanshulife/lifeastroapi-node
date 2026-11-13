@@ -10,13 +10,13 @@ export class Ashtakavarga {
   constructor(private readonly _c: ClientCore) {}
 
   /** Bhinnashtakavarga (BAV) for one planet. */
-  bhinna<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { planet: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>(q.buildPath("/v1/ashtakavarga/bhinna/{planet}", input, ["planet"]), q.qBirthPrefixed(input), opts);
+  bhinna<T = unknown>(input: Types.BirthInput & Types.VedicMomentSettings & { planet: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>(q.buildPath("/v1/ashtakavarga/bhinna/{planet}", input, ["planet"]), q.applyExtras(q.qBirthPrefixed(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get Kaksha (sub-division) level Ashtakavarga analysis — divides each sign into 8 equal 3°45′ segments, each ruled by a graha. */
-  kaksha<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/ashtakavarga/kaksha", q.qNatalTransit(input), opts);
+  kaksha<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/ashtakavarga/kaksha", q.applyExtras(q.qNatalTransit(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get the Sarvashtakavarga table — the combined 12-sign benefic-point grid from all 9 grahas. */
@@ -25,7 +25,7 @@ export class Ashtakavarga {
   }
 
   /** Score current (or a given date's) planetary transits against a natal chart using Ashtakavarga benefic points. */
-  transitScore<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/ashtakavarga/transit-score", q.qNatalTransit(input), opts);
+  transitScore<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/ashtakavarga/transit-score", q.applyExtras(q.qNatalTransit(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 }

@@ -44,8 +44,22 @@ export type HouseSystem =
   | "campanus"
   | "regiomontanus";
 
-/** Narrative / horoscope response languages. */
-export type Locale = "en" | "hi" | "mr" | "bn" | "kn" | "ta" | "te" | "gu" | "ml";
+/**
+ * Response language, passed as `lang` on Vedic methods (panchang, calendar,
+ * festivals, eclipses, planet moments, transit, milan, muhurta, chart, prashna,
+ * numerology, dasha, varshaphal, ashtakavarga, Lal Kitab, horoscope, reports,
+ * narrative, remedies).
+ *
+ * - Complete: `en`, `hi`, `mr`, `te`, `ta`, `kn`, `ml`, `gu`. Names, terms and
+ *   prose all come back in the language.
+ * - Partial: `bn`, `pa`. Names and terms come back in the language; longer
+ *   prose is still English.
+ *
+ * Ids, dates, numbers and explicit `*_en` / `*_hi` fields stay as they are in
+ * every language. Western, Tarot, geo and meta methods answer in English
+ * (Western narrative also in `hi` and `mr`).
+ */
+export type Locale = "en" | "hi" | "mr" | "te" | "ta" | "kn" | "ml" | "gu" | "bn" | "pa";
 
 /**
  * A birth (or event) moment with a fixed location. `date`/`time`/`tz` describe
