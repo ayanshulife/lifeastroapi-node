@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+- New optional inputs the API already reads:
+  - `muhurta.bestTime`: `purpose` (`general`, `vivah`, `graha_pravesh`, `naamkaran`), `topN` (1–20) and `birthDate` (weights the windows by the person's tara bala and chandra bala), plus `ayanamsa`.
+  - `dasha.charCurrent` and `lalkitab.dashaCurrent`: `at` (a moment other than now, UTC), as `dasha.vimshottariCurrent` already had.
+  - `reports.horoscopeWeekly`: `week` (ISO week such as `2026-W47`).
+  - `calendar.month` / `ritu` / `samvatsara` / `adhikMaas`, `planetMoments.ingress` / `combustionWindow`: `ayanamsa`.
+  - Western: `orbConjunction` / `orbOpposition` / `orbTrine` / `orbSquare` / `orbSextile` on the aspect methods (`natal.chart`, `natal.aspects`, `synastry.*`, `composite.chart` / `aspects`, `davison.chart` / `aspects`, `transits.toNatal`, `progressions.aspectsToNatal`, `solarArc.aspectsToNatal`); `rulership` (`modern` or `traditional`) on `natal.chart` / `houses` / `ascendant` / `mc`, `composite.*`, `davison.*` and `returns.*`; `houseSystem` on `synastry.*`, `composite.*` and `davison.*`; `compositeMethod` (`midpoint_planets` or `midpoint_cusps`) on `composite.*`; `relocateLat` / `relocateLon` on `returns.solar` / `lunar`.
+- Fixed: the `User-Agent` header and the exported `VERSION` said `0.2.0`; they now follow the package version (a test keeps them equal).
+- `npm run live`: `festivals.vrat` has a valid sample (`type: "ekadashi"`).
+
 ## 0.8.0 — 2026-11-14
 
 - Bengali (`bn`) is now a complete language. Every Vedic method answers in Bengali with `lang: "bn"`: names, labels and the authored readings (8,469 interpretation rows and the Lal Kitab remedies, written from the Hindi source).

@@ -113,7 +113,7 @@ exact wire parameters the API expects (`birth.lat`, `boy.date`, `start_date`, â€
 | **Two-person** | `western.synastry.*`, `western.composite.*` | `{ personA: Birth, personB: Birth }` |
 | **Rashi** | `horoscope.*` | `{ rashi: "aries", date?, lang? }` |
 | **Date range** | `eclipses.*`, `western.ingresses` | `{ startDate, endDate }` |
-| **Muhurta (search)** | `muhurta.bestTime` | `{ lat, lon, tz, startDate, endDate }` |
+| **Muhurta (search)** | `muhurta.bestTime` | `{ lat, lon, tz, startDate, endDate, purpose?, topN?, birthDate? }` |
 | **Natal + window** | `transit.sadeSatiWindows`, `transit.windows` (`birth` optional) | `{ birth: Birth, from?, tz? }` |
 | **Natal + transit** | `transit.tarabala`, `transit.vedha`, `transit.smallPanoti`, `ashtakavarga.kaksha`, `ashtakavarga.transitScore`, `western.transits.toNatal`, `narrative.transitPhal`, `narrative.dashaPhal`, `narrative.transitDouble`, `narrative.sadeSatiStatus` / `Phase` / `History` | `{ birth: Birth, date, time, tz }` |
 

@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import {
   LifeAstro,
+  VERSION,
   AuthenticationError,
   PaymentRequiredError,
   PermissionError,
@@ -742,5 +743,87 @@ describe("chart, transit, remedy and milan data endpoints (0.5.0)", () => {
     expect(q.get("marriage_windows")).toBe("true");
     expect(q.get("date")).toBe("2027-02-01");
     expect(q.get("tz")).toBe("Asia/Kolkata");
+  });
+});
+
+describe("params the API reads that the manifest lacked", () => {
+  async function query(call: (c: LifeAstro) => Promise<unknown>) {
+    const { fetch, calls } = mockFetch(() => ({ body: {} }));
+    await call(makeClient(fetch));
+    const url = new URL(calls[0]!.url);
+    return { path: url.pathname, q: url.searchParams };
+  }
+
+  it("muhurta.bestTime sends purpose, top_n and birth_date", async () => {
+    const { path, q } = await query((c) =>
+      c.muhurta.bestTime({ lat: 19.076, lon: 72.8777, tz: "Asia/Kolkata", startDate: "2027-01-15", endDate: "2027-01-31", purpose: "vivah", topN: 3, birthDate: "1990-01-15" }),
+    );
+    expect(path).toBe("/v1/muhurta/best-time");
+    expect(q.get("purpose")).toBe("vivah");
+    expect(q.get("top_n")).toBe("3");
+    expect(q.get("birth_date")).toBe("1990-01-15");
+    expect(q.get("start_date")).toBe("2027-01-15");
+  });
+
+  it("dasha.charCurrent and lalkitab.dashaCurrent send `at`", async () => {
+    let r = await query((c) => c.dasha.charCurrent({ ...BIRTH, at: "2027-01-15T06:00:00Z" }));
+    expect(r.path).toBe("/v1/dasha/char/current");
+    expect(r.q.get("at")).toBe("2027-01-15T06:00:00Z");
+    r = await query((c) => c.lalkitab.dashaCurrent({ ...BIRTH, at: "2027-01-15" }));
+    expect(r.path).toBe("/v1/lalkitab/dasha/current");
+    expect(r.q.get("at")).toBe("2027-01-15");
+  });
+
+  it("reports.horoscopeWeekly sends week", async () => {
+    const { path, q } = await query((c) => c.reports.horoscopeWeekly({ rashi: "Aries", week: "2026-W47" }));
+    expect(path).toBe("/v1/reports/horoscope/weekly");
+    expect(q.get("week")).toBe("2026-W47");
+    expect(q.get("rashi")).toBe("aries");
+  });
+
+  it("VERSION (User-Agent) matches package.json", async () => {
+    const { readFileSync } = await import("node:fs");
+    const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
+    expect(VERSION).toBe(pkg.version);
+  });
+});
+
+describe("optional calculation settings the API reads", () => {
+  const GIRL = { date: "1992-03-20", time: "08:15", tz: "Asia/Kolkata", lat: 28.6139, lon: 77.209 };
+  async function query(call: (c: LifeAstro) => Promise<unknown>) {
+    const { fetch, calls } = mockFetch(() => ({ body: {} }));
+    await call(makeClient(fetch));
+    return new URL(calls[0]!.url).searchParams;
+  }
+
+  it("Western aspect orbs, rulership and house system", async () => {
+    let q = await query((c) => c.western.natal.chart({ ...BIRTH, orbTrine: 6, orbSextile: 4, rulership: "traditional" }));
+    expect(q.get("orb_trine")).toBe("6");
+    expect(q.get("orb_sextile")).toBe("4");
+    expect(q.get("rulership")).toBe("traditional");
+    q = await query((c) => c.western.synastry.aspects({ personA: BIRTH, personB: GIRL, houseSystem: "koch", orbConjunction: 8 }));
+    expect(q.get("house_system")).toBe("koch");
+    expect(q.get("orb_conjunction")).toBe("8");
+    expect(q.get("personA.date")).toBe("1990-01-15");
+    q = await query((c) => c.western.transits.toNatal({ birth: BIRTH, date: "2027-01-15", time: "06:00", tz: "UTC", orbSquare: 5 }));
+    expect(q.get("orb_square")).toBe("5");
+    expect(q.get("birth.date")).toBe("1990-01-15");
+  });
+
+  it("composite method and return relocation", async () => {
+    let q = await query((c) => c.western.composite.chart({ personA: BIRTH, personB: GIRL, compositeMethod: "midpoint_cusps" }));
+    expect(q.get("composite_method")).toBe("midpoint_cusps");
+    q = await query((c) => c.western.returns.solar({ ...BIRTH, returnYear: 2027, relocateLat: 51.5, relocateLon: -0.12 }));
+    expect(q.get("relocate_lat")).toBe("51.5");
+    expect(q.get("relocate_lon")).toBe("-0.12");
+  });
+
+  it("ayanamsa on calendar / planet moments / best-time", async () => {
+    let q = await query((c) => c.calendar.ritu({ date: "2027-01-15", tz: "Asia/Kolkata", ayanamsa: "raman" }));
+    expect(q.get("ayanamsa")).toBe("raman");
+    q = await query((c) => c.planetMoments.ingress({ planet: "Jupiter", date: "2027-01-15", tz: "Asia/Kolkata", ayanamsa: "krishnamurti" }));
+    expect(q.get("ayanamsa")).toBe("krishnamurti");
+    q = await query((c) => c.muhurta.bestTime({ lat: 19.076, lon: 72.8777, tz: "Asia/Kolkata", startDate: "2027-01-15", endDate: "2027-01-31", ayanamsa: "raman" }));
+    expect(q.get("ayanamsa")).toBe("raman");
   });
 });

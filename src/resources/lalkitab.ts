@@ -19,8 +19,8 @@ export class Lalkitab {
     return this._c.request<T>("/v1/lalkitab/dasha", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
-  /** Currently active Lal Kitab dasha planet and period window. */
-  dashaCurrent<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/lalkitab/dasha/current", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
+  /** Currently active Lal Kitab dasha planet and period window (optionally at a custom moment `at`, UTC). */
+  dashaCurrent<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { at?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/lalkitab/dasha/current", q.applyExtras(q.qBirth(input), input, [["at", "at"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 }

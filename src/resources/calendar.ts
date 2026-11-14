@@ -10,23 +10,23 @@ export class Calendar {
   constructor(private readonly _c: ClientCore) {}
 
   /** Find the Adhik Maas (intercalary/leap month) in a given year — the extra lunar month inserted to sync the Hindu lunar calendar with the solar year. */
-  adhikMaas<T = unknown>(input: { year: number; tz?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/calendar/adhik-maas", q.applyExtras(q.qNone(input), input, [["year", "year"], ["tz", "tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
+  adhikMaas<T = unknown>(input: { year: number; tz?: string; ayanamsa?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/calendar/adhik-maas", q.applyExtras(q.qNone(input), input, [["year", "year"], ["tz", "tz"], ["ayanamsa", "ayanamsa"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get the Hindu calendar details for a Gregorian month — maps each day to its Hindu month (Chaitra/Vaishakha/…), paksha (Shukla/Krishna), tithi, and Vikram Samvat year. */
-  month<T = unknown>(input: { date: string; tz: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/calendar/month", q.applyExtras(q.qNone(input), input, [["date", "date"], ["tz", "tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
+  month<T = unknown>(input: { date: string; tz: string; ayanamsa?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/calendar/month", q.applyExtras(q.qNone(input), input, [["date", "date"], ["tz", "tz"], ["ayanamsa", "ayanamsa"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get the current Hindu Ritu (season) for a date — one of 6 seasons: Vasanta (spring), Grishma (summer), Varsha (monsoon), Sharad (autumn), Hemanta (pre-winter), Shishira (winter). */
-  ritu<T = unknown>(input: { date: string; tz: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/calendar/ritu", q.applyExtras(q.qNone(input), input, [["date", "date"], ["tz", "tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
+  ritu<T = unknown>(input: { date: string; tz: string; ayanamsa?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/calendar/ritu", q.applyExtras(q.qNone(input), input, [["date", "date"], ["tz", "tz"], ["ayanamsa", "ayanamsa"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Get the Samvatsara (Jupiter year) name for a given year — the 60-year Jupiter cycle used in Hindu astrology (Prabhava, Vibhava, Shukla, … Akshaya). */
-  samvatsara<T = unknown>(input: { date: string; tz: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/calendar/samvatsara", q.applyExtras(q.qNone(input), input, [["date", "date"], ["tz", "tz"], ["lang", "lang"], ["lang", "locale"]]), opts);
+  samvatsara<T = unknown>(input: { date: string; tz: string; ayanamsa?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/calendar/samvatsara", q.applyExtras(q.qNone(input), input, [["date", "date"], ["tz", "tz"], ["ayanamsa", "ayanamsa"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Equinoxes and solstices of a year — exact moment (UTC + local), the ayana that begins (tropical Dakshinayana at the June solstice, tropical Uttarayana at the December solstice; the panchang's Uttarayana is Makara Sankranti), and with lat/lon the sunrise, sunset and day length at that place. */

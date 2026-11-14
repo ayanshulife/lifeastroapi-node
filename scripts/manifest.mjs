@@ -24,7 +24,16 @@ const part2 = JSON.parse(readFileSync(join(__dirname, "endpoints_part2.json"), "
  * keep sade-sati a pure natal query.
  */
 const OVERRIDES = {
-  "/v1/western/transits/to-natal": { shape: "natalTransit", extras: [], ns: "western.transits", method: "toNatal" },
+  "/v1/western/transits/to-natal": {
+    shape: "natalTransit",
+    extras: ["conjunction", "opposition", "trine", "square", "sextile"].map((k) => ({
+      wire: `orb_${k}`,
+      type: "number",
+      required: false,
+    })),
+    ns: "western.transits",
+    method: "toNatal",
+  },
   "/v1/western/narrative/transit-summary": {
     shape: "natalTransit",
     extras: [{ wire: "verbosity", type: "string", required: false }],

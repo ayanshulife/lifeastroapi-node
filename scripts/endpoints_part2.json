@@ -54,7 +54,38 @@
   "path": "/v1/western/synastry/grid",
   "shape": "twoPerson",
   "pathParams": [],
-  "extras": [],
+  "extras": [
+   {
+    "wire": "orb_conjunction",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_opposition",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_trine",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_square",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_sextile",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "house_system",
+    "type": "string",
+    "required": false
+   }
+  ],
   "desc": "Get the full N×M synastry aspect grid between two natal charts — every planet in chart A aspecting every planet in chart B."
  },
  {
@@ -66,6 +97,21 @@
     "wire": "from",
     "type": "string",
     "required": true
+   },
+   {
+    "wire": "rulership",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "relocate_lat",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "relocate_lon",
+    "type": "number",
+    "required": false
    }
   ],
   "desc": "Compute the Lunar Return chart — the chart for the exact moment the transiting Moon returns to its natal degree (~every 27.3 days)."
@@ -100,21 +146,124 @@
   "path": "/v1/western/composite/aspects",
   "shape": "twoPerson",
   "pathParams": [],
-  "extras": [],
+  "extras": [
+   {
+    "wire": "orb_conjunction",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_opposition",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_trine",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_square",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_sextile",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "composite_method",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "house_system",
+    "type": "string",
+    "required": false
+   }
+  ],
   "desc": "Get aspects in the composite (midpoint) chart for two people — shows how the relationship's combined energy is configured."
  },
  {
   "path": "/v1/western/davison/chart",
   "shape": "twoPerson",
   "pathParams": [],
-  "extras": [],
+  "extras": [
+   {
+    "wire": "orb_conjunction",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_opposition",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_trine",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_square",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_sextile",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "rulership",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "house_system",
+    "type": "string",
+    "required": false
+   }
+  ],
   "desc": "Compute the Davison relationship chart — an alternative to the composite chart that uses the midpoint of the two birth times rather than midpoint longitudes."
  },
  {
   "path": "/v1/western/davison/aspects",
   "shape": "twoPerson",
   "pathParams": [],
-  "extras": [],
+  "extras": [
+   {
+    "wire": "orb_conjunction",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_opposition",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_trine",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_square",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_sextile",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "house_system",
+    "type": "string",
+    "required": false
+   }
+  ],
   "desc": "Get aspects in the Davison relationship chart."
  },
  {
@@ -126,6 +275,31 @@
     "wire": "age_in_years",
     "type": "number",
     "required": true
+   },
+   {
+    "wire": "orb_conjunction",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_opposition",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_trine",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_square",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_sextile",
+    "type": "number",
+    "required": false
    }
   ],
   "desc": "Get secondary progressed planet aspects to natal planets — the slow symbolic evolution of the birth chart over time."
@@ -152,6 +326,31 @@
     "wire": "age_in_years",
     "type": "number",
     "required": true
+   },
+   {
+    "wire": "orb_conjunction",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_opposition",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_trine",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_square",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_sextile",
+    "type": "number",
+    "required": false
    }
   ],
   "desc": "Get solar arc directed planet aspects to natal planets — a predictive technique where all planets advance at the rate of the Sun (~1°/year)."
@@ -1574,12 +1773,17 @@
   "pathParams": [],
   "extras": [
    {
+    "wire": "week",
+    "type": "string",
+    "required": false
+   },
+   {
     "wire": "lang",
     "type": "string",
     "required": false
    }
   ],
-  "desc": "Generate a detailed weekly horoscope report for a Moon sign — structured report covering the week's planetary movement, day-by-day highlights, and focus areas."
+  "desc": "Generate a detailed weekly horoscope report for a Moon sign — structured report covering the week's planetary movement, day-by-day highlights, and focus areas. `week` is an ISO week such as `2026-W47` (default: the current week)."
  },
  {
   "path": "/v1/reports/kundli/brihad",
@@ -1829,28 +2033,72 @@
   "path": "/v1/western/composite/houses",
   "shape": "twoPerson",
   "pathParams": [],
-  "extras": [],
+  "extras": [
+   {
+    "wire": "rulership",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "composite_method",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "house_system",
+    "type": "string",
+    "required": false
+   }
+  ],
   "desc": "Compute the house cusps of the Composite chart for two people — the midpoint chart combining both natal charts to represent the relationship itself."
  },
  {
   "path": "/v1/western/composite/planets",
   "shape": "twoPerson",
   "pathParams": [],
-  "extras": [],
+  "extras": [
+   {
+    "wire": "composite_method",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "house_system",
+    "type": "string",
+    "required": false
+   }
+  ],
   "desc": "Compute the planet placements in the Composite chart for two people — midpoint positions for all planets in the relationship chart."
  },
  {
   "path": "/v1/western/davison/houses",
   "shape": "twoPerson",
   "pathParams": [],
-  "extras": [],
+  "extras": [
+   {
+    "wire": "rulership",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "house_system",
+    "type": "string",
+    "required": false
+   }
+  ],
   "desc": "Compute the house cusps of the Davison Relationship chart — the chart for the midpoint in time and space between two people's births (an actual chart for a real moment, unlike the composite)."
  },
  {
   "path": "/v1/western/davison/planets",
   "shape": "twoPerson",
   "pathParams": [],
-  "extras": [],
+  "extras": [
+   {
+    "wire": "house_system",
+    "type": "string",
+    "required": false
+   }
+  ],
   "desc": "Compute the planet placements in the Davison Relationship chart — all planet positions in the Davison chart's tropical zodiac."
  },
  {
@@ -1918,14 +2166,26 @@
   "path": "/v1/western/natal/ascendant",
   "shape": "westernNatal",
   "pathParams": [],
-  "extras": [],
+  "extras": [
+   {
+    "wire": "rulership",
+    "type": "string",
+    "required": false
+   }
+  ],
   "desc": "Compute the Western (tropical) natal Ascendant — rising sign, degree, and Midheaven in the tropical zodiac."
  },
  {
   "path": "/v1/western/natal/mc",
   "shape": "westernNatal",
   "pathParams": [],
-  "extras": [],
+  "extras": [
+   {
+    "wire": "rulership",
+    "type": "string",
+    "required": false
+   }
+  ],
   "desc": "Compute the Midheaven (Medium Coeli, MC) and its tropical sign for a Western birth chart — the career and public reputation point, along with its aspects to natal planets."
  },
  {
@@ -2013,6 +2273,11 @@
     "wire": "tz",
     "type": "string",
     "required": false
+   },
+   {
+    "wire": "ayanamsa",
+    "type": "string",
+    "required": false
    }
   ],
   "desc": "Find the Adhik Maas (intercalary/leap month) in a given year — the extra lunar month inserted to sync the Hindu lunar calendar with the solar year."
@@ -2031,6 +2296,11 @@
     "wire": "tz",
     "type": "string",
     "required": true
+   },
+   {
+    "wire": "ayanamsa",
+    "type": "string",
+    "required": false
    }
   ],
   "desc": "Get the Hindu calendar details for a Gregorian month — maps each day to its Hindu month (Chaitra/Vaishakha/…), paksha (Shukla/Krishna), tithi, and Vikram Samvat year."
@@ -2049,6 +2319,11 @@
     "wire": "tz",
     "type": "string",
     "required": true
+   },
+   {
+    "wire": "ayanamsa",
+    "type": "string",
+    "required": false
    }
   ],
   "desc": "Get the current Hindu Ritu (season) for a date — one of 6 seasons: Vasanta (spring), Grishma (summer), Varsha (monsoon), Sharad (autumn), Hemanta (pre-winter), Shishira (winter)."
@@ -2100,6 +2375,11 @@
     "wire": "tz",
     "type": "string",
     "required": true
+   },
+   {
+    "wire": "ayanamsa",
+    "type": "string",
+    "required": false
    }
   ],
   "desc": "Get the Samvatsara (Jupiter year) name for a given year — the 60-year Jupiter cycle used in Hindu astrology (Prabhava, Vibhava, Shukla, … Akshaya)."
@@ -2451,7 +2731,6 @@
   "path": "/v1/muhurta/yatra",
   "shape": "moment",
   "pathParams": [],
-  "extras": [],
   "desc": "Find auspicious Yatra (travel/journey) muhurta windows — avoids Disha Shool (directional inauspiciousness), Rahu Kaal, Nak Shool, and favours Pushya/Hasta/Ashwini/Anuradha nakshatras for journeys. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`."
  },
  {
@@ -2597,6 +2876,11 @@
    {
     "wire": "max_days",
     "type": "integer",
+    "required": false
+   },
+   {
+    "wire": "ayanamsa",
+    "type": "string",
     "required": false
    }
   ],

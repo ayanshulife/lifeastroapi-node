@@ -19,9 +19,9 @@ export class Dasha {
     return this._c.request<T>(q.buildPath("/v1/dasha/char/{md}/{ad}", input, ["md","ad"]), q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
-  /** Currently running Char Dasha (Jaimini) period stack — active mahadasha and antardasha signs with date windows. */
-  charCurrent<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/dasha/char/current", q.applyExtras(q.qBirth(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
+  /** Currently running Char Dasha (Jaimini) period stack — active mahadasha and antardasha signs with date windows (optionally at a custom moment `at`, UTC). */
+  charCurrent<T = unknown>(input: Types.BirthInput & Types.VedicBirthSettings & { at?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/dasha/char/current", q.applyExtras(q.qBirth(input), input, [["at", "at"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Antardashas inside one Char Dasha mahadasha sign (md = sign name, e.g. 'leo'). */

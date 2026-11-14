@@ -33,23 +33,23 @@ class WesternComposite {
   constructor(private readonly _c: ClientCore) {}
 
   /** Get aspects in the composite (midpoint) chart for two people — shows how the relationship's combined energy is configured. */
-  aspects<T = unknown>(input: Types.TwoPersonInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/composite/aspects", q.qTwoPerson(input), opts);
+  aspects<T = unknown>(input: Types.TwoPersonInput & { orbConjunction?: number; orbOpposition?: number; orbTrine?: number; orbSquare?: number; orbSextile?: number; compositeMethod?: string; houseSystem?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/composite/aspects", q.applyExtras(q.qTwoPerson(input), input, [["orbConjunction", "orb_conjunction"], ["orbOpposition", "orb_opposition"], ["orbTrine", "orb_trine"], ["orbSquare", "orb_square"], ["orbSextile", "orb_sextile"], ["compositeMethod", "composite_method"], ["houseSystem", "house_system"]]), opts);
   }
 
   /** Composite (midpoint) relationship chart. */
-  chart<T = unknown>(input: Types.TwoPersonInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/composite/chart", q.qTwoPerson(input), opts);
+  chart<T = unknown>(input: Types.TwoPersonInput & { orbConjunction?: number; orbOpposition?: number; orbTrine?: number; orbSquare?: number; orbSextile?: number; rulership?: string; compositeMethod?: string; houseSystem?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/composite/chart", q.applyExtras(q.qTwoPerson(input), input, [["orbConjunction", "orb_conjunction"], ["orbOpposition", "orb_opposition"], ["orbTrine", "orb_trine"], ["orbSquare", "orb_square"], ["orbSextile", "orb_sextile"], ["rulership", "rulership"], ["compositeMethod", "composite_method"], ["houseSystem", "house_system"]]), opts);
   }
 
   /** Compute the house cusps of the Composite chart for two people — the midpoint chart combining both natal charts to represent the relationship itself. */
-  houses<T = unknown>(input: Types.TwoPersonInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/composite/houses", q.qTwoPerson(input), opts);
+  houses<T = unknown>(input: Types.TwoPersonInput & { rulership?: string; compositeMethod?: string; houseSystem?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/composite/houses", q.applyExtras(q.qTwoPerson(input), input, [["rulership", "rulership"], ["compositeMethod", "composite_method"], ["houseSystem", "house_system"]]), opts);
   }
 
   /** Compute the planet placements in the Composite chart for two people — midpoint positions for all planets in the relationship chart. */
-  planets<T = unknown>(input: Types.TwoPersonInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/composite/planets", q.qTwoPerson(input), opts);
+  planets<T = unknown>(input: Types.TwoPersonInput & { compositeMethod?: string; houseSystem?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/composite/planets", q.applyExtras(q.qTwoPerson(input), input, [["compositeMethod", "composite_method"], ["houseSystem", "house_system"]]), opts);
   }
 }
 
@@ -57,23 +57,23 @@ class WesternDavison {
   constructor(private readonly _c: ClientCore) {}
 
   /** Get aspects in the Davison relationship chart. */
-  aspects<T = unknown>(input: Types.TwoPersonInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/davison/aspects", q.qTwoPerson(input), opts);
+  aspects<T = unknown>(input: Types.TwoPersonInput & { orbConjunction?: number; orbOpposition?: number; orbTrine?: number; orbSquare?: number; orbSextile?: number; houseSystem?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/davison/aspects", q.applyExtras(q.qTwoPerson(input), input, [["orbConjunction", "orb_conjunction"], ["orbOpposition", "orb_opposition"], ["orbTrine", "orb_trine"], ["orbSquare", "orb_square"], ["orbSextile", "orb_sextile"], ["houseSystem", "house_system"]]), opts);
   }
 
   /** Compute the Davison relationship chart — an alternative to the composite chart that uses the midpoint of the two birth times rather than midpoint longitudes. */
-  chart<T = unknown>(input: Types.TwoPersonInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/davison/chart", q.qTwoPerson(input), opts);
+  chart<T = unknown>(input: Types.TwoPersonInput & { orbConjunction?: number; orbOpposition?: number; orbTrine?: number; orbSquare?: number; orbSextile?: number; rulership?: string; houseSystem?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/davison/chart", q.applyExtras(q.qTwoPerson(input), input, [["orbConjunction", "orb_conjunction"], ["orbOpposition", "orb_opposition"], ["orbTrine", "orb_trine"], ["orbSquare", "orb_square"], ["orbSextile", "orb_sextile"], ["rulership", "rulership"], ["houseSystem", "house_system"]]), opts);
   }
 
   /** Compute the house cusps of the Davison Relationship chart — the chart for the midpoint in time and space between two people's births (an actual chart for a real moment, unlike the composite). */
-  houses<T = unknown>(input: Types.TwoPersonInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/davison/houses", q.qTwoPerson(input), opts);
+  houses<T = unknown>(input: Types.TwoPersonInput & { rulership?: string; houseSystem?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/davison/houses", q.applyExtras(q.qTwoPerson(input), input, [["rulership", "rulership"], ["houseSystem", "house_system"]]), opts);
   }
 
   /** Compute the planet placements in the Davison Relationship chart — all planet positions in the Davison chart's tropical zodiac. */
-  planets<T = unknown>(input: Types.TwoPersonInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/davison/planets", q.qTwoPerson(input), opts);
+  planets<T = unknown>(input: Types.TwoPersonInput & { houseSystem?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/davison/planets", q.applyExtras(q.qTwoPerson(input), input, [["houseSystem", "house_system"]]), opts);
   }
 }
 
@@ -234,8 +234,8 @@ class WesternNatal {
   }
 
   /** Compute the Western (tropical) natal Ascendant — rising sign, degree, and Midheaven in the tropical zodiac. */
-  ascendant<T = unknown>(input: Types.WesternNatalInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/natal/ascendant", q.qWesternNatal(input), opts);
+  ascendant<T = unknown>(input: Types.WesternNatalInput & { rulership?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/natal/ascendant", q.applyExtras(q.qWesternNatal(input), input, [["rulership", "rulership"]]), opts);
   }
 
   /** Detect classical multi-planet aspect patterns in a natal chart — Grand Trine, T-Square, Grand Cross, Yod (Finger of God), Kite, Mystic Rectangle, Stellium, Grand Sextile. */
@@ -244,8 +244,8 @@ class WesternNatal {
   }
 
   /** All natal aspects with orbs and partile flags. */
-  aspects<T = unknown>(input: Types.WesternNatalInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/natal/aspects", q.qWesternNatal(input), opts);
+  aspects<T = unknown>(input: Types.WesternNatalInput & { orbConjunction?: number; orbOpposition?: number; orbTrine?: number; orbSquare?: number; orbSextile?: number }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/natal/aspects", q.applyExtras(q.qWesternNatal(input), input, [["orbConjunction", "orb_conjunction"], ["orbOpposition", "orb_opposition"], ["orbTrine", "orb_trine"], ["orbSquare", "orb_square"], ["orbSextile", "orb_sextile"]]), opts);
   }
 
   /** A single asteroid by MPC number. */
@@ -264,8 +264,8 @@ class WesternNatal {
   }
 
   /** Western (tropical) natal chart: planets, ascendant, MC, houses and aspects. */
-  chart<T = unknown>(input: Types.WesternNatalInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/natal/chart", q.qWesternNatal(input), opts);
+  chart<T = unknown>(input: Types.WesternNatalInput & { orbConjunction?: number; orbOpposition?: number; orbTrine?: number; orbSquare?: number; orbSextile?: number; rulership?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/natal/chart", q.applyExtras(q.qWesternNatal(input), input, [["orbConjunction", "orb_conjunction"], ["orbOpposition", "orb_opposition"], ["orbTrine", "orb_trine"], ["orbSquare", "orb_square"], ["orbSextile", "orb_sextile"], ["rulership", "rulership"]]), opts);
   }
 
   /** Classify the natal chart into one of the seven Jones planetary distribution patterns: Splash, Bundle, Locomotive, Bowl, Bucket, See-Saw, or Splay. */
@@ -304,8 +304,8 @@ class WesternNatal {
   }
 
   /** Western tropical house cusps + Ascendant and MC. */
-  houses<T = unknown>(input: Types.WesternNatalInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/natal/houses", q.qWesternNatal(input), opts);
+  houses<T = unknown>(input: Types.WesternNatalInput & { rulership?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/natal/houses", q.applyExtras(q.qWesternNatal(input), input, [["rulership", "rulership"]]), opts);
   }
 
   /** Get all Lilith positions: Mean Black Moon Lilith, True Black Moon Lilith, Osculating (Interpolated) Lilith, and asteroid 1181 Lilith. */
@@ -324,8 +324,8 @@ class WesternNatal {
   }
 
   /** Compute the Midheaven (Medium Coeli, MC) and its tropical sign for a Western birth chart — the career and public reputation point, along with its aspects to natal planets. */
-  mc<T = unknown>(input: Types.WesternNatalInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/natal/mc", q.qWesternNatal(input), opts);
+  mc<T = unknown>(input: Types.WesternNatalInput & { rulership?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/natal/mc", q.applyExtras(q.qWesternNatal(input), input, [["rulership", "rulership"]]), opts);
   }
 
   /** All planet-pair midpoints and activations. */
@@ -416,8 +416,8 @@ class WesternProgressions {
   constructor(private readonly _c: ClientCore) {}
 
   /** Get secondary progressed planet aspects to natal planets — the slow symbolic evolution of the birth chart over time. */
-  aspectsToNatal<T = unknown>(input: Types.WesternNatalInput & { ageInYears: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/progressions/aspects-to-natal", q.applyExtras(q.qWesternNatal(input), input, [["ageInYears", "age_in_years"]]), opts);
+  aspectsToNatal<T = unknown>(input: Types.WesternNatalInput & { ageInYears: number; orbConjunction?: number; orbOpposition?: number; orbTrine?: number; orbSquare?: number; orbSextile?: number }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/progressions/aspects-to-natal", q.applyExtras(q.qWesternNatal(input), input, [["ageInYears", "age_in_years"], ["orbConjunction", "orb_conjunction"], ["orbOpposition", "orb_opposition"], ["orbTrine", "orb_trine"], ["orbSquare", "orb_square"], ["orbSextile", "orb_sextile"]]), opts);
   }
 
   /** Get the progressed Moon phase — shows what stage of the 29-year progressed lunation cycle you are in (new moon, crescent, first quarter, gibbous, full moon, disseminating, last quarter, balsamic). */
@@ -435,8 +435,8 @@ class WesternReturns {
   constructor(private readonly _c: ClientCore) {}
 
   /** Compute the Lunar Return chart — the chart for the exact moment the transiting Moon returns to its natal degree (~every 27.3 days). */
-  lunar<T = unknown>(input: Types.WesternNatalInput & { from: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/returns/lunar", q.applyExtras(q.qWesternNatal(input), input, [["from", "from"]]), opts);
+  lunar<T = unknown>(input: Types.WesternNatalInput & { from: string; rulership?: string; relocateLat?: number; relocateLon?: number }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/returns/lunar", q.applyExtras(q.qWesternNatal(input), input, [["from", "from"], ["rulership", "rulership"], ["relocateLat", "relocate_lat"], ["relocateLon", "relocate_lon"]]), opts);
   }
 
   /** Get the aspects formed between planets in the lunar return chart. */
@@ -445,8 +445,8 @@ class WesternReturns {
   }
 
   /** Solar Return chart for a year. */
-  solar<T = unknown>(input: Types.WesternNatalInput & { returnYear: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/returns/solar", q.applyExtras(q.qWesternNatal(input), input, [["returnYear", "return_year"]]), opts);
+  solar<T = unknown>(input: Types.WesternNatalInput & { returnYear: number; rulership?: string; relocateLat?: number; relocateLon?: number }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/returns/solar", q.applyExtras(q.qWesternNatal(input), input, [["returnYear", "return_year"], ["rulership", "rulership"], ["relocateLat", "relocate_lat"], ["relocateLon", "relocate_lon"]]), opts);
   }
 
   /** Get the aspects formed between planets in the solar return chart — shows which planets are strongly configured in the return year. */
@@ -464,8 +464,8 @@ class WesternSolarArc {
   constructor(private readonly _c: ClientCore) {}
 
   /** Get solar arc directed planet aspects to natal planets — a predictive technique where all planets advance at the rate of the Sun (~1°/year). */
-  aspectsToNatal<T = unknown>(input: Types.WesternNatalInput & { ageInYears: number }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/solar-arc/aspects-to-natal", q.applyExtras(q.qWesternNatal(input), input, [["ageInYears", "age_in_years"]]), opts);
+  aspectsToNatal<T = unknown>(input: Types.WesternNatalInput & { ageInYears: number; orbConjunction?: number; orbOpposition?: number; orbTrine?: number; orbSquare?: number; orbSextile?: number }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/solar-arc/aspects-to-natal", q.applyExtras(q.qWesternNatal(input), input, [["ageInYears", "age_in_years"], ["orbConjunction", "orb_conjunction"], ["orbOpposition", "orb_opposition"], ["orbTrine", "orb_trine"], ["orbSquare", "orb_square"], ["orbSextile", "orb_sextile"]]), opts);
   }
 
   /** Solar Arc directed planetary positions at an age. */
@@ -478,18 +478,18 @@ class WesternSynastry {
   constructor(private readonly _c: ClientCore) {}
 
   /** Cross-chart synastry aspects between two charts. */
-  aspects<T = unknown>(input: Types.TwoPersonInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/synastry/aspects", q.qTwoPerson(input), opts);
+  aspects<T = unknown>(input: Types.TwoPersonInput & { orbConjunction?: number; orbOpposition?: number; orbTrine?: number; orbSquare?: number; orbSextile?: number; houseSystem?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/synastry/aspects", q.applyExtras(q.qTwoPerson(input), input, [["orbConjunction", "orb_conjunction"], ["orbOpposition", "orb_opposition"], ["orbTrine", "orb_trine"], ["orbSquare", "orb_square"], ["orbSextile", "orb_sextile"], ["houseSystem", "house_system"]]), opts);
   }
 
   /** Get the full N×M synastry aspect grid between two natal charts — every planet in chart A aspecting every planet in chart B. */
-  grid<T = unknown>(input: Types.TwoPersonInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/synastry/grid", q.qTwoPerson(input), opts);
+  grid<T = unknown>(input: Types.TwoPersonInput & { orbConjunction?: number; orbOpposition?: number; orbTrine?: number; orbSquare?: number; orbSextile?: number; houseSystem?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/synastry/grid", q.applyExtras(q.qTwoPerson(input), input, [["orbConjunction", "orb_conjunction"], ["orbOpposition", "orb_opposition"], ["orbTrine", "orb_trine"], ["orbSquare", "orb_square"], ["orbSextile", "orb_sextile"], ["houseSystem", "house_system"]]), opts);
   }
 
   /** Synastry compatibility score and breakdown. */
-  score<T = unknown>(input: Types.TwoPersonInput, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/synastry/score", q.qTwoPerson(input), opts);
+  score<T = unknown>(input: Types.TwoPersonInput & { orbConjunction?: number; orbOpposition?: number; orbTrine?: number; orbSquare?: number; orbSextile?: number; houseSystem?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/synastry/score", q.applyExtras(q.qTwoPerson(input), input, [["orbConjunction", "orb_conjunction"], ["orbOpposition", "orb_opposition"], ["orbTrine", "orb_trine"], ["orbSquare", "orb_square"], ["orbSextile", "orb_sextile"], ["houseSystem", "house_system"]]), opts);
   }
 }
 
@@ -512,8 +512,8 @@ class WesternTransits {
   }
 
   /** All current transiting aspects to natal planets. */
-  toNatal<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/western/transits/to-natal", q.qNatalTransit(input), opts);
+  toNatal<T = unknown>(input: Types.NatalTransitInput & Types.VedicMomentSettings & { orbConjunction?: number; orbOpposition?: number; orbTrine?: number; orbSquare?: number; orbSextile?: number }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/western/transits/to-natal", q.applyExtras(q.qNatalTransit(input), input, [["orbConjunction", "orb_conjunction"], ["orbOpposition", "orb_opposition"], ["orbTrine", "orb_trine"], ["orbSquare", "orb_square"], ["orbSextile", "orb_sextile"]]), opts);
   }
 }
 

@@ -13,7 +13,7 @@ import type { QueryParams } from "./types.js";
 import { Resources } from "./resources/index.js";
 
 /** SDK version, surfaced in the User-Agent header. */
-export const VERSION = "0.2.0";
+export const VERSION = "0.8.0";
 
 const DEFAULT_BASE_URL = "https://api.lifeastroapi.com";
 

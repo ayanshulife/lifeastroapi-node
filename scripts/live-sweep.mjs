@@ -111,6 +111,7 @@ const PER_PATH = {
   "/v1/western/transits/exact": { from: "2026-01-01T00:00:00Z", to: "2027-01-01T00:00:00Z" },
   "/v1/vedic/narrative/reference/{family}": { family: "yoga" },
   "/v1/chart/ashtakvarga/{planet}": { planet: "Jupiter" },
+  "/v1/festivals/vrat": { type: "ekadashi" },
 };
 
 function buildInput(e) {

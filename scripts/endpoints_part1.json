@@ -605,7 +605,29 @@
   "path": "/v1/muhurta/best-time",
   "shape": "muhurta",
   "method": "bestTime",
-  "desc": "Best-scoring general muhurta window in a date range. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`."
+  "extras": [
+   {
+    "wire": "purpose",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "top_n",
+    "type": "integer",
+    "required": false
+   },
+   {
+    "wire": "birth_date",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "ayanamsa",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Best-scoring muhurta windows in a date range. `purpose` is `general` (default), `vivah`, `graha_pravesh` or `naamkaran`; `topN` (1-20, default 5) sets how many windows come back; `birthDate` (YYYY-MM-DD) weights the windows by the person's tara bala and chandra bala. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`."
  },
  {
   "path": "/v1/eclipses/solar",
@@ -823,6 +845,11 @@
    {
     "wire": "max_days",
     "type": "integer",
+    "required": false
+   },
+   {
+    "wire": "ayanamsa",
+    "type": "string",
     "required": false
    }
   ],
@@ -1053,16 +1080,82 @@
  {
   "path": "/v1/western/natal/chart",
   "shape": "westernNatal",
+  "extras": [
+   {
+    "wire": "orb_conjunction",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_opposition",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_trine",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_square",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_sextile",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "rulership",
+    "type": "string",
+    "required": false
+   }
+  ],
   "desc": "Western (tropical) natal chart: planets, ascendant, MC, houses and aspects."
  },
  {
   "path": "/v1/western/natal/houses",
   "shape": "westernNatal",
+  "extras": [
+   {
+    "wire": "rulership",
+    "type": "string",
+    "required": false
+   }
+  ],
   "desc": "Western tropical house cusps + Ascendant and MC."
  },
  {
   "path": "/v1/western/natal/aspects",
   "shape": "westernNatal",
+  "extras": [
+   {
+    "wire": "orb_conjunction",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_opposition",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_trine",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_square",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_sextile",
+    "type": "number",
+    "required": false
+   }
+  ],
   "desc": "All natal aspects with orbs and partile flags."
  },
  {
@@ -1207,6 +1300,31 @@
     "wire": "tz",
     "type": "string",
     "required": true
+   },
+   {
+    "wire": "orb_conjunction",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_opposition",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_trine",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_square",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_sextile",
+    "type": "number",
+    "required": false
    }
   ],
   "desc": "All current transiting aspects to natal planets."
@@ -1216,6 +1334,38 @@
   "shape": "twoPerson",
   "ns": "western.synastry",
   "method": "aspects",
+  "extras": [
+   {
+    "wire": "orb_conjunction",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_opposition",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_trine",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_square",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_sextile",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "house_system",
+    "type": "string",
+    "required": false
+   }
+  ],
   "desc": "Cross-chart synastry aspects between two charts."
  },
  {
@@ -1223,6 +1373,38 @@
   "shape": "twoPerson",
   "ns": "western.synastry",
   "method": "score",
+  "extras": [
+   {
+    "wire": "orb_conjunction",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_opposition",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_trine",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_square",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_sextile",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "house_system",
+    "type": "string",
+    "required": false
+   }
+  ],
   "desc": "Synastry compatibility score and breakdown."
  },
  {
@@ -1230,6 +1412,48 @@
   "shape": "twoPerson",
   "ns": "western.composite",
   "method": "chart",
+  "extras": [
+   {
+    "wire": "orb_conjunction",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_opposition",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_trine",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_square",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "orb_sextile",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "rulership",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "composite_method",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "house_system",
+    "type": "string",
+    "required": false
+   }
+  ],
   "desc": "Composite (midpoint) relationship chart."
  },
  {
@@ -1273,6 +1497,21 @@
     "wire": "return_year",
     "type": "integer",
     "required": true
+   },
+   {
+    "wire": "rulership",
+    "type": "string",
+    "required": false
+   },
+   {
+    "wire": "relocate_lat",
+    "type": "number",
+    "required": false
+   },
+   {
+    "wire": "relocate_lon",
+    "type": "number",
+    "required": false
    }
   ],
   "desc": "Solar Return chart for a year."
@@ -1482,7 +1721,15 @@
   "path": "/v1/dasha/char/current",
   "shape": "birth",
   "method": "charCurrent",
-  "desc": "Currently running Char Dasha (Jaimini) period stack — active mahadasha and antardasha signs with date windows."
+  "extras": [
+   {
+    "name": "at",
+    "wire": "at",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Currently running Char Dasha (Jaimini) period stack — active mahadasha and antardasha signs with date windows (optionally at a custom moment `at`, UTC)."
  },
  {
   "path": "/v1/dasha/char/{md}",
@@ -1522,7 +1769,15 @@
   "shape": "birth",
   "ns": "lalkitab",
   "method": "dashaCurrent",
-  "desc": "Currently active Lal Kitab dasha planet and period window."
+  "extras": [
+   {
+    "name": "at",
+    "wire": "at",
+    "type": "string",
+    "required": false
+   }
+  ],
+  "desc": "Currently active Lal Kitab dasha planet and period window (optionally at a custom moment `at`, UTC)."
  },
  {
   "path": "/v1/vedic/remedies/daan/{id}",

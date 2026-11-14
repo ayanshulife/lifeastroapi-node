@@ -10,13 +10,13 @@ export class PlanetMoments {
   constructor(private readonly _c: ClientCore) {}
 
   /** Find the combustion window for a planet — the date range when the planet is too close to the Sun (within classical combust limits) and loses strength. */
-  combustionWindow<T = unknown>(input: { planet: string; date: string; time?: string; tz: string; maxDays?: number; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/planet-moments/combustion-window", q.applyExtras(q.qNone(input), input, [["planet", "planet"], ["date", "date"], ["time", "time"], ["tz", "tz"], ["maxDays", "max_days"], ["lang", "lang"], ["lang", "locale"]]), opts);
+  combustionWindow<T = unknown>(input: { planet: string; date: string; time?: string; tz: string; maxDays?: number; ayanamsa?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/planet-moments/combustion-window", q.applyExtras(q.qNone(input), input, [["planet", "planet"], ["date", "date"], ["time", "time"], ["tz", "tz"], ["maxDays", "max_days"], ["ayanamsa", "ayanamsa"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** A planet's sign ingresses (sankranti) in a date range. */
-  ingress<T = unknown>(input: { planet: string; date: string; time?: string; tz: string; maxDays?: number; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/planet-moments/ingress", q.applyExtras(q.qNone(input), input, [["planet", "planet"], ["date", "date"], ["time", "time"], ["tz", "tz"], ["maxDays", "max_days"], ["lang", "lang"], ["lang", "locale"]]), opts);
+  ingress<T = unknown>(input: { planet: string; date: string; time?: string; tz: string; maxDays?: number; ayanamsa?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/planet-moments/ingress", q.applyExtras(q.qNone(input), input, [["planet", "planet"], ["date", "date"], ["time", "time"], ["tz", "tz"], ["maxDays", "max_days"], ["ayanamsa", "ayanamsa"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** A planet's retrograde windows (station retro -> station direct) in a date range. */

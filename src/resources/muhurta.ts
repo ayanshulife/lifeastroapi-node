@@ -9,9 +9,9 @@ import type { RequestOptions } from "../http.js";
 export class Muhurta {
   constructor(private readonly _c: ClientCore) {}
 
-  /** Best-scoring general muhurta window in a date range. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`. */
-  bestTime<T = unknown>(input: Types.MuhurtaInput & { lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/muhurta/best-time", q.applyExtras(q.qMuhurta(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
+  /** Best-scoring muhurta windows in a date range. `purpose` is `general` (default), `vivah`, `graha_pravesh` or `naamkaran`; `topN` (1-20, default 5) sets how many windows come back; `birthDate` (YYYY-MM-DD) weights the windows by the person's tara bala and chandra bala. Each `factors[]` item has a stable English `id` (e.g. `Tithi`, `RahuKaal`); `name` and `value` follow `lang`. */
+  bestTime<T = unknown>(input: Types.MuhurtaInput & { purpose?: string; topN?: number; birthDate?: string; ayanamsa?: string; lang?: Types.Locale }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/muhurta/best-time", q.applyExtras(q.qMuhurta(input), input, [["purpose", "purpose"], ["topN", "top_n"], ["birthDate", "birth_date"], ["ayanamsa", "ayanamsa"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Compute Chandra Bala — the Moon's strength relative to a person's natal Moon sign on a given date. */

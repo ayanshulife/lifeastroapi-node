@@ -24,9 +24,9 @@ export class Reports {
     return this._c.request<T>("/v1/reports/horoscope/monthly", q.applyExtras(q.qRashi(input), input, [["month", "month"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
-  /** Generate a detailed weekly horoscope report for a Moon sign — structured report covering the week's planetary movement, day-by-day highlights, and focus areas. */
-  horoscopeWeekly<T = unknown>(input: Types.RashiInput & { lang?: string }, opts?: RequestOptions): Promise<T> {
-    return this._c.request<T>("/v1/reports/horoscope/weekly", q.applyExtras(q.qRashi(input), input, [["lang", "lang"], ["lang", "locale"]]), opts);
+  /** Generate a detailed weekly horoscope report for a Moon sign — structured report covering the week's planetary movement, day-by-day highlights, and focus areas. `week` is an ISO week such as `2026-W47` (default: the current week). */
+  horoscopeWeekly<T = unknown>(input: Types.RashiInput & { week?: string; lang?: string }, opts?: RequestOptions): Promise<T> {
+    return this._c.request<T>("/v1/reports/horoscope/weekly", q.applyExtras(q.qRashi(input), input, [["week", "week"], ["lang", "lang"], ["lang", "locale"]]), opts);
   }
 
   /** Generate the Brihad (comprehensive) Kundli report — the most detailed birth chart report covering chart analysis, all divisional charts (D1–D60), planetary strengths (Shadbala), ashtakavarga, all dashas, yogas, doshas, remedies, and lifetime predictions. */
