@@ -260,6 +260,23 @@ export const LABELS: Record<string, Record<string, string>> = {
     mangal_dosha: "મંગળ દોષ",
     nadi_dosha: "નાડી દોષ",
   },
+  bn: {
+    title_match: "কুণ্ডলী মিলন: যোটক বিচার",
+    born: "জন্ম",
+    generated: "তৈরি",
+    section_ashtakoota: "অষ্টকূট: 8 গুণের মিলন",
+    section_doshas: "দোষ",
+    section_final: "চূড়ান্ত সিদ্ধান্ত",
+    koota: "কূট",
+    max: "সর্বোচ্চ",
+    score: "প্রাপ্ত গুণ",
+    details: "বিবরণ",
+    total: "মোট",
+    nakshatra: "নক্ষত্র",
+    ashtakoota_verdict: "অষ্টকূটের সিদ্ধান্ত",
+    mangal_dosha: "মাঙ্গলিক দোষ",
+    nadi_dosha: "নাড়ী দোষ",
+  },
 };
 
 /**
@@ -275,9 +292,10 @@ export const VERDICT_LABELS: Record<string, Record<string, string>> = {
   kn: { poor: "ಕಡಿಮೆ", fair: "ಸಾಧಾರಣ", good: "ಉತ್ತಮ", excellent: "ಅತ್ಯುತ್ತಮ" },
   ml: { poor: "കുറവ്", fair: "സാധാരണം", good: "നല്ലത്", excellent: "ഉത്തമം" },
   gu: { poor: "અલ્પ", fair: "સામાન્ય", good: "સારું", excellent: "ઉત્તમ" },
+  bn: { poor: "অল্প", fair: "সাধারণ", good: "ভালো", excellent: "উত্তম" },
 };
 
-/** Verdict, dosha and nadi prose for te / ta / kn / ml / gu (written from the Hindi). */
+/** Verdict, dosha and nadi prose for te / ta / kn / ml / gu / bn (written from the Hindi). */
 interface SouthMatchProse {
   verdict: { excellent: string; good: string; fair: string; poor: string };
   mangalNotComputed: string;
@@ -388,6 +406,25 @@ const SOUTH_MATCH: Record<string, SouthMatchProse> = {
     nadiNone: (boy, girl) => `નાડી દોષ નથી. (વર: ${boy}, વધૂ: ${girl})`,
     nadiExempted: (exc) => `નાડી દોષ છે, પરંતુ શાસ્ત્રીય અપવાદને કારણે રદ થાય છે (${exc})`,
     nadiHigh: (boy) => `નાડી દોષ: બંનેની નાડી એક જ છે (${boy}). શાસ્ત્રીય રીતે પ્રતિકૂળ.`,
+  },
+  bn: {
+    verdict: {
+      excellent: "উত্তম মিলন: সব ক্ষেত্রে সামঞ্জস্যের সম্ভাবনা বেশি।",
+      good: "ভালো মিলন: বিবাহের জন্য অনুকূল যোগ।",
+      fair: "সাধারণ মিলন: কয়েকটি কূটে ঘাটতি আছে, তবু এগোনো যায়।",
+      poor: "অল্প মিলন: অনেক কূটে ঘাটতি আছে, ভেবেচিন্তে সিদ্ধান্ত নেওয়া জরুরি।",
+    },
+    mangalNotComputed: "মাঙ্গলিক দোষের পরীক্ষা হয়নি: জন্মস্থান (অক্ষাংশ/দ্রাঘিমাংশ) দেওয়া হয়নি।",
+    mangalNone: "মাঙ্গলিক দোষ নেই।",
+    typePurn: "পূর্ণ",
+    typeMild: "অল্প",
+    fromLagna: (hs) => `লগ্ন থেকে ${hs}`,
+    fromMoon: (hs) => `চন্দ্র থেকে ${hs}`,
+    mangal: (type, houses) => `মাঙ্গলিক দোষ (${type}), ভাব: ${houses}।`,
+    cancelled: " নিবারণ: ",
+    nadiNone: (boy, girl) => `নাড়ী দোষ নেই। (পাত্র: ${boy}, পাত্রী: ${girl})`,
+    nadiExempted: (exc) => `নাড়ী দোষ আছে, তবে শাস্ত্রীয় ব্যতিক্রমের কারণে তা খণ্ডিত হয় (${exc})`,
+    nadiHigh: (boy) => `নাড়ী দোষ: দুজনেরই একই নাড়ী (${boy})। শাস্ত্রমতে প্রতিকূল।`,
   },
 };
 

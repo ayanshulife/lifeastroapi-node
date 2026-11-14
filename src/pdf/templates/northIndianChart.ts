@@ -141,7 +141,7 @@ ${planetsSvg}
 </div>`;
 }
 
-/** Short planet labels for chart cells: EN, Devanagari (hi/mr), te, ta, kn, ml, gu. */
+/** Short planet labels for chart cells: EN, Devanagari (hi/mr), te, ta, kn, ml, gu, bn. */
 export const PLANET_LABELS_EN: Record<string, string> = {
   Sun: "Su", Moon: "Mo", Mars: "Ma", Mercury: "Me", Jupiter: "Ju",
   Venus: "Ve", Saturn: "Sa", Rahu: "Ra", Ketu: "Ke",
@@ -187,6 +187,13 @@ export const PLANET_LABELS_GU: Record<string, string> = {
   Venus: "શુ", Saturn: "શ", Rahu: "રા", Ketu: "કે",
   Uranus: "યુ", Neptune: "ને", Pluto: "પ્લૂ",
 };
+// Bengali: cut from the engine's names (vedic.PlanetBN) like the others:
+// সূ(র্য) চ(ন্দ্র) ম(ঙ্গল) বু(ধ) বৃ(হস্পতি) শু(ক্র) শ(নি) রা(হু) কে(তু). All nine distinct.
+export const PLANET_LABELS_BN: Record<string, string> = {
+  Sun: "সূ", Moon: "চ", Mars: "ম", Mercury: "বু", Jupiter: "বৃ",
+  Venus: "শু", Saturn: "শ", Rahu: "রা", Ketu: "কে",
+  Uranus: "ইউ", Neptune: "নে", Pluto: "প্লু",
+};
 
 /** The chart-cell label table for a locale (English abbreviations by default). */
 export function planetLabelsFor(locale: string | undefined): Record<string, string> {
@@ -204,6 +211,8 @@ export function planetLabelsFor(locale: string | undefined): Record<string, stri
       return PLANET_LABELS_ML;
     case "gu":
       return PLANET_LABELS_GU;
+    case "bn":
+      return PLANET_LABELS_BN;
     default:
       return PLANET_LABELS_EN;
   }

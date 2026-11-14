@@ -50,10 +50,10 @@ export type HouseSystem =
  * numerology, dasha, varshaphal, ashtakavarga, Lal Kitab, horoscope, reports,
  * narrative, remedies).
  *
- * - Complete: `en`, `hi`, `mr`, `te`, `ta`, `kn`, `ml`, `gu`. Names, terms and
- *   prose all come back in the language.
- * - Partial: `bn`, `pa`. Names and terms come back in the language; longer
- *   prose is still English.
+ * - Complete: `en`, `hi`, `mr`, `te`, `ta`, `kn`, `ml`, `gu`, `bn`. Names, terms
+ *   and prose all come back in the language.
+ * - Partial: `pa`. Names and terms come back in the language; longer prose is
+ *   still English.
  *
  * Ids, dates, numbers and explicit `*_en` / `*_hi` fields stay as they are in
  * every language. Western, Tarot, geo and meta methods answer in English

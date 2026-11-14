@@ -1,5 +1,5 @@
 /**
- * Telugu / Tamil / Kannada / Malayalam / Gujarati (own-script) PDF templates.
+ * Telugu / Tamil / Kannada / Malayalam / Gujarati / Bengali (own-script) PDF templates.
  *
  * Every template is rendered from a fixture whose data fields are already in
  * the target locale (as the API sends them), then the visible text is checked:
@@ -31,8 +31,8 @@ import { LABELS as VARSHA_LABELS } from "../src/pdf/templates/varshaphal.js";
 import { BASE_CSS } from "../src/pdf/shared.js";
 import { PLANET_NAMES, RASHI_NAMES, WEEKDAY_NAMES, localizeWeekday } from "../src/pdf/locales.js";
 
-type Loc = "te" | "ta" | "kn" | "ml" | "gu";
-const LOCALES: Loc[] = ["te", "ta", "kn", "ml", "gu"];
+type Loc = "te" | "ta" | "kn" | "ml" | "gu" | "bn";
+const LOCALES: Loc[] = ["te", "ta", "kn", "ml", "gu", "bn"];
 
 const SCRIPT: Record<Loc, RegExp> = {
   te: /[ఀ-౿]/g,
@@ -40,19 +40,26 @@ const SCRIPT: Record<Loc, RegExp> = {
   kn: /[ಀ-೿]/g,
   ml: /[ഀ-ൿ]/g,
   gu: /[઀-૿]/g,
+  bn: /[ঀ-৿]/g,
 };
 const DEVANAGARI = /[ऀ-ॿ]/;
+/** Bengali ends a sentence with the danda । ॥ (U+0964/5, Devanagari block): punctuation, not Hindi. */
+const DEVANAGARI_LETTER = /[\u0900-\u0963\u0966-\u097F]/;
+function devanagariFor(loc: Loc): RegExp {
+  return loc === "bn" ? DEVANAGARI_LETTER : DEVANAGARI;
+}
 
 /** A short native word used as stand-in body text from the API. */
-const WORD: Record<Loc, string> = { te: "నమూనా వాక్యం.", ta: "மாதிரி வாக்கியம்.", kn: "ಮಾದರಿ ವಾಕ್ಯ.", ml: "മാതൃകാ വാക്യം.", gu: "નમૂનાનું વાક્ય." };
+const WORD: Record<Loc, string> = { te: "నమూనా వాక్యం.", ta: "மாதிரி வாக்கியம்.", kn: "ಮಾದರಿ ವಾಕ್ಯ.", ml: "മാതൃകാ വാക്യം.", gu: "નમૂનાનું વાક્ય.", bn: "নমুনা বাক্য।" };
 /** Yoga / dosha names as the API's NameLocal field sends them. */
-const YOGA: Record<Loc, string> = { te: "గజకేసరి యోగం", ta: "கஜகேசரி யோகம்", kn: "ಗಜಕೇಸರಿ ಯೋಗ", ml: "ഗജകേസരി യോഗം", gu: "ગજકેસરી યોગ" };
+const YOGA: Record<Loc, string> = { te: "గజకేసరి యోగం", ta: "கஜகேசரி யோகம்", kn: "ಗಜಕೇಸರಿ ಯೋಗ", ml: "ഗജകേസരി യോഗം", gu: "ગજકેસરી યોગ", bn: "গজকেশরী যোগ" };
 const NAK: Record<Loc, [string, string]> = {
   te: ["మఖ", "అశ్విని"],
   ta: ["மகம்", "அசுவினி"],
   kn: ["ಮಖ", "ಅಶ್ವಿನಿ"],
   ml: ["മകം", "അശ്വതി"],
   gu: ["મઘા", "અશ્વિની"],
+  bn: ["মঘা", "অশ্বিনী"],
 };
 
 /** Tokens that are data or branding, not template labels, and may stay Latin. */
@@ -325,7 +332,7 @@ const RENDERERS: Array<{ name: string; render: (loc: Loc) => string }> = [
   },
 ];
 
-describe("PDF templates render fully in te / ta / kn / ml / gu", () => {
+describe("PDF templates render fully in te / ta / kn / ml / gu / bn", () => {
   for (const { name, render } of RENDERERS) {
     for (const loc of LOCALES) {
       it(`${name} [${loc}]: no English labels, ${loc} script, no Devanagari`, () => {
@@ -339,7 +346,7 @@ describe("PDF templates render fully in te / ta / kn / ml / gu", () => {
         for (const other of LOCALES.filter((l) => l !== loc)) {
           expect(text.match(SCRIPT[other]) ?? []).toEqual([]);
         }
-        expect(DEVANAGARI.test(text)).toBe(false);
+        expect(devanagariFor(loc).test(text)).toBe(false);
       });
     }
   }
@@ -439,6 +446,40 @@ describe("south-locale specifics", () => {
     }
   });
 
+  it("Bengali: engine names, Yogini lords, chart labels, Part banner, আপনি register, no Hindi", () => {
+    expect(PLANET_NAMES.bn!.Jupiter).toBe("বৃহস্পতি");
+    expect(RASHI_NAMES.bn![1]).toBe("বৃষ");
+    expect(localizeWeekday("bn", "Thursday")).toBe("বৃহস্পতিবার");
+    const num = RENDERERS.find((r) => r.name === "numerology")!.render("bn");
+    expect(num).toContain("শুক্র");
+    expect(num).toContain("শুক্রবার");
+    const brihad = RENDERERS.find((r) => r.name === "kundliBrihad")!.render("bn");
+    expect((brihad.match(/class="north-chart"/g) ?? []).length).toBeGreaterThanOrEqual(2);
+    expect(brihad).toContain(">সূ<");
+    expect(brihad).toContain(">শ<"); // Saturn (fixture planets: Sun, Moon, Mars, Saturn)
+    expect(brihad).toContain("ভাগ 1:");
+    expect(brihad).toContain("নবাংশ কুণ্ডলী");
+    expect(brihad).not.toMatch(/জ্যোতিষী|পুরোহিত|ज्योतिषी/);
+    const dasha = RENDERERS.find((r) => r.name === "dashaAnalysis")!.render("bn");
+    expect(dasha).toContain("শনি");
+    expect(dasha).toContain("মঙ্গলা");
+    const sade = RENDERERS.find((r) => r.name === "sadeSati")!.render("bn");
+    expect(sade).toContain("শনির সাড়েসাতি");
+    expect(sade).toContain("সর্ষের তেল");
+    const match = RENDERERS.find((r) => r.name === "matchMaking")!.render("bn");
+    expect(match).toContain("নাড়ী দোষ");
+    expect(match).toContain("মাঙ্গলিক দোষ");
+    for (const { render } of RENDERERS) {
+      const text = visibleText(render("bn"));
+      // Reader register is আপনি; never তুমি / তুই (explicit Bengali-letter boundaries).
+      expect(text).not.toMatch(/(?<![ঀ-৿])(তুমি|তোমার|তোমাকে|তোমায়|তুই|তোর|তোকে)(?![ঀ-৿])/);
+      expect(DEVANAGARI_LETTER.test(text)).toBe(false);
+      // ASCII digits and no ZWNJ / ZWJ (the em dash check runs on the label tables above;
+      // a few template separators such as "সিংহ (06°00') — নক্ষত্র" are shared by every locale).
+      expect(text).not.toMatch(/[০-৯\u200c\u200d]/);
+    }
+  });
+
   it("font stacks cover Telugu, Tamil, Kannada and Malayalam everywhere a font is set", () => {
     const html = RENDERERS.find((r) => r.name === "kundliDetailed")!.render("kn");
     const stacks = [...html.matchAll(/font-family:\s*([^;}"]+)/g)].map((m) => m[1]!);
@@ -450,6 +491,7 @@ describe("south-locale specifics", () => {
       expect(s).toContain("Noto Sans Kannada");
       expect(s).toContain("Noto Sans Malayalam");
       expect(s).toContain("Noto Sans Gujarati");
+      expect(s).toContain("Noto Sans Bengali");
     }
     expect(BASE_CSS).toMatch(/:where\(html:lang\(te\), html:lang\(ta\), html:lang\(kn\), html:lang\(ml\)\) body/);
   });
@@ -470,7 +512,7 @@ describe("API NameLocal / LordLocal fields", () => {
     Doshas: { Mangal: { NameEN: "Mangal Dosha", NameHI: "मंगल दोष", NameLocal: "LOCAL_DOSHA", Severity: "present", Body: "x" } },
   };
 
-  for (const loc of ["hi", "te", "ta", "kn"]) {
+  for (const loc of ["hi", "te", "ta", "kn", "bn"]) {
     it(`are preferred when present [${loc}] (Detailed + Brihad)`, () => {
       for (const html of [
         renderKundliDetailedHtml({ ...base, Locale: loc }),

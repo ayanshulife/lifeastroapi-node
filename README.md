@@ -177,7 +177,7 @@ const chart = await client.chart.planets({
 | `kn` | Kannada | complete |
 | `ml` | Malayalam | complete |
 | `gu` | Gujarati | complete |
-| `bn` | Bengali | names and terms; longer prose is still English |
+| `bn` | Bengali | complete |
 | `pa` | Punjabi | names and terms; longer prose is still English |
 
 - **Where it works:** `panchang`, `calendar`, `festivals`, `eclipses`, `planetMoments`,
@@ -394,7 +394,7 @@ Each report has a `render*Html` and a `*Pdf` form:
 | Varshaphal | `reports.varshaphal` | `renderVarshaphalHtml` | `varshaphalPdf` |
 | Horoscope (daily / weekly / monthly) | `reports.horoscopeDaily` … | `renderHoroscopeHtml` | `horoscopePdf` |
 
-All render in `en`, `hi`, `mr`, `te`, `ta`, `kn`, `ml` and `gu` — pass `lang` when you
+All render in `en`, `hi`, `mr`, `te`, `ta`, `kn`, `ml`, `gu` and `bn` — pass `lang` when you
 request the report. Each script needs its Noto font on the machine that renders the
 PDF (see [Fonts](#fonts)).
 

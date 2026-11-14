@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.0 — 2026-11-14
+
+- Bengali (`bn`) is now a complete language. Every Vedic method answers in Bengali with `lang: "bn"`: names, labels and the authored readings (8,469 interpretation rows and the Lal Kitab remedies, written from the Hindi source).
+- PDF reports render fully in Bengali: all templates have native labels, chart sign and planet names (North Indian chart labels সূ চ ম বু বৃ শু শ রা কে), dasha and Yogini lord names, weekday names and the `Noto Sans Bengali` font.
+- `Locale` docs: complete languages are now `en`, `hi`, `mr`, `te`, `ta`, `kn`, `ml`, `gu`, `bn`; `pa` returns names and terms, longer text is still English.
+
 ## 0.7.0 — 2026-11-13
 
 - PDF reports now render fully in Gujarati (`gu`): all templates have native labels, chart sign and planet names (North Indian chart labels સૂ ચં મં બુ ગુ શુ શ રા કે), dasha and Yogini lord names, weekday names and the `Noto Sans Gujarati` font. `Locale` now includes `"gu"`.

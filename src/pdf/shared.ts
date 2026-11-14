@@ -201,13 +201,13 @@ export function cleanNarrative(text: string, locale = "en"): string {
       .replace(/जातकाचे/g, "तुमचे")
       .replace(/जातकाचा/g, "तुमचा")
       .replace(/जातक/g, "तुम्ही");
-  } else if (locale === "te" || locale === "ta" || locale === "kn" || locale === "ml" || locale === "gu") {
+  } else if (locale === "te" || locale === "ta" || locale === "kn" || locale === "ml" || locale === "gu" || locale === "bn") {
     // Deliberately no rewrite. te/ta are already second person at the source
     // (మీరు / நீங்கள், gate-clean). Kannada rows still read third person, but
     // in agglutinative Kannada/Telugu/Tamil the person is carried by the verb
     // ending, so swapping the noun (ಜಾತಕ → ನೀವು) would leave broken grammar;
     // the fix belongs in the corpus. Malayalam is agglutinative too (ml rows
-    // are written in നിങ്ങൾ at the source; gu rows in આપ). The English rules below must not
+    // are written in നിങ്ങൾ at the source; gu rows in આપ; bn rows in আপনি). The English rules below must not
     // run on this prose either.
   } else {
     s = s

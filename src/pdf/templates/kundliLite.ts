@@ -212,6 +212,23 @@ const LABELS: Record<string, Record<string, string>> = {
     upsell:
       "યોગ, દશા અને ઉપાયો સહિત વિસ્તૃત વિશ્લેષણ માટે વિસ્તૃત કુંડળી અથવા બૃહદ્ કુંડળી રિપોર્ટ મેળવજો.",
   },
+  bn: {
+    title_lite: "জন্মকুণ্ডলী",
+    born: "জন্ম",
+    at: "সময়",
+    generated: "তৈরি",
+    section_ascendant: "লগ্ন",
+    section_planets: "গ্রহের অবস্থান",
+    ascendant: "লগ্ন",
+    nakshatra: "নক্ষত্র",
+    pada: "পাদ",
+    lord: "অধিপতি",
+    planet: "গ্রহ",
+    sign: "রাশি",
+    degree: "অংশ",
+    house: "ভাব",
+    upsell: "যোগ, দশা ও প্রতিকারসহ বিস্তারিত বিশ্লেষণের জন্য বিস্তারিত কুণ্ডলী বা বৃহৎ কুণ্ডলী রিপোর্ট নিন।",
+  },
 };
 
 /**

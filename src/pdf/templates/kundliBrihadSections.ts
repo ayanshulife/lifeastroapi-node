@@ -69,7 +69,7 @@ const SIGN_INDEX: Record<string, number> = {
   // Malayalam (= Go vedic.RashiML): the Malayalam month-style names.
   "മേടം": 0, "ഇടവം": 1, "മിഥുനം": 2, "കർക്കടകം": 3, "ചിങ്ങം": 4, "കന്നി": 5,
   "തുലാം": 6, "വൃശ്ചികം": 7, "ധനു": 8, "മകരം": 9, "കുംഭം": 10, "മീനം": 11,
-  // Telugu / Tamil / Kannada / Malayalam / Gujarati (= Go vedic.RashiTE / TA / KN / ML / GU)
+  // Telugu / Tamil / Kannada / Malayalam / Gujarati / Bengali (= Go vedic.RashiTE / TA / KN / ML / GU / BN)
   ...SOUTH_SIGN_INDEX,
 };
 

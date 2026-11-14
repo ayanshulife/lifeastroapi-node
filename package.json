@@ -1,6 +1,6 @@
 {
   "name": "lifeastroapi",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Official Node.js / TypeScript SDK for LifeAstroAPI: Vedic astrology and Hindu calendar API (panchang, festivals, Ekadashi, kundli, kundli matching, muhurat, dashas, horoscopes, numerology, tarot, Western astrology). Festival dates verified against printed panchangs of 14 cities.",
   "keywords": [
     "astrology",
