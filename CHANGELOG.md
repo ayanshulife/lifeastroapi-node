@@ -1,6 +1,14 @@
 # Changelog
 
-## Unreleased
+## 0.9.1 — 2026-11-14
+
+- **React Native and Expo.** New entry `lifeastroapi/pdf-html`: the ten `render*Html` report renderers and the branding helpers, with no Puppeteer and no Node code, for React Native (Metro), Expo, browsers and edge runtimes. Print the HTML on the device with `expo-print` to get the PDF; the new `A4_PRINT_OPTIONS` (A4 and the reports' page margins, in points) is the page geometry to pass with it, because the iOS print engine ignores the CSS `@page` rule. `lifeastroapi/pdf` exports the same functions as before, plus `A4_PRINT_OPTIONS`.
+- Tested in an Expo SDK 58 app (React Native 0.88) on the iOS simulator against a local API: client calls with `lang`, typed errors, and Kundli (Bengali), detailed Kundli (Hindi) and match-making (Tamil) PDFs printed on the device. Not run on an Android device or emulator.
+- Report HTML asks for exact print colours (`print-color-adjust: exact`), so the coloured table headers and cards print on iOS and Android as they do in Chromium. Puppeteer output is unchanged.
+- Fixed: a request that times out in React Native was reported as `Network request failed` (`code: "connection_error"`); it is now `Request timed out after …ms` (`code: "timeout"`), as in Node. React Native's `fetch` rejects an aborted request with a `TypeError`, not an `AbortError`.
+- README: new "React Native and Expo" section.
+
+## 0.9.0 — 2026-11-14
 
 - New optional inputs the API already reads:
   - `muhurta.bestTime`: `purpose` (`general`, `vivah`, `graha_pravesh`, `naamkaran`), `topN` (1–20) and `birthDate` (weights the windows by the person's tara bala and chandra bala), plus `ayanamsa`.

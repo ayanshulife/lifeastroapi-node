@@ -17,6 +17,8 @@ Free tier: 1,500 credits a month, no card — [get a key](https://lifeastroapi.c
   print-ready kundli / matchmaking / numerology / horoscope PDFs. Rendering needs
   Puppeteer (a headless Chrome), installed separately — see
   [Branded PDF reports](#branded-pdf-reports).
+- ✅ **React Native and Expo**: the same client, and report PDFs printed on the
+  device from `lifeastroapi/pdf-html` — see [React Native and Expo](#react-native-and-expo).
 
 ```bash
 npm install lifeastroapi
@@ -83,8 +85,9 @@ error. Get a key at **https://lifeastroapi.com/dashboard/keys**.
 > desktop, or any client-side code**, where end users could extract it and run up your bill.
 > For client apps, call LifeAstroAPI from your own backend and forward the results.
 >
-> (Need PDFs in the browser? The dependency-free `lifeastroapi/pdf` `render*Html`
-> functions take **no key** and are safe to run anywhere — see [Branded PDF reports](#branded-pdf-reports).)
+> (Need PDFs in a browser or a mobile app? The dependency-free `render*Html` functions of
+> `lifeastroapi/pdf-html` take **no key** and are safe to run anywhere — see
+> [React Native and Expo](#react-native-and-expo).)
 
 ## Configuration
 
@@ -508,7 +511,7 @@ Bring your own renderer, or run where a browser is not available — the HTML la
 has no dependencies:
 
 ```ts
-import { renderMatchMakingHtml } from "lifeastroapi/pdf";
+import { renderMatchMakingHtml } from "lifeastroapi/pdf-html"; // or "lifeastroapi/pdf"
 const html = renderMatchMakingHtml(matchReport, { primaryColor: "#b91c1c" });
 // → your own Puppeteer/Playwright, Gotenberg, a print service, or the browser's Print dialog
 ```
@@ -517,6 +520,9 @@ The HTML is a complete, self-contained document with print CSS (A4, page margins
 footer), so any Chromium-based converter gives the same layout. The Brihad table of
 contents, running header and bookmarks are added by `kundliBrihadPdf` and are not
 part of the plain HTML.
+
+`lifeastroapi/pdf-html` has only the HTML renderers and branding helpers: no Puppeteer
+and no Node code, so it bundles for browsers, edge runtimes and React Native.
 
 ### `htmlToPdf` options
 
@@ -553,6 +559,79 @@ restricted network egress to avoid requests to internal hosts (SSRF).
 | No footer line on pages | The browser is older than Chromium 131. Update Puppeteer. |
 | Timeouts on Brihad Kundli | It is a very large document rendered twice. Raise `timeoutMs` and render in a background job. |
 | Cover says "Subject" | Pass `name` (and `place`) when requesting the report. |
+
+## React Native and Expo
+
+The SDK runs in React Native as it does in Node: the client uses the platform `fetch`,
+and `lifeastroapi/pdf-html` builds the report HTML with no Puppeteer and no Node code.
+The device's own print engine turns that HTML into a PDF, so the report is rendered on
+the phone.
+
+```bash
+npm install lifeastroapi
+npx expo install expo-print expo-sharing
+```
+
+```tsx
+import * as Print from "expo-print";
+import * as Sharing from "expo-sharing";
+import { renderKundliLiteHtml, A4_PRINT_OPTIONS } from "lifeastroapi/pdf-html";
+
+// 1. Report JSON from YOUR backend (see below); it is the JSON of client.reports.kundliLite().
+const report = await (await fetch("https://api.your-app.example/kundli?lang=bn")).json();
+
+// 2. Branded HTML, built on the device
+const html = renderKundliLiteHtml(report, {
+  companyName: "Acme Astro",
+  primaryColor: "#6b21a8",
+});
+
+// 3. PDF, printed on the device
+const { uri } = await Print.printToFileAsync({ html, ...A4_PRINT_OPTIONS });
+await Sharing.shareAsync(uri, { mimeType: "application/pdf" });
+```
+
+**Keep the API key on your server.** Anything shipped inside an app can be read out of
+it. Call LifeAstroAPI from your backend with this SDK and send the JSON to the app:
+
+```ts
+// your backend (Node)
+import { LifeAstro } from "lifeastroapi";
+const client = new LifeAstro(); // reads LIFEASTRO_API_KEY
+
+app.get("/kundli", async (req, res) => {
+  res.json(await client.reports.kundliLite({ ...birthOf(req.user), lang: req.query.lang }));
+});
+```
+
+What to know:
+
+- **Entry point.** Import the renderers from `lifeastroapi/pdf-html` in an app.
+  `lifeastroapi/pdf` also carries the Puppeteer `*Pdf` functions, which cannot run on a
+  phone. Metro finds the subpath through the package `exports` field, which is on by
+  default from React Native 0.79 (Expo SDK 53).
+- **Page size and margins.** The templates set A4 and the page margins with a CSS `@page`
+  rule. Chromium follows it; the iOS print engine does not, so pass `A4_PRINT_OPTIONS`
+  (`width`, `height` and `margins` in points) to `printToFileAsync`.
+- **All ten reports** have a renderer: `renderKundliLiteHtml`, `renderKundliDetailedHtml`,
+  `renderKundliBrihadHtml`, `renderMatchMakingHtml`, `renderMangalDoshaHtml`,
+  `renderDashaAnalysisHtml`, `renderNumerologyHtml`, `renderSadeSatiHtml`,
+  `renderVarshaphalHtml` and `renderHoroscopeHtml`, in every language the PDF reports
+  support.
+- **Differences from the Puppeteer PDF.** The footer line and the Brihad Kundli table of
+  contents, running header and bookmarks are drawn by Chromium features, so they are not
+  in a device-printed PDF. If you need them, make that PDF on your server with
+  `lifeastroapi/pdf` and download it in the app.
+- **Fonts.** iOS and Android include fonts for the Indian scripts. The templates also name
+  the Noto fonts, which the device uses when they are installed.
+- **Timeouts and errors** are the same classes as in Node (`AuthenticationError`,
+  `RateLimitError`, `LifeAstroConnectionError` with `code: "timeout"` …).
+
+Tested in an Expo SDK 58 app (React Native 0.88) on the iOS simulator: client calls with
+`lang`, typed errors, and Kundli (Bengali), detailed Kundli (Hindi) and match-making
+(Tamil) PDFs. An Android build bundles; it has not been run on an Android device.
+Without Expo, any library that prints HTML to PDF with the system WebView takes the same
+HTML.
 
 ## Contributing
 

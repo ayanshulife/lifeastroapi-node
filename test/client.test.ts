@@ -488,6 +488,32 @@ describe("abort & timeout", () => {
     expect(err).toBeInstanceOf(LifeAstroConnectionError);
     expect(err.code).toBe("timeout");
   });
+
+  // React Native's fetch rejects an aborted request with a TypeError, not an AbortError.
+  const rnFetch: FetchLike = (_url, init) =>
+    new Promise((_resolve, reject) => {
+      const fail = () => reject(new TypeError("Network request failed"));
+      if (init?.signal?.aborted) return fail();
+      init?.signal?.addEventListener("abort", fail, { once: true });
+    });
+
+  it("times out with code 'timeout' when fetch rejects with a TypeError (React Native)", async () => {
+    const err = await makeClient(rnFetch, { maxRetries: 0 })
+      .panchang.tithi({ lat: 1, lon: 2, tz: "UTC" }, { timeoutMs: 10 })
+      .catch((e) => e);
+    expect(err).toBeInstanceOf(LifeAstroConnectionError);
+    expect(err.code).toBe("timeout");
+    expect(err.message).toBe("Request timed out after 10ms");
+  });
+
+  it("reports a caller abort as 'aborted' when fetch rejects with a TypeError (React Native)", async () => {
+    const ac = new AbortController();
+    ac.abort();
+    const err = await makeClient(rnFetch)
+      .panchang.tithi({ lat: 1, lon: 2, tz: "UTC" }, { signal: ac.signal })
+      .catch((e) => e);
+    expect(err.code).toBe("aborted");
+  });
 });
 
 describe("escape hatch", () => {

@@ -1,7 +1,8 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["src/index.ts", "src/pdf/index.ts"],
+  // Named entries: dist/index, dist/pdf/index, dist/pdf-html (the React Native / browser-safe HTML renderers).
+  entry: { index: "src/index.ts", "pdf/index": "src/pdf/index.ts", "pdf-html": "src/pdf/html.ts" },
   format: ["esm", "cjs"],
   dts: true,
   sourcemap: true,

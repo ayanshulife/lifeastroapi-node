@@ -147,7 +147,9 @@ export async function performRequest<T>(
       text = await res.text();
     } catch (cause) {
       // Distinguish a user/timeout abort from a genuine network error.
-      const aborted = (cause as { name?: string })?.name === "AbortError";
+      // Our own controller is the source of truth: React Native's fetch rejects an
+      // aborted request with a plain TypeError, not an AbortError.
+      const aborted = controller.signal.aborted || (cause as { name?: string })?.name === "AbortError";
       if (aborted && opts.signal?.aborted) {
         throw new LifeAstroConnectionError("Request aborted by caller", { cause, code: "aborted" });
       }

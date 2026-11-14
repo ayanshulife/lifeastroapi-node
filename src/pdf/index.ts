@@ -45,21 +45,8 @@ import {
   BRIHAD_PDF_MARGIN,
 } from "./templates/kundliBrihadSections.js";
 
-// ── Branding + HTML helpers ────────────────────────────────────────────────
-export type { Branding, RawBranding, ResolvedBranding } from "./shared.js";
-export { resolveBranding, esc, escBody, humanize, cleanNarrative } from "./shared.js";
-
-// ── HTML renderers (zero-dependency) ────────────────────────────────────────
-export { renderKundliLiteHtml, type KundliLiteData } from "./templates/kundliLite.js";
-export { renderKundliDetailedHtml, type KundliDetailedData } from "./templates/kundliDetailed.js";
-export { renderKundliBrihadHtml, type KundliBrihadData } from "./templates/kundliBrihad.js";
-export { renderMatchMakingHtml, type MatchMakingData } from "./templates/matchMaking.js";
-export { renderDashaAnalysisHtml, type DashaAnalysisData } from "./templates/dashaAnalysis.js";
-export { renderNumerologyHtml, type NumerologyData } from "./templates/numerology.js";
-export { renderSadeSatiHtml, type SadeSatiData } from "./templates/sadeSati.js";
-export { renderMangalDoshaHtml, type MangalDoshaData } from "./templates/mangalDosha.js";
-export { renderVarshaphalHtml, type VarshaphalData } from "./templates/varshaphal.js";
-export { renderHoroscopeHtml, type HoroscopeData } from "./templates/horoscope.js";
+// ── Branding + HTML renderers: the same exports as `lifeastroapi/pdf-html` ──
+export * from "./html.js";
 
 // ── PDF rendering (optional puppeteer) ──────────────────────────────────────
 export { htmlToPdf } from "./render.js";
